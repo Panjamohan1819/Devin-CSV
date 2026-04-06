@@ -35,14 +35,30 @@ const VALUES = [
 ]
 
 const TEAM = [
-  { name:'James Whitfield', role:'CEO & Founder',             loc:'London, UK',       exp:'20 yrs', cert:'MBA · MC-900', initials:'JW', color:C.blue },
-  { name:'Priya Sharma',    role:'CTO & Technical Director',   loc:'New Delhi, IN',    exp:'16 yrs', cert:'Azure Architect', initials:'PS', color:C.purple },
-  { name:'Marcus Chen',     role:'Head of Delivery, Americas', loc:'New York, USA',    exp:'14 yrs', cert:'MB-300 · PMP',    initials:'MC', color:C.teal },
-  { name:'Sarah O\'Brien',  role:'Head of Customer Success',   loc:'London, UK',       exp:'12 yrs', cert:'MB-240 · PRINCE2', initials:'SO', color:C.orange },
-  { name:'Anil Kapoor',     role:'Head of Delivery, APAC',     loc:'New Delhi, IN',    exp:'13 yrs', cert:'MB-800 · AZ-900',  initials:'AK', color:C.green },
-  { name:'Natalie Girard',  role:'VP Sales & Partnerships',    loc:'Toronto, CA',      exp:'11 yrs', cert:'MB-910 · Salesforce', initials:'NG', color:C.blue },
-  { name:'David Park',      role:'AI & Copilot Practice Lead', loc:'New York, USA',    exp:'9 yrs',  cert:'AI-102 · MB-1002',  initials:'DP', color:C.purple },
-  { name:'Emma Rhodes',     role:'Head of Finance Practice',   loc:'London, UK',       exp:'15 yrs', cert:'ACCA · MB-310',     initials:'ER', color:C.teal },
+  { name:'James Whitfield', role:'CEO & Founder',             loc:'London, UK',    exp:'20 yrs', cert:'MBA · MC-900',        initials:'JW', color:C.blue,
+    about:'James founded DevinStratus in 2009 with a mission to make enterprise software deliver real business value. He leads strategy, partnerships, and client relationships at the executive level.',
+    linkedin:'https://linkedin.com' },
+  { name:'Priya Sharma',    role:'CTO & Technical Director',  loc:'New Delhi, IN', exp:'16 yrs', cert:'Azure Architect',       initials:'PS', color:C.purple,
+    about:'Priya oversees all technical delivery and architecture decisions. She leads our Azure & AI practice and ensures every solution is built to scale, integrate, and perform.',
+    linkedin:'https://linkedin.com' },
+  { name:'Marcus Chen',     role:'Head of Delivery, Americas',loc:'New York, USA', exp:'14 yrs', cert:'MB-300 · PMP',          initials:'MC', color:C.teal,
+    about:'Marcus manages all North American client engagements and delivery operations. With 14 years in D365 implementations, he ensures projects land on time and on budget.',
+    linkedin:'https://linkedin.com' },
+  { name:'Sarah O\'Brien',  role:'Head of Customer Success',  loc:'London, UK',    exp:'12 yrs', cert:'MB-240 · PRINCE2',     initials:'SO', color:C.orange,
+    about:'Sarah leads our post-go-live success programmes, ensuring clients realise the full ROI of their Dynamics 365 investment through adoption, training, and continuous improvement.',
+    linkedin:'https://linkedin.com' },
+  { name:'Anil Kapoor',     role:'Head of Delivery, APAC',    loc:'New Delhi, IN', exp:'13 yrs', cert:'MB-800 · AZ-900',       initials:'AK', color:C.green,
+    about:'Anil heads our India delivery centre and APAC client operations, specialising in Business Central and supply chain implementations for manufacturing and logistics clients.',
+    linkedin:'https://linkedin.com' },
+  { name:'Natalie Girard',  role:'VP Sales & Partnerships',   loc:'Toronto, CA',   exp:'11 yrs', cert:'MB-910 · Salesforce',   initials:'NG', color:C.blue,
+    about:'Natalie drives our global sales strategy and partner ecosystem. She has built long-term relationships with over 200 enterprise clients across North America and Europe.',
+    linkedin:'https://linkedin.com' },
+  { name:'David Park',      role:'AI & Copilot Practice Lead',loc:'New York, USA', exp:'9 yrs',  cert:'AI-102 · MB-1002',      initials:'DP', color:C.purple,
+    about:'David leads our dedicated Microsoft Copilot & AI practice, helping clients embed artificial intelligence into finance, sales, and operations workflows across the Dynamics 365 platform.',
+    linkedin:'https://linkedin.com' },
+  { name:'Emma Rhodes',     role:'Head of Finance Practice',  loc:'London, UK',    exp:'15 yrs', cert:'ACCA · MB-310',         initials:'ER', color:C.teal,
+    about:'Emma is a qualified accountant and D365 Finance specialist. She leads our finance transformation engagements, helping CFOs close faster, consolidate entities, and automate reporting.',
+    linkedin:'https://linkedin.com' },
 ]
 
 const OFFICES = [
@@ -105,7 +121,7 @@ function CompanyHero({ section, navigate }) {
         </div>
         <h1 style={{ fontSize:'clamp(32px,5vw,52px)', fontWeight:900, color:'#fff', lineHeight:1.1, marginBottom:16, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
           {cfg.title.split(' ').slice(0,-1).join(' ')}{' '}
-          <span style={{ background:`linear-gradient(135deg,${cfg.color},${cfg.color}99)`, WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
+          <span className="grad-text" style={{ background:`linear-gradient(135deg,${cfg.color},${cfg.color}99)`, display:'inline-block' }}>
             {cfg.title.split(' ').slice(-1)[0]}
           </span>
         </h1>
@@ -130,11 +146,11 @@ function AboutSection({ navigate, openConsult }) {
   return (
     <div>
       <section style={{ padding:'72px 24px', background:'#fff' }}>
-        <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:64, alignItems:'start' }}>
+        <div className="company-about-g" style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:48, alignItems:'start' }}>
           <div className="rv">
             <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.blue},${C.purple})`, marginBottom:16 }} />
             <h2 style={{ fontSize:32, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:16, lineHeight:1.2 }}>
-              We Make Dynamics 365 <span style={{ background:`linear-gradient(135deg,${C.blue},${C.purple})`, WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>Actually Work</span>
+              We Make Dynamics 365 <span className="grad-text" style={{ background:`linear-gradient(135deg,${C.blue},${C.purple})`, display:'inline-block' }}>Actually Work</span>
             </h2>
             <p style={{ fontSize:15.5, color:C.textM, lineHeight:1.85, marginBottom:20 }}>
               DevinStratus Technologies was founded in 2009 with a simple belief: enterprise software should deliver measurable business results, not just go live and gather dust. Sixteen years later, that belief still drives every engagement we take on.
@@ -160,7 +176,7 @@ function AboutSection({ navigate, openConsult }) {
               </div>
             </div>
             <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:14 }}>Our Values</h3>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+            <div className="company-values-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
               {VALUES.map(v => (
                 <div key={v.title} style={{ padding:'16px', borderRadius:14, border:`1.5px solid ${C.border}`, background:'#fff', transition:'all .22s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor=v.color+'55'; e.currentTarget.style.boxShadow=`0 8px 24px ${v.color}12`; e.currentTarget.style.transform='translateY(-3px)' }}
@@ -205,51 +221,107 @@ function AboutSection({ navigate, openConsult }) {
 
 // ── Team Section ─────────────────────────────────────────────────────────────────
 function TeamSection() {
+  const [flipped, setFlipped] = useState(null)
   useReveal()
   return (
     <section style={{ padding:'72px 24px', background:'#fff' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
-        <div className="rv" style={{ marginBottom:48 }}>
+
+        {/* Section header */}
+        <div className="rv" style={{ marginBottom:52 }}>
           <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.purple},${C.blue})`, marginBottom:16 }} />
           <h2 style={{ fontSize:32, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8 }}>Leadership Team</h2>
           <p style={{ color:C.textM, fontSize:16, maxWidth:560 }}>Our leadership brings together deep Dynamics 365 expertise, global consulting experience, and a passion for client outcomes.</p>
         </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:20 }}>
+
+        {/* Card grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(290px,1fr))', gap:24 }}>
           {TEAM.map((m, i) => (
-            <div key={m.name} className="rv" style={{ padding:'24px', borderRadius:20, border:`1.5px solid ${C.border}`, background:'#fff', transition:'all .25s', animation:`fadeUp .4s ease both ${i*50}ms` }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 16px 48px ${m.color}18`; e.currentTarget.style.borderColor=m.color+'44'; e.currentTarget.style.transform='translateY(-4px)' }}
+            <div key={m.name} className="rv"
+              style={{ borderRadius:22, border:`1.5px solid ${C.border}`, background:'#fff', overflow:'hidden', transition:'all .28s cubic-bezier(.4,0,.2,1)', animation:`fadeUp .4s ease both ${i*55}ms`, cursor:'pointer' }}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow=`0 20px 52px ${m.color}22`; e.currentTarget.style.borderColor=m.color+'55'; e.currentTarget.style.transform='translateY(-5px)' }}
               onMouseLeave={e => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.borderColor=C.border; e.currentTarget.style.transform='none' }}>
-              <div style={{ width:64, height:64, borderRadius:18, background:`linear-gradient(135deg,${m.color},${m.color}88)`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:16, boxShadow:`0 4px 16px ${m.color}33` }}>
-                <span style={{ fontSize:22, fontWeight:800, color:'#fff', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{m.initials}</span>
+
+              {/* Coloured top strip + avatar */}
+              <div style={{ position:'relative', padding:'28px 24px 0', background:`linear-gradient(160deg,${m.color}18 0%,transparent 70%)` }}>
+                {/* Decorative corner shape */}
+                <div style={{ position:'absolute', top:0, right:0, width:80, height:80, background:`linear-gradient(225deg,${m.color}20,transparent)`, borderRadius:'0 22px 0 80px' }} />
+
+                {/* Avatar circle */}
+                <div style={{ width:76, height:76, borderRadius:'50%', background:`linear-gradient(135deg,${m.color},${m.color}99)`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:16, boxShadow:`0 6px 24px ${m.color}44`, border:'3px solid #fff', position:'relative' }}>
+                  <span style={{ fontSize:26, fontWeight:800, color:'#fff', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{m.initials}</span>
+                  {/* Online indicator */}
+                  <div style={{ position:'absolute', bottom:3, right:3, width:14, height:14, borderRadius:'50%', background:'#4ade80', border:'2px solid #fff', boxShadow:'0 0 6px #4ade8066' }} />
+                </div>
+
+                {/* Name & role */}
+                <h3 style={{ fontSize:17, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:3 }}>{m.name}</h3>
+                <div style={{ fontSize:13, fontWeight:600, color:m.color, marginBottom:12 }}>{m.role}</div>
               </div>
-              <h3 style={{ fontSize:17, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:4 }}>{m.name}</h3>
-              <div style={{ fontSize:13, fontWeight:600, color:m.color, marginBottom:8 }}>{m.role}</div>
-              <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
-                <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:11.5, color:C.textM }}><Ic n="Pin" s={11} style={{ color:C.textL }} />{m.loc}</span>
-                <span style={{ fontSize:11.5, color:C.textM }}>·</span>
-                <span style={{ fontSize:11.5, color:C.textM }}>{m.exp} exp</span>
-              </div>
-              <div style={{ marginTop:10, padding:'6px 10px', borderRadius:8, background:m.color+'10', display:'inline-block' }}>
-                <span style={{ fontSize:11, fontWeight:700, color:m.color }}>{m.cert}</span>
+
+              {/* Body */}
+              <div style={{ padding:'0 24px 24px' }}>
+                {/* Meta row */}
+                <div style={{ display:'flex', gap:12, marginBottom:14, flexWrap:'wrap' }}>
+                  <span style={{ display:'flex', alignItems:'center', gap:4, fontSize:11.5, color:C.textM }}>
+                    <Ic n="Pin" s={11} style={{ color:C.textL }} />{m.loc}
+                  </span>
+                  <span style={{ fontSize:11.5, color:C.textL }}>·</span>
+                  <span style={{ fontSize:11.5, color:C.textM }}>{m.exp} exp</span>
+                </div>
+
+                {/* About text */}
+                <p style={{ fontSize:13, color:C.textM, lineHeight:1.68, marginBottom:16 }}>{m.about}</p>
+
+                {/* Cert badge */}
+                <div style={{ marginBottom:18, padding:'6px 12px', borderRadius:8, background:m.color+'10', display:'inline-flex', alignItems:'center', gap:6 }}>
+                  <Ic n="Award" s={11} style={{ color:m.color }} />
+                  <span style={{ fontSize:11, fontWeight:700, color:m.color }}>{m.cert}</span>
+                </div>
+
+                {/* Action buttons */}
+                <div style={{ display:'flex', gap:8 }}>
+                  <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
+                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 14px', borderRadius:50, background:`linear-gradient(135deg,${m.color},${m.color}99)`, color:'#fff', fontSize:12.5, fontWeight:700, textDecoration:'none', transition:'opacity .18s' }}
+                    onMouseEnter={e => e.currentTarget.style.opacity='.88'}
+                    onMouseLeave={e => e.currentTarget.style.opacity='1'}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                  </a>
+                  <button
+                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 14px', borderRadius:50, background:'#fff', border:`1.5px solid ${m.color}44`, color:m.color, fontSize:12.5, fontWeight:700, cursor:'pointer', transition:'all .18s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background=m.color+'12' }}
+                    onMouseLeave={e => { e.currentTarget.style.background='#fff' }}>
+                    <Ic n="Mail" s={12} style={{ color:m.color }} /> Contact
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
-        <div className="rv" style={{ marginTop:40, padding:'32px', borderRadius:20, background:`linear-gradient(135deg,${C.bgSoft},#fff)`, border:`1px solid ${C.border}`, textAlign:'center' }}>
-          <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8 }}>Plus 100+ More Certified Consultants</h3>
-          <p style={{ color:C.textM, fontSize:15, marginBottom:20 }}>Our full team includes specialists in D365 Finance, SCM, CRM, Power Platform, Azure, and AI — all Microsoft certified.</p>
-          <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap' }}>
-            {['MB-300 (Core Finance & Operations)','MB-310 (Finance)','MB-320 (Manufacturing)','MB-330 (Supply Chain)','MB-800 (Business Central)','MB-910 (CRM Essentials)','PL-400 (Power Apps)','AI-102 (AI Engineer)'].map(cert => (
-              <span key={cert} style={{ padding:'6px 14px', borderRadius:50, background:C.blueL, color:C.blue, fontSize:11.5, fontWeight:700 }}>{cert}</span>
-            ))}
+
+        {/* Bottom CTA */}
+        <div className="rv" style={{ marginTop:48, padding:'36px 40px', borderRadius:24, background:`linear-gradient(135deg,${C.bgSoft},#fff)`, border:`1.5px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:20 }}>
+          <div>
+            <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:6 }}>Plus 100+ More Certified Consultants</h3>
+            <p style={{ color:C.textM, fontSize:14, marginBottom:16 }}>Our full team includes specialists in D365 Finance, SCM, CRM, Power Platform, Azure, and AI — all Microsoft certified.</p>
+            <div style={{ display:'flex', gap:8, flexWrap:'wrap' }}>
+              {['MB-300','MB-310','MB-320','MB-330','MB-800','MB-910','PL-400','AI-102'].map(cert => (
+                <span key={cert} style={{ padding:'5px 12px', borderRadius:50, background:C.blueL, color:C.blue, fontSize:11, fontWeight:700 }}>{cert}</span>
+              ))}
+            </div>
           </div>
+          <a href="mailto:careers@devinstratus.com"
+            style={{ display:'flex', alignItems:'center', gap:8, padding:'13px 26px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, color:'#fff', fontSize:14, fontWeight:700, textDecoration:'none', whiteSpace:'nowrap', boxShadow:`0 6px 20px ${C.blue}33` }}>
+            Join Our Team <Ic n="Arrow" s={14} style={{ color:'#fff' }} />
+          </a>
         </div>
       </div>
     </section>
   )
 }
 
-// ── Global Offices Section ────────────────────────────────────────────────────────
+
 function GlobalSection({ navigate }) {
   useReveal()
   return (
@@ -357,7 +429,7 @@ function CareersSection({ navigate }) {
   return (
     <div>
       <section style={{ padding:'72px 24px', background:'#fff' }}>
-        <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:56, alignItems:'start' }}>
+        <div className="svc-body-g" style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'start' }}>
           <div className="rv">
             <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.green},${C.teal})`, marginBottom:16 }} />
             <h2 style={{ fontSize:32, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:16 }}>Join a Team That Actually Gives a Damn</h2>
@@ -367,7 +439,7 @@ function CareersSection({ navigate }) {
             <p style={{ fontSize:15.5, color:C.textM, lineHeight:1.85, marginBottom:28 }}>
               We work on genuinely interesting problems, with clients who trust us, and managers who want you to grow. Remote and hybrid options available for most roles.
             </p>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:28 }}>
+            <div className="company-values-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:28 }}>
               {[
                 { icon:'Star',  text:'Glassdoor 4.7/5 employer rating' },
                 { icon:'Globe', text:'100% remote-eligible roles available' },
@@ -466,9 +538,9 @@ export default function CompanyPage({ navigate, slug, openConsult }) {
     { slug:'about',   title:'About Us',           icon:'Award',     color:C.blue,   desc:'Our story, mission and 16-year track record' },
     { slug:'team',    title:'Our Team',            icon:'Users',     color:C.purple, desc:'120+ certified consultants worldwide' },
     { slug:'global',  title:'Global Offices',      icon:'Globe',     color:C.teal,   desc:'4 offices across 4 time zones' },
-    { slug:'awards',  title:'Awards',              icon:'Star',      color:C.orange, desc:'Recognised by Microsoft & industry' },
+    // { slug:'awards',  title:'Awards',      icon:'Star',      color:C.orange, desc:'Recognised by Microsoft & industry' }, // HIDDEN — uncomment to show
     { slug:'careers', title:'Careers',             icon:'Brief',     color:C.green,  desc:'Join a team that grows with you' },
-    { slug:'press',   title:'Press & Media',       icon:'Megaphone', color:C.purple, desc:'News, announcements & expert commentary' },
+    // { slug:'press',   title:'Press & Media', icon:'Megaphone', color:C.purple, desc:'News, announcements & expert commentary' }, // HIDDEN — uncomment to show
   ]
 
   return (
@@ -491,9 +563,9 @@ export default function CompanyPage({ navigate, slug, openConsult }) {
       {section === 'about'   && <AboutSection   navigate={navigate} openConsult={openConsult} />}
       {section === 'team'    && <TeamSection    />}
       {section === 'global'  && <GlobalSection  navigate={navigate} />}
-      {section === 'awards'  && <AwardsSection  />}
+      {/* section === 'awards'  && <AwardsSection  /> */}{/* HIDDEN */}
       {section === 'careers' && <CareersSection navigate={navigate} />}
-      {section === 'press'   && <PressSection   />}
+      {/* section === 'press'   && <PressSection   /> */}{/* HIDDEN */}
     </div>
   )
 }

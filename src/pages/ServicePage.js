@@ -44,7 +44,7 @@ export default function ServicePage({ serviceSlug, navigate, openConsult }) {
             <span style={{ fontSize:13, color:'rgba(255,255,255,.85)', fontWeight:600 }}>{service.t}</span>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 420px', gap:56, alignItems:'center', paddingBottom:64 }}>
+          <div className="svc-hero-g" style={{ display:'grid', gridTemplateColumns:'1fr 420px', gap:48, alignItems:'center', paddingBottom:64 }}>
             <div>
               <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:service.color+'22', border:`1px solid ${service.color}44`, borderRadius:50, padding:'6px 14px', fontSize:12, fontWeight:700, color:service.color, marginBottom:20 }}>
                 <Ic n={service.n} s={13} style={{ color:service.color }}/>
@@ -91,8 +91,8 @@ export default function ServicePage({ serviceSlug, navigate, openConsult }) {
       </section>
 
       {/* Bullets/process */}
-      <section style={{ padding:'80px 24px', background:'#fff' }}>
-        <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:64 }}>
+      <section style={{ padding:'64px 24px', background:'#fff' }}>
+        <div style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:48 }} className="svc-body-g">
           <div className="rv">
             <div style={{ width:4, height:36, borderRadius:4, background:`linear-gradient(180deg,${service.color},${service.color}44)`, marginBottom:14 }} />
             <h2 style={{ fontSize:30, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8 }}>What's included</h2>
@@ -134,7 +134,7 @@ export default function ServicePage({ serviceSlug, navigate, openConsult }) {
 
       {/* FAQ */}
       {service.faq && (
-        <section style={{ padding:'80px 24px', background:C.bgSoft }}>
+        <section style={{ padding:'64px 24px', background:C.bgSoft }}>
           <div style={{ maxWidth:800, margin:'0 auto' }}>
             <div className="rv" style={{ textAlign:'center', marginBottom:40 }}>
               <h2 style={{ fontSize:34, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8 }}>Common questions</h2>
@@ -154,7 +154,7 @@ export default function ServicePage({ serviceSlug, navigate, openConsult }) {
       )}
 
       {/* CTA */}
-      <section style={{ padding:'80px 24px', background:`linear-gradient(135deg,${C.blue},${C.purple})` }}>
+      <section style={{ padding:'64px 24px', background:`linear-gradient(135deg,${C.blue},${C.purple})` }}>
         <div style={{ maxWidth:800, margin:'0 auto', textAlign:'center' }}>
           <h2 style={{ fontSize:36, fontWeight:800, color:'#fff', fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:14 }}>Ready to get started?</h2>
           <p style={{ fontSize:16, color:'rgba(255,255,255,.85)', marginBottom:36, lineHeight:1.7 }}>Let's scope your project together — free, no obligation.</p>

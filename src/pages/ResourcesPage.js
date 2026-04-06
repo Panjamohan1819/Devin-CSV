@@ -80,7 +80,7 @@ function ResourcesHero({ section, navigate }) {
         </div>
         <h1 style={{ fontSize:'clamp(32px,5vw,52px)', fontWeight:900, color:'#fff', lineHeight:1.1, marginBottom:16, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
           {cfg.title.split(' ')[0]}{' '}
-          <span style={{ background:`linear-gradient(135deg,${cfg.color},${cfg.color}99)`, WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>
+          <span className="grad-text" style={{ background:`linear-gradient(135deg,${cfg.color},${cfg.color}99)`, display:'inline-block' }}>
             {cfg.title.split(' ').slice(1).join(' ')}
           </span>
         </h1>
@@ -92,14 +92,14 @@ function ResourcesHero({ section, navigate }) {
 
 // ── Sub-nav ────────────────────────────────────────────────────────────────────
 const SUB_SECTIONS = [
-  { slug:'case-studies',   title:'Case Studies',   icon:'FileText', color:C.blue   },
-  { slug:'white-papers',   title:'White Papers',   icon:'BookOpen', color:C.purple },
-  { slug:'webinars',       title:'Webinars',        icon:'Video',    color:C.teal   },
-  { slug:'blog',           title:'Blog',            icon:'Chart',    color:C.orange },
-  { slug:'roi-calculator', title:'ROI Calculator',  icon:'Calc',     color:C.green  },
-  { slug:'certifications', title:'Certifications',  icon:'Award',    color:C.blue   },
-  { slug:'partner',        title:'Partner Programme',icon:'Users',   color:C.purple },
-  { slug:'docs',           title:'Docs',            icon:'Globe',    color:C.teal   },
+  // { slug:'case-studies', title:'Case Studies',      icon:'FileText', color:C.blue   }, // HIDDEN — uncomment when content ready
+  // { slug:'white-papers', title:'White Papers',      icon:'BookOpen', color:C.purple }, // HIDDEN — uncomment when content ready
+  // { slug:'webinars',     title:'Webinars',           icon:'Video',    color:C.teal   }, // HIDDEN — uncomment when content ready
+  { slug:'blog',           title:'Blog',               icon:'Chart',    color:C.orange },
+  { slug:'roi-calculator', title:'ROI Calculator',     icon:'Calc',     color:C.green  },
+  { slug:'certifications', title:'Certifications',     icon:'Award',    color:C.blue   },
+  // { slug:'partner',      title:'Partner Programme',  icon:'Users',    color:C.purple }, // HIDDEN — uncomment when content ready
+  { slug:'docs',           title:'Docs',               icon:'Globe',    color:C.teal   },
 ]
 
 function SubNav({ section, navigate }) {
@@ -266,9 +266,32 @@ function ROICalculator({ openConsult }) {
       <div style={{ maxWidth:900, margin:'0 auto' }}>
         <div className="rv" style={{ padding:'40px', borderRadius:24, border:`1.5px solid ${C.border}`, background:'#fff', boxShadow:'0 8px 40px rgba(0,0,0,.06)' }}>
           <h2 style={{ fontSize:26, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:6 }}>Dynamics 365 ROI Calculator</h2>
-          <p style={{ color:C.textM, fontSize:14, marginBottom:32 }}>Estimate the financial impact of a Dynamics 365 transformation for your business. Based on benchmarks from 500+ deployments.</p>
+          <p style={{ color:C.textM, fontSize:14, marginBottom:20 }}>Estimate the financial impact of a Dynamics 365 transformation for your business. Based on benchmarks from 500+ real deployments across UK, US and Europe.</p>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:24, marginBottom:32 }}>
+          {/* How this calculator works */}
+          <div style={{ marginBottom:28, padding:'18px 20px', borderRadius:14, background:'linear-gradient(135deg,#f0f7ff,#faf5ff)', border:`1px solid ${C.blue}22` }}>
+            <div style={{ fontSize:12, fontWeight:800, color:C.blue, letterSpacing:'.1em', marginBottom:10 }}>HOW THIS CALCULATION WORKS</div>
+            <div className="roi-method-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+              {[
+                { icon:'Users',   label:'Per-User Baseline',   desc:'We start with £2,200 per user/year — the average productivity saving DevinStratus clients achieve from eliminating manual processes, duplicate data entry, and reporting time.' },
+                { icon:'Package', label:'Module Multiplier',   desc:'Each additional D365 module (Finance, CRM, Supply Chain etc.) compounds the saving — integrations between modules eliminate data silos and reduce reconciliation work.' },
+                { icon:'Globe',   label:'Industry Uplift',     desc:'Savings vary by sector. Manufacturing and Financial Services see higher ROI (1.25–1.3×) due to complex compliance and inventory automation. Retail typically sees 1.1×.' },
+                { icon:'Clock',   label:'Year 1 vs 3-Year',    desc:'Year 1 savings are typically 45% of the annualised figure — accounting for go-live in Q2/Q3. The 3-year figure assumes full adoption and additional module rollout.' },
+              ].map(item => (
+                <div key={item.label} style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
+                  <div style={{ width:28, height:28, borderRadius:7, background:C.blue+'15', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:1 }}>
+                    <Ic n={item.icon} s={13} style={{ color:C.blue }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize:12, fontWeight:700, color:C.text, marginBottom:2 }}>{item.label}</div>
+                    <div style={{ fontSize:11.5, color:C.textM, lineHeight:1.55 }}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="roi-inputs-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:20, marginBottom:28 }}>
             <div>
               <label style={{ fontSize:13, fontWeight:700, color:C.text, display:'block', marginBottom:8 }}>Number of Users: <span style={{ color:C.blue }}>{users}</span></label>
               <input type="range" min={10} max={500} value={users} onChange={e => setUsers(+e.target.value)} style={{ width:'100%', accentColor:C.blue }} />
@@ -287,7 +310,7 @@ function ROICalculator({ openConsult }) {
             </div>
           </div>
 
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr', gap:14 }}>
+          <div className="roi-results-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr 1fr', gap:12 }}>
             {[
               { label:'Year 1 Savings', value:`£${(yr1Savings/1000).toFixed(0)}k`, color:C.blue, icon:'Dollar' },
               { label:'3-Year Total ROI', value:`£${(yr3Savings/1000).toFixed(0)}k`, color:C.purple, icon:'TrendUp' },
@@ -302,8 +325,22 @@ function ROICalculator({ openConsult }) {
             ))}
           </div>
 
-          <div style={{ marginTop:24, padding:'16px 20px', borderRadius:12, background:C.bgSoft, border:`1px solid ${C.border}`, fontSize:12.5, color:C.textM }}>
-            ⚠️ This is an indicative estimate only, based on benchmarks from similar deployments. A detailed business case requires discovery work with your specific processes and data. <button onClick={openConsult} style={{ background:'none', border:'none', color:C.blue, cursor:'pointer', fontWeight:700, fontSize:12.5 }}>Book a free business case review →</button>
+          <div style={{ marginTop:24, padding:'20px', borderRadius:14, background:`linear-gradient(135deg,${C.orange}08,${C.orange}04)`, border:`1.5px solid ${C.orange}33` }}>
+            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
+              <span style={{ fontSize:18, flexShrink:0 }}>⚠️</span>
+              <div>
+                <div style={{ fontSize:13, fontWeight:700, color:C.text, marginBottom:4 }}>Indicative Estimate — Not a Formal Business Case</div>
+                <div style={{ fontSize:12.5, color:C.textM, lineHeight:1.65, marginBottom:10 }}>
+                  This calculator provides a directional estimate based on benchmarks from 500+ Dynamics 365 deployments. <strong>Actual ROI depends on your specific processes, current systems, change management effectiveness, and adoption rate.</strong> Figures should not be used for board-level investment decisions without a proper discovery and business case exercise.
+                </div>
+                <div style={{ fontSize:12, color:C.textM, marginBottom:12 }}>
+                  A free business case review with one of our consultants typically takes 60–90 minutes and produces a tailored savings model with line-item breakdown — suitable for CFO or board sign-off.
+                </div>
+                <button onClick={openConsult} style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'9px 18px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:12.5, fontWeight:700, cursor:'pointer' }}>
+                  <Ic n="Calendar" s={13} style={{ color:'#fff' }} /> Book a Free Business Case Review →
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -419,19 +456,19 @@ function DocsSection() {
 export default function ResourcesPage({ navigate, slug, openConsult }) {
   useReveal()
   useEffect(() => { window.scrollTo(0,0) }, [slug])
-  const section = slug || 'case-studies'
+  const section = slug || 'blog'
 
   return (
     <div className="page-fade" style={{ paddingTop:68 }}>
       <ResourcesHero section={section} navigate={navigate} />
       <SubNav section={section} navigate={navigate} />
-      {section === 'case-studies'   && <CaseStudies />}
-      {section === 'white-papers'   && <WhitePapers />}
-      {section === 'webinars'       && <WebinarsSection />}
+      {/* section === 'case-studies' && <CaseStudies /> */}{/* HIDDEN */}
+      {/* section === 'white-papers'   && <WhitePapers /> */}{/* HIDDEN */}
+      {/* section === 'webinars'       && <WebinarsSection /> */}{/* HIDDEN */}
       {section === 'blog'           && <BlogSection />}
       {section === 'roi-calculator' && <ROICalculator openConsult={openConsult} />}
       {section === 'certifications' && <CertificationsSection />}
-      {section === 'partner'        && <PartnerSection navigate={navigate} />}
+      {/* section === 'partner' && <PartnerSection navigate={navigate} /> */}{/* HIDDEN */}
       {section === 'docs'           && <DocsSection />}
     </div>
   )

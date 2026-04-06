@@ -158,6 +158,26 @@ export const SOLUTIONS = [
         useCases:["Businesses building customer self-service portals","Manufacturers managing dealer/partner networks","Professional services sharing project status with clients","Healthcare organisations publishing patient portals"],
         faq:[{q:"Can customers see and update their own CRM records?",a:"Yes — customers can view cases, orders, invoices and update their own profile data, all connected live to your Dynamics 365 records."},{q:"Is it secure for external users?",a:"Yes — Azure AD B2C handles authentication, with configurable MFA, and row-level security ensures users only see their own data."}],
       },
+      // ── COMING SOON: Two new Power Platform solutions — client to confirm exact names & content ──
+      {
+        slug:"power-solution-5", n:"Star", t:"Coming Soon", tag:"New",
+        d:"New Power Platform capability",
+        hero:"Details coming soon. This solution will extend your Power Platform capabilities with powerful new functionality. Content and name to be confirmed by client.",
+        features:["Feature details coming soon","Content to be confirmed","Stay tuned for updates"],
+        benefits:[{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"}],
+        useCases:["Use cases to be confirmed by client"],
+        faq:[{q:"When will this be available?",a:"Full details and content are being finalised. Please contact us for the latest information."}],
+      },
+      {
+        slug:"power-solution-6", n:"Layers", t:"Coming Soon", tag:"New",
+        d:"Innovative Power Platform solution",
+        hero:"Details coming soon. This solution will bring innovative new Power Platform capabilities to your organisation. Name and content to be provided by client.",
+        features:["Feature details coming soon","Content to be confirmed","Stay tuned for updates"],
+        benefits:[{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"},{v:"TBC",u:"",l:"Details coming soon"}],
+        useCases:["Use cases to be confirmed by client"],
+        faq:[{q:"When will this be available?",a:"Full details and content are being finalised. Please contact us for the latest information."}],
+      },
+      // ── END COMING SOON ──
     ],
   },
 ]

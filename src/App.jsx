@@ -931,7 +931,7 @@ function Hero({ openConsult, openDemo }) {
               Microsoft Gold Partner · Trusted by 350+ businesses
             </div>
             <h1 style={{ fontSize:"clamp(2rem,4.2vw,3.2rem)",fontWeight:800,color:C.text,marginBottom:20,lineHeight:1.15 }}>
-              Empower Your Business with <span className="gtext">AI-Enabled ERP</span> &amp; <span className="gtextO">CRM Solutions</span>
+              Empower Your Business with <span className="gtext">AI-Enabled Solutions</span> &amp; <span className="gtextO">CRM Solutions</span>
             </h1>
             <p style={{ fontSize:15.5,color:C.textM,lineHeight:1.78,marginBottom:32,maxWidth:510 }}>
               Unify finance, operations, sales and service on one intelligent Dynamics 365 platform — cutting manual work, automating decisions, and giving every team real-time visibility.

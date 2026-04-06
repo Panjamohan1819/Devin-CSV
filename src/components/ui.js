@@ -134,12 +134,20 @@ export function GS() {
       @keyframes solPanelIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
       @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
       @keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-      @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+      @keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
       @keyframes slideRight{from{width:0}to{width:100%}}
       @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
       @keyframes popIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+      @keyframes heroFadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+      @keyframes badgeFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+      @keyframes kpiIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+      @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+      @keyframes orbSpin{0%{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.08)}100%{transform:rotate(360deg) scale(1)}}
+      @keyframes scrollDot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(10px);opacity:1}}
 
       .vis{opacity:0}.vis.show{animation:fadeUp .6s ease forwards}
+      /* Reliable cross-browser gradient text — use className="grad-text" + inline style={{ background:'...' }} */
+      .grad-text{-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:transparent!important;display:inline-block}
 
       .mega{position:absolute;top:calc(100% + 10px);background:#fff;border-radius:18px;box-shadow:0 8px 48px rgba(0,0,0,.13),0 1.5px 6px rgba(0,0,0,.07);border:1px solid ${C.border};overflow:hidden;z-index:5000;animation:fadeIn .16s ease}
 
@@ -193,17 +201,50 @@ export function GS() {
       .mob-link:hover{color:${C.blue}}
 
       .show-mob{display:none!important}
-      @media(max-width:1100px){.show-mob{display:flex!important}.hide-desk{display:none!important}}
-      @media(max-width:768px){
-        .hero-g,.proc-g{grid-template-columns:1fr!important}
-        .stats-g{grid-template-columns:1fr 1fr!important}
+      @media(max-width:1100px){.show-mob{display:flex!important;align-items:center!important}.hide-desk{display:none!important}}
+      @media(max-width:900px){
+        /* Hero */
+        .hero-g{grid-template-columns:1fr!important;gap:32px!important}
+        .hero-g>div:nth-child(2){display:none!important}
+        /* Page grids */
+        .proc-g,.page-hero-g{grid-template-columns:1fr!important;gap:24px!important}
+        /* Service page */
+        .svc-hero-g{grid-template-columns:1fr!important;gap:24px!important}
+        .svc-hero-g>div:nth-child(2){display:none!important}
+        .svc-body-g{grid-template-columns:1fr!important;gap:32px!important}
+        /* Contact page */
+        .contact-hero-g{grid-template-columns:1fr!important}
+        .contact-hero-g>div:nth-child(2){display:none!important}
+        .contact-offices-g{grid-template-columns:1fr 1fr!important;gap:14px!important}
+        /* Company page */
+        .company-about-g{grid-template-columns:1fr!important;gap:32px!important}
+        .company-values-g{grid-template-columns:1fr 1fr!important}
+        /* ROI Calculator */
+        .roi-inputs-g{grid-template-columns:1fr!important;gap:16px!important}
+        .roi-method-g{grid-template-columns:1fr!important;gap:12px!important}
+        .roi-results-g{grid-template-columns:1fr 1fr!important;gap:10px!important}
+        /* Stats */
+        .stats-g{grid-template-columns:1fr 1fr!important;gap:14px!important}
+        /* Solutions */
+        .sol-g{grid-template-columns:1fr 1fr!important;gap:14px!important}
+        /* Footer */
         .foot-g{grid-template-columns:1fr 1fr!important;gap:28px!important}
-        .sol-g,.why-g{grid-template-columns:1fr 1fr!important}
-        .page-hero-g{grid-template-columns:1fr!important}
+        /* Features */
         .features-g{grid-template-columns:1fr 1fr!important}
       }
-      @media(max-width:480px){
-        .sol-g,.why-g,.stats-g,.foot-g,.features-g{grid-template-columns:1fr!important}
+      @media(max-width:580px){
+        .hero-g{padding:32px 0 40px!important}
+        .sol-g,.why-g,.stats-g,.features-g{grid-template-columns:1fr!important}
+        .foot-g{grid-template-columns:1fr!important}
+        .contact-offices-g{grid-template-columns:1fr!important}
+        .company-values-g{grid-template-columns:1fr!important}
+        .roi-results-g{grid-template-columns:1fr 1fr!important}
+        .hero-stats{flex-wrap:wrap!important}
+        .hero-stats>div{min-width:45%!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,.08)!important;padding:12px 8px!important;text-align:center!important}
+        /* Touch-friendly buttons */
+        button,a{min-height:44px}
+        /* Readable text */
+        section{padding-left:16px!important;padding-right:16px!important}
       }
     `}</style>
   )

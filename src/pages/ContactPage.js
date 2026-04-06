@@ -20,7 +20,7 @@ const OFFICES = [
 ]
 
 const INTERESTS = [
-  { icon:'Package',  label:'ERP Solutions',        color:C.blue   },
+  // { icon:'Package', label:'ERP Solutions', color:C.blue }, // HIDDEN — uncomment to re-enable
   { icon:'Users',    label:'CRM & Customer Svc',   color:C.purple },
   { icon:'Zap',      label:'Power Platform / AI',  color:C.teal   },
   { icon:'Wrench',   label:'Implementation',       color:C.orange },
@@ -185,7 +185,7 @@ export default function ContactPage({ navigate, openConsult }) {
         <div style={{ position:'absolute', top:'40%', left:'30%', width:200, height:200, borderRadius:'50%', background:`${C.teal}10`, animation:'float 11s ease-in-out infinite', pointerEvents:'none' }} />
 
         <div style={{ maxWidth:1280, margin:'0 auto', position:'relative', zIndex:1 }}>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:72, alignItems:'center' }}>
+          <div className="contact-hero-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:48, alignItems:'center' }}>
             <div>
               <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:'rgba(74,222,128,.12)', border:'1px solid rgba(74,222,128,.25)', borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:700, color:'#4ade80', marginBottom:24 }}>
                 <span style={{ width:7, height:7, borderRadius:'50%', background:'#4ade80', display:'inline-block', animation:'pulseRing 2s ease-out infinite' }} />
@@ -370,7 +370,7 @@ export default function ContactPage({ navigate, openConsult }) {
                       {form.day && (
                         <div style={{ animation:'slideUp .25s ease' }}>
                           <div style={{ fontSize:12, fontWeight:700, color:C.textL, letterSpacing:'.1em', marginBottom:12 }}>AVAILABLE TIMES ({form.day})</div>
-                          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8 }}>
+                          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(80px,1fr))', gap:8 }}>
                             {TIMES.map(t => (
                               <button key={t} className="slot-btn"
                                 onClick={() => h('time', t)}

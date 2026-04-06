@@ -11,22 +11,22 @@ const NAV_INDUSTRIES = [
   { n:'Globe',    t:'Logistics & Transport', d:'Fleet, freight & supply tracking',      c:C.blue,   bg:C.blueL,   slug:'logistics'      },
 ]
 const NAV_RESOURCES = [
-  { n:'FileText', t:'Case Studies',         d:'Real results from real clients',       c:C.blue,   bg:C.blueL,   slug:'case-studies'   },
-  { n:'BookOpen', t:'White Papers',         d:'Deep-dive technical guides',           c:C.purple, bg:C.purpleL, slug:'white-papers'   },
-  { n:'Video',    t:'Webinars & Events',    d:'Live & on-demand sessions',            c:C.teal,   bg:C.tealL,   slug:'webinars'       },
+  // { n:'FileText', t:'Case Studies',      d:'Real results from real clients',       c:C.blue,   bg:C.blueL,   slug:'case-studies'   }, // HIDDEN — uncomment when content is ready
+  // { n:'BookOpen', t:'White Papers',      d:'Deep-dive technical guides',           c:C.purple, bg:C.purpleL, slug:'white-papers'   }, // HIDDEN — uncomment when content is ready
+  // { n:'Video',    t:'Webinars & Events', d:'Live & on-demand sessions',            c:C.teal,   bg:C.tealL,   slug:'webinars'       }, // HIDDEN — uncomment when content is ready
   { n:'Chart',    t:'Blog & Insights',      d:'Expert tips, news & trends',           c:C.orange, bg:C.orangeL, slug:'blog'           },
   { n:'Calc',     t:'ROI Calculator',       d:'Model your business case',             c:C.green,  bg:C.greenL,  slug:'roi-calculator' },
   { n:'Award',    t:'MS Certifications',    d:'Our Gold Partner credentials',         c:C.blue,   bg:C.blueL,   slug:'certifications' },
-  { n:'Users',    t:'Partner Programme',    d:'Become a referral partner',            c:C.purple, bg:C.purpleL, slug:'partner'        },
+  // { n:'Users',    t:'Partner Programme',  d:'Become a referral partner',            c:C.purple, bg:C.purpleL, slug:'partner'        }, // HIDDEN — uncomment when content is ready
   { n:'Globe',    t:'Documentation Hub',    d:'Technical docs & integration guides',  c:C.teal,   bg:C.tealL,   slug:'docs'           },
 ]
 const NAV_COMPANY = [
   { n:'Award',     t:'About DevinStratus', d:'Our story, mission & values',    c:C.blue,   bg:C.blueL,   slug:'about'   },
   { n:'Users',     t:'Our Team',           d:'120+ certified consultants',     c:C.purple, bg:C.purpleL, slug:'team'    },
   { n:'Globe',     t:'Global Offices',     d:'London · NYC · Toronto · Delhi', c:C.teal,   bg:C.tealL,   slug:'global'  },
-  { n:'Star',      t:'Awards',             d:'Microsoft Inner Circle 2025',    c:C.orange, bg:C.orangeL, slug:'awards'  },
+  // { n:'Star',   t:'Awards',             d:'Microsoft Inner Circle 2025',    c:C.orange, bg:C.orangeL, slug:'awards'  }, // HIDDEN — uncomment to show
   { n:'Brief',     t:'Careers',            d:'Join our growing practice',      c:C.green,  bg:C.greenL,  slug:'careers' },
-  { n:'Megaphone', t:'Press & Media',      d:'News, announcements & PR',       c:C.purple, bg:C.purpleL, slug:'press'   },
+  // { n:'Megaphone', t:'Press & Media',   d:'News, announcements & PR',       c:C.purple, bg:C.purpleL, slug:'press'   }, // HIDDEN — uncomment to show
 ]
 
 export default function Header({ navigate, openConsult }) {
@@ -34,7 +34,8 @@ export default function Header({ navigate, openConsult }) {
   const [mob, setMob] = useState(false)
   const [mobSection, setMobSection] = useState(null)
   const [open, setOpen] = useState(null)
-  const [activeSolSection, setActiveSolSection] = useState(0)
+  const FILTERED_SOLUTIONS = SOLUTIONS.filter(s => s.slug !== 'erp') // ERP hidden — remove filter to re-enable
+  const [activeSlug, setActiveSlug] = useState(SOLUTIONS.filter(s => s.slug !== 'erp')[0]?.slug)
   const timers = useRef({})
 
   useEffect(() => {
@@ -43,8 +44,23 @@ export default function Header({ navigate, openConsult }) {
     return () => window.removeEventListener('scroll', h)
   }, [])
   useEffect(() => {
-    document.body.style.overflow = mob ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    // iOS-safe scroll lock
+    if (mob) {
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.top = `-${window.scrollY}px`
+    } else {
+      const top = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+      if (top) window.scrollTo(0, -parseInt(top || '0'))
+    }
+    return () => {
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.top = ''
+    }
   }, [mob])
 
   const openM  = k => { clearTimeout(timers.current[k]); setOpen(k) }
@@ -89,19 +105,20 @@ export default function Header({ navigate, openConsult }) {
   const onCH = (e,c) => { e.currentTarget.style.borderColor=c+'55'; e.currentTarget.style.boxShadow=`0 4px 16px ${c}14`; e.currentTarget.style.transform='translateY(-2px)' }
   const offCH = e => { e.currentTarget.style.borderColor=C.border; e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='none' }
 
-  const sec = SOLUTIONS[activeSolSection]
+  const sec = FILTERED_SOLUTIONS.find(s => s.slug === activeSlug) || FILTERED_SOLUTIONS[0]
 
   // ── Mobile accordion sections ──
+  // NOTE: Industries hidden for now — uncomment the industries entry below to re-enable it in mobile nav
   const MOB_SECTIONS = [
-    { key:'solutions',  label:'Solutions',  icon:'Package', items: SOLUTIONS.map(s => ({ label:s.heading, path:`/solutions/${s.slug}`, color:s.color, icon:s.icon })) },
+    { key:'solutions',  label:'Solutions',  icon:'Package', items: FILTERED_SOLUTIONS.map(s => ({ label:s.heading, path:`/solutions/${s.slug}`, color:s.color, icon:s.icon })) },
     { key:'services',   label:'Services',   icon:'Wrench',  items: SERVICES.map(s =>  ({ label:s.t,       path:`/service/${s.slug}`,   color:s.color, icon:s.n    })) },
-    { key:'industries', label:'Industries', icon:'Globe',   items: NAV_INDUSTRIES.map(i => ({ label:i.t, path:`/industries/${i.slug}`, color:i.c, icon:i.n })) },
+    // { key:'industries', label:'Industries', icon:'Globe',   items: NAV_INDUSTRIES.map(i => ({ label:i.t, path:`/industries/${i.slug}`, color:i.c, icon:i.n })) }, // HIDDEN — uncomment to re-enable
     { key:'resources',  label:'Resources',  icon:'BookOpen',items: NAV_RESOURCES.map(r  => ({ label:r.t, path:`/resources/${r.slug}`,  color:r.c, icon:r.n })) },
     { key:'company',    label:'Company',    icon:'Award',   items: NAV_COMPANY.map(c    => ({ label:c.t, path:`/company/${c.slug}`,    color:c.c, icon:c.n })) },
   ]
 
   return (
-    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:9000, background:sc?'rgba(255,255,255,.97)':'#fff', borderBottom:`1px solid ${sc?C.border:'transparent'}`, boxShadow:sc?'0 2px 20px rgba(0,0,0,.07)':'none', backdropFilter:sc?'blur(12px)':'none', transition:'all .25s' }}>
+    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(255,255,255,.97)':'#fff', borderBottom:`1px solid ${sc?C.border:'transparent'}`, boxShadow:sc?'0 2px 20px rgba(0,0,0,.07)':'none', backdropFilter:sc?'blur(12px)':'none', transition:'all .25s' }}>
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 24px', height:68, display:'flex', alignItems:'center', gap:24 }}>
 
         {/* Logo */}
@@ -125,20 +142,21 @@ export default function Header({ navigate, openConsult }) {
               <div style={{ display:'grid', gridTemplateColumns:'220px 1fr' }}>
                 <div style={{ background:C.bgSoft, borderRight:`1px solid ${C.border}`, padding:'14px 10px', display:'flex', flexDirection:'column', gap:2, maxHeight:460, overflowY:'auto', scrollbarWidth:'thin' }}>
                   <div style={{ fontSize:9, fontWeight:800, letterSpacing:'.14em', color:C.textL, padding:'4px 8px 8px', textTransform:'uppercase' }}>All Solutions</div>
-                  {SOLUTIONS.map((s,i) => (
-                    <button key={s.slug} className={`sol-cat-btn ${activeSolSection===i?'sol-active':''}`} onMouseEnter={() => setActiveSolSection(i)} onClick={() => go(`/solutions/${s.slug}`)}>
-                      <div style={{ width:32, height:32, borderRadius:9, flexShrink:0, background:activeSolSection===i?s.bg:C.bgAlt, display:'flex', alignItems:'center', justifyContent:'center' }}>
-                        <Ic n={s.icon} s={14} style={{ color:activeSolSection===i?s.color:C.textL }} />
+                  {/* ERP Solutions hidden — remove filter in FILTERED_SOLUTIONS above to re-enable */}
+                  {FILTERED_SOLUTIONS.map((s) => (
+                    <button key={s.slug} className={`sol-cat-btn ${activeSlug===s.slug?'sol-active':''}`} onMouseEnter={() => setActiveSlug(s.slug)} onClick={() => go(`/solutions/${s.slug}`)}>
+                      <div style={{ width:32, height:32, borderRadius:9, flexShrink:0, background:activeSlug===s.slug?s.bg:C.bgAlt, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                        <Ic n={s.icon} s={14} style={{ color:activeSlug===s.slug?s.color:C.textL }} />
                       </div>
                       <div style={{ flex:1, minWidth:0 }}>
-                        <div style={{ fontSize:12.5, fontWeight:700, color:activeSolSection===i?s.color:C.text, lineHeight:1.2, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{s.heading}</div>
+                        <div style={{ fontSize:12.5, fontWeight:700, color:activeSlug===s.slug?s.color:C.text, lineHeight:1.2, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{s.heading}</div>
                         <div style={{ fontSize:10.5, color:C.textL, marginTop:1, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis' }}>{s.desc}</div>
                       </div>
-                      <Ic n="ChevR" s={11} style={{ color:activeSolSection===i?s.color:C.border, flexShrink:0 }} />
+                      <Ic n="ChevR" s={11} style={{ color:activeSlug===s.slug?s.color:C.border, flexShrink:0 }} />
                     </button>
                   ))}
                 </div>
-                <div key={activeSolSection} className="sol-items-panel" style={{ padding:'18px 16px', display:'flex', flexDirection:'column' }}>
+                <div key={activeSlug} className="sol-items-panel" style={{ padding:'18px 16px', display:'flex', flexDirection:'column' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14, paddingBottom:12, borderBottom:`1px solid ${C.border}` }}>
                     <div style={{ width:38, height:38, borderRadius:11, background:sec.bg, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                       <Ic n={sec.icon} s={18} style={{ color:sec.color }} />
@@ -177,7 +195,7 @@ export default function Header({ navigate, openConsult }) {
                 </div>
               </div>
               <div style={{ padding:'10px 20px', background:C.bgSoft, borderTop:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-                <span style={{ fontSize:11.5, color:C.textM }}><span style={{ fontWeight:700, color:C.text }}>{SOLUTIONS.length} categories</span> · Browse full portfolio</span>
+                <span style={{ fontSize:11.5, color:C.textM }}><span style={{ fontWeight:700, color:C.text }}>{FILTERED_SOLUTIONS.length} categories</span> · Browse full portfolio</span>
                 <button onClick={() => go('/solutions')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>View all <Ic n="Arrow" s={12} /></button>
               </div>
             </div>
@@ -213,8 +231,8 @@ export default function Header({ navigate, openConsult }) {
             </div>
           </NavItem>
 
-          {/* INDUSTRIES */}
-          <NavItem label="Industries" k="industries">
+          {/* INDUSTRIES — hidden for now, uncomment the NavItem block below to re-enable */}
+          {/* <NavItem label="Industries" k="industries">
             <div style={mega(620)}>
               <div style={{ padding:'18px 16px' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
@@ -241,7 +259,7 @@ export default function Header({ navigate, openConsult }) {
                 <button onClick={() => go('/industries')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>All industries <Ic n="Arrow" s={12} /></button>
               </div>
             </div>
-          </NavItem>
+          </NavItem> */}
 
           {/* RESOURCES */}
           <NavItem label="Resources" k="resources">
@@ -316,14 +334,14 @@ export default function Header({ navigate, openConsult }) {
         </div>
 
         {/* Hamburger */}
-        <button className="show-mob" onClick={() => { setMob(!mob); setMobSection(null) }} style={{ marginLeft:'auto', background:'none', border:'none', cursor:'pointer', padding:8 }}>
+        <button className="show-mob" onClick={e => { e.stopPropagation(); setMob(m => !m); setMobSection(null) }} style={{ marginLeft:'auto', background:mob?'rgba(0,87,184,.12)':'transparent', border:'none', borderRadius:12, cursor:'pointer', padding:'10px 10px', position:'relative', zIndex:10002, flexShrink:0, WebkitTapHighlightColor:'transparent', touchAction:'manipulation' }}>
           <Ic n={mob?'X':'Menu'} s={22} style={{ color:C.text }} />
         </button>
       </div>
 
       {/* ── MOBILE DRAWER ── */}
       {mob && (
-        <div style={{ position:'fixed', top:68, left:0, right:0, bottom:0, background:'#fff', overflowY:'auto', zIndex:8999 }}>
+        <div style={{ position:'fixed', top:0, left:0, right:0, bottom:0, background:'#fff', overflowY:'auto', zIndex:10001, paddingTop:68, WebkitOverflowScrolling:'touch' }}>
           {/* Header strip */}
           <div style={{ padding:'16px 20px', borderBottom:`1px solid ${C.border}`, background:C.bgSoft, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <div style={{ fontSize:13, fontWeight:700, color:C.text }}>Navigation</div>
