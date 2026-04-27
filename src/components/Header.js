@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import { C, Ic, LogoSvg } from './ui'
+import { C, Ic } from './ui'
 import { SOLUTIONS, SERVICES } from '../data/content'
+import logoFull from '../assets/DS_Logo_and_Text.png'
+import logoIcon from '../assets/DS_Logo.png'
 
 const NAV_INDUSTRIES = [
   { n:'Truck',    t:'Manufacturing',         d:'Smart factory & production ops',        c:C.blue,   bg:C.blueL,   slug:'manufacturing'  },
@@ -114,31 +116,37 @@ export default function Header({ navigate, openConsult }) {
     { key:'services',   label:'Services',   icon:'Wrench',  items: SERVICES.map(s =>  ({ label:s.t,       path:`/service/${s.slug}`,   color:s.color, icon:s.n    })) },
     // { key:'industries', label:'Industries', icon:'Globe',   items: NAV_INDUSTRIES.map(i => ({ label:i.t, path:`/industries/${i.slug}`, color:i.c, icon:i.n })) }, // HIDDEN — uncomment to re-enable
     { key:'resources',  label:'Resources',  icon:'BookOpen',items: NAV_RESOURCES.map(r  => ({ label:r.t, path:`/resources/${r.slug}`,  color:r.c, icon:r.n })) },
-    { key:'company',    label:'Company',    icon:'Award',   items: NAV_COMPANY.map(c    => ({ label:c.t, path:`/company/${c.slug}`,    color:c.c, icon:c.n })) },
+    { key:'company',    label:'Company',    icon:'Award',   items: NAV_COMPANY.map(c    => ({ label:c.t, path: c.slug === 'careers' ? '/careers' : `/company/${c.slug}`,    color:c.c, icon:c.n })) },
   ]
 
   return (
-    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(255,255,255,.97)':'#fff', borderBottom:`1px solid ${sc?C.border:'transparent'}`, boxShadow:sc?'0 2px 20px rgba(0,0,0,.07)':'none', backdropFilter:sc?'blur(12px)':'none', transition:'all .25s' }}>
-      <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 24px', height:68, display:'flex', alignItems:'center', gap:24 }}>
+    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(255,255,255,.97)':'transparent', borderBottom:`1px solid ${sc?C.border:'transparent'}`, boxShadow:sc?'0 2px 20px rgba(0,0,0,.07)':'none', backdropFilter:sc?'blur(12px)':'none', transition:'all .25s' }}>
+      <div style={{ padding:'0 56px', height:68, display:'flex', alignItems:'center', gap:24 }}>
 
         {/* Logo */}
-        <button onClick={() => go('/')} style={{ display:'flex', alignItems:'center', gap:10, background:'none', border:'none', cursor:'pointer', flexShrink:0 }}>
-          <LogoSvg size={40} id="hdr-logo" />
-          <div>
-            <div style={{ fontSize:17, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.1 }}>
-              <span style={{ background:`linear-gradient(135deg,${C.blue},${C.purple})`, WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent' }}>Devin</span>
-              <span style={{ color:C.text }}>Stratus</span>
-            </div>
-            <div style={{ fontSize:8.5, fontWeight:700, letterSpacing:'.16em', color:C.textL }}>TECHNOLOGIES</div>
-          </div>
+        <button onClick={() => go('/')} style={{ marginTop:10, display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', flexShrink:0, padding:0 }}>
+          {/* Full logo with text — visible on desktop, hidden on mobile */}
+          <img
+            src={logoFull}
+            alt="DevinStratus"
+            className="hide-desk"
+            style={{ height:52, width:'auto', display:'block', objectFit:'contain' }}
+          />
+          {/* Icon only — visible on mobile, hidden on desktop */}
+          <img
+            src={logoIcon}
+            alt="DevinStratus"
+            className="show-mob"
+            style={{ height:40, width:'auto', display:'block', objectFit:'contain' }}
+          />
         </button>
 
         {/* Desktop nav */}
-        <nav className="nav-wrapper hide-desk" style={{ display:'flex', alignItems:'center', gap:2, flex:1, justifyContent:'center' }}>
+        <nav className="nav-wrapper hide-desk" style={{ display:'flex', alignItems:'center', gap:2, marginLeft:'auto', justifyContent:'flex-end' }}>
 
           {/* SOLUTIONS */}
           <NavItem label="Solutions" k="solutions">
-            <div style={{ ...mega(780), display:'flex', flexDirection:'column' }}>
+            <div style={{ ...mega(780,'right'), display:'flex', flexDirection:'column' }}>
               <div style={{ display:'grid', gridTemplateColumns:'220px 1fr' }}>
                 <div style={{ background:C.bgSoft, borderRight:`1px solid ${C.border}`, padding:'14px 10px', display:'flex', flexDirection:'column', gap:2, maxHeight:460, overflowY:'auto', scrollbarWidth:'thin' }}>
                   <div style={{ fontSize:9, fontWeight:800, letterSpacing:'.14em', color:C.textL, padding:'4px 8px 8px', textTransform:'uppercase' }}>All Solutions</div>
@@ -203,7 +211,7 @@ export default function Header({ navigate, openConsult }) {
 
           {/* SERVICES */}
           <NavItem label="Services" k="services">
-            <div style={mega(660)}>
+            <div style={mega(660,'right')}>
               <div style={{ padding:'18px 16px' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
                   <div style={{ fontSize:10, fontWeight:800, letterSpacing:'.14em', color:C.blue }}>8 SPECIALIST SERVICES</div>
@@ -233,7 +241,7 @@ export default function Header({ navigate, openConsult }) {
 
           {/* INDUSTRIES — hidden for now, uncomment the NavItem block below to re-enable */}
           {/* <NavItem label="Industries" k="industries">
-            <div style={mega(620)}>
+            <div style={mega(620,'right')}>
               <div style={{ padding:'18px 16px' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
                   <div style={{ fontSize:10, fontWeight:800, letterSpacing:'.14em', color:C.teal }}>INDUSTRIES WE SERVE</div>
@@ -301,7 +309,7 @@ export default function Header({ navigate, openConsult }) {
                 </div>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:12 }}>
                   {NAV_COMPANY.map(r => (
-                    <button key={r.t} onClick={() => go(`/company/${r.slug}`)} style={cardBtn(r.c)} onMouseEnter={e=>onCH(e,r.c)} onMouseLeave={offCH}>
+                    <button key={r.t} onClick={() => go(r.slug === 'careers' ? '/careers' : `/company/${r.slug}`)} style={cardBtn(r.c)} onMouseEnter={e=>onCH(e,r.c)} onMouseLeave={offCH}>
                       <div style={{ position:'absolute', left:0, top:0, bottom:0, width:3, background:`linear-gradient(180deg,${r.c},${r.c}55)`, borderRadius:'13px 0 0 13px' }} />
                       <div style={{ width:38, height:38, borderRadius:10, background:r.bg, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginLeft:4 }}>
                         <Ic n={r.n} s={17} style={{ color:r.c }} />
@@ -328,26 +336,19 @@ export default function Header({ navigate, openConsult }) {
           <button onClick={() => go('/contact')} style={{ padding:'8px 12px', border:'none', background:'transparent', fontSize:14, fontWeight:600, color:C.text, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Contact</button>
         </nav>
 
-        {/* Desktop CTA */}
-        <div className="hide-desk" style={{ display:'flex', gap:10, marginLeft:'auto', flexShrink:0 }}>
-          <button onClick={openConsult} style={{ padding:'9px 18px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:13, fontWeight:700, cursor:'pointer', whiteSpace:'nowrap' }}>Free Consultation</button>
-        </div>
-
         {/* Hamburger */}
-        <button className="show-mob" onClick={e => { e.stopPropagation(); setMob(m => !m); setMobSection(null) }} style={{ marginLeft:'auto', background:mob?'rgba(0,87,184,.12)':'transparent', border:'none', borderRadius:12, cursor:'pointer', padding:'10px 10px', position:'relative', zIndex:10002, flexShrink:0, WebkitTapHighlightColor:'transparent', touchAction:'manipulation' }}>
+        <button className="show-mob" onClick={e => { e.stopPropagation(); setMob(m => !m); setMobSection(null) }} style={{ marginLeft:'auto', background:mob?'rgba(0,102,255,.12)':'transparent', border:'none', borderRadius:12, cursor:'pointer', padding:'10px 10px', position:'relative', zIndex:10002, flexShrink:0, WebkitTapHighlightColor:'transparent', touchAction:'manipulation' }}>
           <Ic n={mob?'X':'Menu'} s={22} style={{ color:C.text }} />
         </button>
       </div>
 
       {/* ── MOBILE DRAWER ── */}
       {mob && (
-        <div style={{ position:'fixed', top:0, left:0, right:0, bottom:0, background:'#fff', overflowY:'auto', zIndex:10001, paddingTop:68, WebkitOverflowScrolling:'touch' }}>
+        <div style={{ position:'fixed', top:0, left:0, right:0, bottom:0, background:'linear-gradient(160deg,#f0f5ff 0%,#e8f0ff 60%,#f5f0ff 100%)', overflowY:'auto', zIndex:10001, paddingTop:68, WebkitOverflowScrolling:'touch' }}>
           {/* Header strip */}
-          <div style={{ padding:'16px 20px', borderBottom:`1px solid ${C.border}`, background:C.bgSoft, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <div style={{ padding:'16px 20px', borderBottom:'1px solid rgba(0,102,255,0.1)', background:'rgba(0,102,255,0.04)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
             <div style={{ fontSize:13, fontWeight:700, color:C.text }}>Navigation</div>
-            <button onClick={openConsult} style={{ padding:'8px 16px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:12, fontWeight:700, cursor:'pointer' }}>
-              Free Consultation
-            </button>
+
           </div>
 
           <div style={{ padding:'12px 16px' }}>
@@ -356,7 +357,7 @@ export default function Header({ navigate, openConsult }) {
                 {/* Section header button */}
                 <button
                   onClick={() => setMobSection(mobSection===sec.key ? null : sec.key)}
-                  style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:mobSection===sec.key?C.blueLL:'#fff', border:`1.5px solid ${mobSection===sec.key?C.blue+'44':C.border}`, cursor:'pointer', textAlign:'left', transition:'all .18s' }}>
+                  style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:mobSection===sec.key?'rgba(0,102,255,0.1)':'rgba(255,255,255,0.7)', border:`1.5px solid ${mobSection===sec.key?'rgba(0,102,255,0.4)':'rgba(0,102,255,0.12)'}`, cursor:'pointer', textAlign:'left', transition:'all .18s' }}>
                   <div style={{ width:36, height:36, borderRadius:10, background:mobSection===sec.key?`linear-gradient(135deg,${C.blue},${C.purple})`:`linear-gradient(135deg,${C.bgAlt},${C.bgSoft})`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .18s' }}>
                     <Ic n={sec.icon} s={16} style={{ color:mobSection===sec.key?'#fff':C.textM }} />
                   </div>
@@ -386,7 +387,7 @@ export default function Header({ navigate, openConsult }) {
 
             {/* Contact direct link */}
             <button onClick={() => go('/contact')}
-              style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:'#fff', border:`1.5px solid ${C.border}`, cursor:'pointer', textAlign:'left', marginBottom:4 }}>
+              style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', cursor:'pointer', textAlign:'left', marginBottom:4 }}>
               <div style={{ width:36, height:36, borderRadius:10, background:C.bgAlt, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
                 <Ic n="Mail" s={16} style={{ color:C.textM }} />
               </div>
@@ -396,15 +397,15 @@ export default function Header({ navigate, openConsult }) {
           </div>
 
           {/* Bottom CTA */}
-          <div style={{ padding:'16px 20px', borderTop:`1px solid ${C.border}`, background:C.bgSoft }}>
-            <button onClick={() => { openConsult(); setMob(false) }} style={{ width:'100%', padding:'15px', borderRadius:14, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:15, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
-              Book Free Consultation →
+          <div style={{ padding:'16px 20px', borderTop:'1px solid rgba(0,102,255,0.1)', background:'rgba(0,102,255,0.04)' }}>
+            <button onClick={() => { navigate('/contact'); setMob(false) }} style={{ width:'100%', padding:'15px', borderRadius:14, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:15, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+              Contact Us →
             </button>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginTop:10 }}>
-              <a href="tel:+442071932502" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'#fff', border:`1.5px solid ${C.border}`, textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
+              <a href="tel:+442071932502" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
                 <Ic n="Phone" s={13} style={{ color:C.blue }} /> Call UK
               </a>
-              <a href="mailto:hello@devinstratus.com" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'#fff', border:`1.5px solid ${C.border}`, textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
+              <a href="mailto:hello@devinstratus.com" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
                 <Ic n="Mail" s={13} style={{ color:C.purple }} /> Email Us
               </a>
             </div>
