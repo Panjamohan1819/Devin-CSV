@@ -66,6 +66,16 @@ const STYLES = `
     .ds-section-header{margin-bottom:32px!important}
     .ds-section-cta{padding:24px 18px 56px!important}
     .ds-section-cta > div > div{padding:40px 26px!important}
+    /* Trust strip — wider fade + smaller cards on mobile so they don't get clipped */
+    .trust-strip-mask{mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 82%,transparent 100%)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 82%,transparent 100%)!important}
+    .trust-track > div{min-width:auto!important;padding:10px 16px!important;gap:10px!important}
+    .trust-track > div > div:first-child{width:40px!important;height:40px!important}
+    .trust-track > div > div:first-child span{font-size:13px!important}
+    .trust-track > div > div:nth-child(2) > div:first-child{font-size:13px!important}
+    /* "View all solutions" button — center and widen on mobile when it wraps below heading */
+    .ds-view-all-btn{justify-content:center!important;width:100%!important;padding:14px 24px!important}
+    /* Solutions section header — stack heading + button vertically with proper alignment */
+    .ds-section .ds-section-header[style*="space-between"]{flex-direction:column!important;align-items:stretch!important;text-align:left!important}
   }
   @media(max-width:540px){
     .axis-sol-grid{grid-template-columns:1fr!important}
@@ -458,7 +468,7 @@ function Trust() {
       <div style={{ textAlign: 'center', fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 28, textTransform: 'uppercase' }}>
         Trusted by global enterprises &nbsp;·&nbsp; Manufacturing &nbsp;·&nbsp; Retail &nbsp;·&nbsp; Finance &nbsp;·&nbsp; Healthcare &nbsp;·&nbsp; Logistics
       </div>
-      <div style={{ overflow: 'hidden', maskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)', WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)' }}>
+      <div className="trust-strip-mask" style={{ overflow: 'hidden', maskImage: 'linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%)', WebkitMaskImage: 'linear-gradient(90deg,transparent 0%,#000 12%,#000 88%,transparent 100%)' }}>
         <div className="trust-track">
           {doubled.map((b, i) => {
             const c = shades[i % shades.length]
@@ -495,6 +505,10 @@ function ImpactNumbers() {
   ]
   return (
     <section ref={sRef} className="ds-section" style={{ padding: '100px 32px', background: 'linear-gradient(160deg,#001d4a,#003580,#0050b3)', position: 'relative', overflow: 'hidden' }}>
+      {/* Top fade — softens transition from white trust strip into dark blue */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 80, background: 'linear-gradient(180deg, #f5f9ff 0%, rgba(0, 29, 74, 0) 100%)', pointerEvents: 'none', zIndex: 2 }} />
+      {/* Bottom fade — softens transition from dark blue into light blue solutions */}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, background: 'linear-gradient(0deg, #f5f9ff 0%, rgba(0, 80, 179, 0) 100%)', pointerEvents: 'none', zIndex: 2 }} />
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px)', backgroundSize: '32px 32px', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', top: '20%', left: '50%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle,rgba(102,178,255,.18) 0%,transparent 68%)', filter: 'blur(70px)', transform: 'translateX(-50%)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,180,255,.12) 0%,transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
@@ -546,7 +560,7 @@ function Solutions({ navigate }) {
               <span className="grad-text" style={{ background: 'linear-gradient(135deg,#0066FF,#003FB3)' }}>unified on one platform</span>
             </h2>
           </div>
-          <button onClick={() => navigate('/solutions')} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', borderRadius: 50, background: '#f8fafc', border: '1.5px solid #e2e8f0', color: '#475569', fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap' }}
+          <button className="ds-view-all-btn" onClick={() => navigate('/solutions')} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', borderRadius: 50, background: '#f8fafc', border: '1.5px solid #e2e8f0', color: '#475569', fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap' }}
             onMouseEnter={e => e.currentTarget.style.borderColor = '#0066FF'}
             onMouseLeave={e => e.currentTarget.style.borderColor = '#e2e8f0'}>
             View all solutions <Ic n="Arrow" s={14} style={{ color: '#0066FF' }} />

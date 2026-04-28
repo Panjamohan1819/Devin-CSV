@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GS, useRouter, C, Ic } from './components/ui'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -63,15 +63,17 @@ function ConsultForm({ onSuccess }) {
 
 function ScrollTop() {
   const [show, setShow] = useState(false)
-  useState(() => {
-    const h = () => setShow(window.scrollY > 500)
+  useEffect(() => {
+    const h = () => setShow(window.scrollY > 800)
     window.addEventListener('scroll', h, { passive:true })
     return () => window.removeEventListener('scroll', h)
-  })
+  }, [])
   if (!show) return null
   return (
-    <button onClick={() => window.scrollTo({ top:0, behavior:'smooth' })}
-      style={{ position:'fixed', bottom:28, right:28, width:44, height:44, borderRadius:'50%', background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 18px rgba(0,87,184,.3)', zIndex:7000 }}>
+    <button className="ds-scroll-top" onClick={() => window.scrollTo({ top:0, behavior:'smooth' })}
+      style={{ position:'fixed', bottom:24, right:24, width:42, height:42, borderRadius:'50%', background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 6px 20px rgba(0,53,128,.35)', zIndex:7000, opacity:0.85, transition:'opacity .2s, transform .2s' }}
+      onMouseEnter={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+      onMouseLeave={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'none' }}>
       <Ic n="ChevU" s={18} style={{ color:'#fff' }} />
     </button>
   )
