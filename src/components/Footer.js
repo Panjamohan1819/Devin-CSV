@@ -1,6 +1,6 @@
-import { C, Ic } from './ui'
+import { C, Ic, LogoSvg } from './ui'
 import { SOLUTIONS, SERVICES } from '../data/content'
-import logoWhite from '../assets/DS_Logo_white.png'
+import logoFull from '../assets/DS_Logo_and_Text.png'
 
 export default function Footer({ navigate, openConsult }) {
   const go = (path) => { navigate(path); window.scrollTo({ top:0, behavior:'instant' }) }
@@ -37,15 +37,22 @@ export default function Footer({ navigate, openConsult }) {
 
           {/* Brand */}
           <div>
-            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
-              <img src={logoWhite} alt="DevinStratus" style={{ height:38, width:'auto', display:'block', objectFit:'contain' }} />
-              <div>
-                <div style={{ fontSize:16, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
-                  <span className="grad-text" style={{ background:`linear-gradient(135deg,#60b4ff,#bfdbfe)` }}>Devin</span>
-                  <span style={{ color:'#fff' }}>Stratus</span>
-                </div>
-                <div style={{ fontSize:8.5, letterSpacing:'.16em', color:'#94a3b8', fontWeight:700 }}>TECHNOLOGIES</div>
-              </div>
+            <div style={{ marginBottom: 20 }}>
+              {/* Main logo with diagonal white→dark gradient applied through CSS mask */}
+              <div style={{
+                width: 220,
+                height: 46,
+                background: 'linear-gradient(135deg, #ffffff 0%, #7dc4ff 35%, #0066FF 70%, #001233 100%)',
+                WebkitMaskImage: `url(${logoFull})`,
+                maskImage: `url(${logoFull})`,
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskPosition: 'left center',
+                maskPosition: 'left center',
+              }} />
+              <div style={{ fontSize: 8.5, letterSpacing: '.16em', color: '#94a3b8', fontWeight: 700, marginTop: 6 }}>TECHNOLOGIES</div>
             </div>
             <p style={{ fontSize:13.5, color:'#64748b', lineHeight:1.8, marginBottom:24, maxWidth:280 }}>
               Microsoft Dynamics 365 specialists — implementation, migration, support and training for ambitious businesses worldwide.
