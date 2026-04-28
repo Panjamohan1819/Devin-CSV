@@ -34,7 +34,7 @@ const STYLES = `
   .step-card.vis { opacity:1!important; transform:none!important }
   .sol-card { transition:all .28s cubic-bezier(.22,1,.36,1) }
   .sol-card:hover { transform:translateY(-6px); box-shadow:var(--hover-shadow) }
-  .trust-track { display:flex; gap:28px; animation:marqueeScroll 30s linear infinite; width:max-content }
+  .trust-track { display:flex; gap:20px; animation:marqueeScroll 50s linear infinite; width:max-content }
   .trust-track:hover { animation-play-state:paused }
   .cta-border-spin { animation:borderSpin 8s linear infinite }
   @media(max-width:900px){
@@ -164,7 +164,28 @@ function Hero({ openConsult, navigate }) {
     73%   { left: 71%; opacity: 0; }
    100%   { left: 86%; opacity: 0; }
   }
-      
+
+      /* Label highlight — each label lights up only while the active chevron rests on its step */
+      @keyframes dsLabel1 {
+        0%, 5%   { color: rgba(10,10,20,0.30); font-weight: 400; letter-spacing: 0.30em; }
+        7%, 23%  { color: #0066FF; font-weight: 600; letter-spacing: 0.30em; text-shadow: 0 0 12px rgba(0,102,255,0.35); }
+        25%, 100%{ color: rgba(10,10,20,0.30); font-weight: 400; letter-spacing: 0.30em; text-shadow: none; }
+      }
+      @keyframes dsLabel2 {
+        0%, 32%  { color: rgba(10,10,20,0.30); font-weight: 400; text-shadow: none; }
+        34%, 56% { color: #0066FF; font-weight: 600; text-shadow: 0 0 12px rgba(0,102,255,0.35); }
+        58%, 100%{ color: rgba(10,10,20,0.30); font-weight: 400; text-shadow: none; }
+      }
+      @keyframes dsLabel3 {
+        0%, 65%  { color: rgba(10,10,20,0.30); font-weight: 400; text-shadow: none; }
+        67%, 89% { color: #0066FF; font-weight: 600; text-shadow: 0 0 12px rgba(0,102,255,0.35); }
+        91%, 100%{ color: rgba(10,10,20,0.30); font-weight: 400; text-shadow: none; }
+      }
+      .ds-chev-label { color: rgba(10,10,20,0.30); transition: color 0.3s ease; }
+      .ds-chev-label-1 { animation: dsLabel1 4.5s cubic-bezier(0.65,0,0.35,1) infinite; }
+      .ds-chev-label-2 { animation: dsLabel2 4.5s cubic-bezier(0.65,0,0.35,1) infinite; }
+      .ds-chev-label-3 { animation: dsLabel3 4.5s cubic-bezier(0.65,0,0.35,1) infinite; }
+
       @keyframes dsPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}
       @keyframes dsScrollDot{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 
@@ -175,34 +196,45 @@ function Hero({ openConsult, navigate }) {
 
       /* ── Tablet & mobile: stack chevrons below hero text ── */
       @media(max-width:820px){
-        .ds-hero-section{ height:auto !important; min-height:100vh !important; }
+        .ds-hero-section{ height:auto !important; min-height:auto !important; }
         .ds-hero-content{
-          padding:96px 22px 24px 22px !important;
+          padding:84px 18px 12px 18px !important;
           height:auto !important;
           justify-content:flex-start !important;
           max-width:100% !important;
+          gap:0 !important;
         }
+        /* Children: 1=pill, 2=h1, 3=p (description), 4=buttons */
+        .ds-hero-content > :nth-child(1){ margin-bottom:18px !important; }   /* pill */
+        .ds-hero-content > :nth-child(2){ margin:0 0 4px 0 !important; }      /* h1 */
+        .ds-hero-content > :nth-child(3){ margin-top:14px !important; }       /* description */
+        .ds-hero-content > :nth-child(4){ margin-top:22px !important; }       /* buttons */
         .ds-chev-area{
           position:relative !important;
           right:auto !important; top:auto !important; bottom:auto !important;
           width:100% !important;
-          max-width:380px !important;
-          height:170px !important;
-          margin:24px auto 60px !important;
+          max-width:340px !important;
+          height:130px !important;
+          margin:18px auto 28px !important;
         }
-        .ds-chev-area > div > div{ width:100px !important; height:73px !important; }
-        .ds-chev-area > div:nth-child(4){ width:122px !important; height:89px !important; }
-        .ds-chev-area > div:nth-child(5){ width:100px !important; height:73px !important; }
-        .ds-chev-area > div > span{ font-size:9px !important; letter-spacing:0.22em !important; }
+        /* New flat structure: ghosts = direct div children 1-3, labels = spans, active = div 7, trail = div 8 */
+        .ds-chev-area > div:nth-child(-n+3){ width:96px !important; height:70px !important; }
+        .ds-chev-area > div:nth-child(7){ width:118px !important; height:86px !important; }
+        .ds-chev-area > div:nth-child(8){ width:96px !important; height:70px !important; }
+        .ds-chev-area > .ds-chev-label{ font-size:9px !important; letter-spacing:0.22em !important; top: calc(52% + 60px) !important; }
       }
 
       /* ── Phone ── */
       @media(max-width:480px){
-        .ds-chev-area{ max-width:320px !important; height:148px !important; }
-        .ds-chev-area > div > div{ width:84px !important; height:61px !important; }
-        .ds-chev-area > div:nth-child(4){ width:102px !important; height:75px !important; }
-        .ds-chev-area > div:nth-child(5){ width:84px !important; height:61px !important; }
-        .ds-chev-area > div > span{ font-size:8px !important; letter-spacing:0.18em !important; }
+        .ds-hero-content{ padding:76px 16px 10px 16px !important; }
+        .ds-hero-content > :nth-child(1){ margin-bottom:14px !important; font-size:10px !important; }
+        .ds-hero-content > :nth-child(3){ margin-top:12px !important; font-size:14.5px !important; }
+        .ds-hero-content > :nth-child(4){ margin-top:18px !important; gap:10px !important; }
+        .ds-chev-area{ max-width:300px !important; height:120px !important; margin:14px auto 24px !important; }
+        .ds-chev-area > div:nth-child(-n+3){ width:80px !important; height:58px !important; }
+        .ds-chev-area > div:nth-child(7){ width:98px !important; height:72px !important; }
+        .ds-chev-area > div:nth-child(8){ width:80px !important; height:58px !important; }
+        .ds-chev-area > .ds-chev-label{ font-size:8px !important; letter-spacing:0.18em !important; top: calc(52% + 52px) !important; }
       }`
     document.head.appendChild(el)
     return () => document.head.removeChild(el)
@@ -349,11 +381,13 @@ function Hero({ openConsult, navigate }) {
 
       {/* Chevrons — right side */}
       <div className="ds-chev-area" style={{position:'absolute',right:80,top:0,bottom:0,width:560,zIndex:10,pointerEvents:'none'}}>
+        {/* Ghost chevrons — each centered at top:52% (matches active chevron) */}
         {STEPS.map((label,i) => (
-          <div key={i} style={{position:'absolute',top:'52%',left:`${14 + i*36}%`,transform:'translate(-50%,-50%)',display:'flex',flexDirection:'column',alignItems:'center',gap:12}}>
-            <div style={{...CHEV,width:180,height:132,opacity:0.18}} />
-            <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:'0.3em',textTransform:'uppercase',color:'rgba(10,10,20,0.30)',whiteSpace:'nowrap'}}>{label}</span>
-          </div>
+          <div key={`g-${i}`} style={{...CHEV,position:'absolute',top:'52%',left:`${14 + i*36}%`,width:180,height:132,transform:'translate(-50%,-50%)',opacity:0.18}} />
+        ))}
+        {/* Step labels — positioned below chevrons, animated to highlight when active */}
+        {STEPS.map((label,i) => (
+          <span key={`l-${i}`} className={`ds-chev-label ds-chev-label-${i+1}`} style={{position:'absolute',top:'calc(52% + 90px)',left:`${14 + i*36}%`,transform:'translateX(-50%)',fontFamily:"'JetBrains Mono',monospace",fontSize:10,letterSpacing:'0.3em',textTransform:'uppercase',whiteSpace:'nowrap'}}>{label}</span>
         ))}
         <div style={{...CHEV,position:'absolute',top:'52%',width:220,height:161,transform:'translate(-50%,-50%)',animation:'dsChevAdvance 4.5s cubic-bezier(0.65,0,0.35,1) infinite'}} />
         <div style={{...CHEV,position:'absolute',top:'52%',width:180,height:132,transform:'translate(-50%,-50%)',opacity:0,animation:'dsChevTrail 4.5s cubic-bezier(0.65,0,0.35,1) infinite'}} />
@@ -372,43 +406,54 @@ function Hero({ openConsult, navigate }) {
 
 /* ══════════════════════════════════════════════════════
    SECTION 2 — TRUST MARQUEE
+   ──────────────────────────────────────────────────────
+   ⚠️  PLACEHOLDER CLIENT LOGOS — replace before launch.
+   The names below are FICTITIOUS placeholders. Replace with real client
+   brand names + logos once DevinStratus has signed marketing permissions
+   from each client. Drop real SVG/PNG logos into /src/assets/ and import
+   them above, then swap the `abbr` monogram for an <img/>.
    ══════════════════════════════════════════════════════ */
 function Trust() {
   const brands = [
-    { name: 'HP Inc', color: '#0096D6', abbr: 'HP', sub: 'Technology' },
-    { name: 'Heineken', color: '#00843D', abbr: 'HNK', sub: 'Beverages' },
-    { name: 'BMW Group', color: '#1C69D4', abbr: 'BMW', sub: 'Automotive' },
-    { name: 'Rolls-Royce', color: '#1A1A1A', abbr: 'RR', sub: 'Aerospace' },
-    { name: 'Leatherman', color: '#C8102E', abbr: 'LMN', sub: 'Manufacturing' },
-    { name: 'Rockwell Auto.', color: '#CC0000', abbr: 'ROK', sub: 'Industrial' },
-    { name: "G&J Pepsi", color: '#004B93', abbr: 'PEP', sub: 'Retail' },
-    { name: "Land O'Lakes", color: '#E87722', abbr: 'LOL', sub: 'Agriculture' },
-    { name: 'Arla Foods', color: '#00539B', abbr: 'ARL', sub: 'Food & Dairy' },
-    { name: 'Wipro', color: '#341C75', abbr: 'WPR', sub: 'IT Services' },
-    { name: 'Accenture', color: '#A100FF', abbr: 'ACN', sub: 'Consulting' },
-    { name: 'Groupe SEB', color: '#E30613', abbr: 'SEB', sub: 'Consumer' },
+    { name: 'Northstar Industries',  abbr: 'NS',  sub: 'Manufacturing' },
+    { name: 'Meridian Logistics',    abbr: 'ML',  sub: 'Supply Chain' },
+    { name: 'Vanguard Retail Group', abbr: 'VR',  sub: 'Retail' },
+    { name: 'Catalyst Healthcare',   abbr: 'CH',  sub: 'Healthcare' },
+    { name: 'Sovereign Capital',     abbr: 'SC',  sub: 'Finance' },
+    { name: 'Apex Distribution',     abbr: 'AX',  sub: 'Distribution' },
+    { name: 'Zenith Aerospace',      abbr: 'ZA',  sub: 'Aerospace' },
+    { name: 'Helix Pharma',          abbr: 'HX',  sub: 'Pharmaceuticals' },
+    { name: 'Cascade Tech',          abbr: 'CT',  sub: 'Technology' },
+    { name: 'Pinnacle Energy',       abbr: 'PE',  sub: 'Energy' },
+    { name: 'Alpine Foods',          abbr: 'AF',  sub: 'Food & Beverage' },
+    { name: 'Quantum Holdings',      abbr: 'QH',  sub: 'Diversified' },
   ]
+  // Cycle through blue-family shades so each card has a distinct but on-theme look
+  const shades = ['#0066FF', '#003FB3', '#06B6D4', '#1E40AF', '#0EA5E9', '#1D4ED8']
   const doubled = [...brands, ...brands]
   return (
-    <section style={{ background: '#fff', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', padding: '22px 0', overflow: 'hidden' }}>
-      <div style={{ textAlign: 'center', fontSize: 10, fontWeight: 800, letterSpacing: '.16em', color: '#94a3b8', marginBottom: 16, textTransform: 'uppercase' }}>
-        Trusted by global enterprises across Manufacturing · Retail · Finance · Healthcare · Logistics
+    <section style={{ background: '#fff', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', padding: '40px 0 44px', overflow: 'hidden' }}>
+      <div style={{ textAlign: 'center', fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 28, textTransform: 'uppercase' }}>
+        Trusted by global enterprises &nbsp;·&nbsp; Manufacturing &nbsp;·&nbsp; Retail &nbsp;·&nbsp; Finance &nbsp;·&nbsp; Healthcare &nbsp;·&nbsp; Logistics
       </div>
-      <div style={{ overflow: 'hidden', maskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)', WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)' }}>
+      <div style={{ overflow: 'hidden', maskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)', WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)' }}>
         <div className="trust-track">
-          {doubled.map((b, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 20px', borderRadius: 12, border: '1px solid #f1f5f9', whiteSpace: 'nowrap', flexShrink: 0, transition: 'all .22s', cursor: 'default' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = b.color + '44'; e.currentTarget.style.boxShadow = `0 4px 16px ${b.color}18`; e.currentTarget.style.transform = 'translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = '#f1f5f9'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none' }}>
-              <div style={{ width: 32, height: 32, borderRadius: 8, background: b.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <span style={{ color: '#fff', fontSize: 9, fontWeight: 900 }}>{b.abbr}</span>
+          {doubled.map((b, i) => {
+            const c = shades[i % shades.length]
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 24px', borderRadius: 16, border: '1.5px solid rgba(0, 102, 255, 0.10)', background: 'rgba(0, 102, 255, 0.02)', whiteSpace: 'nowrap', flexShrink: 0, transition: 'all .25s cubic-bezier(.2,.8,.2,1)', cursor: 'default', minWidth: 230 }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = c + '55'; e.currentTarget.style.boxShadow = `0 8px 28px ${c}22`; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.background = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; e.currentTarget.style.background = 'rgba(0, 102, 255, 0.02)' }}>
+                <div style={{ width: 52, height: 52, borderRadius: 13, background: `linear-gradient(135deg, ${c}, ${c}cc)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 4px 14px ${c}33` }}>
+                  <span style={{ color: '#fff', fontSize: 16, fontWeight: 900, letterSpacing: '.02em', fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{b.abbr}</span>
+                </div>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 800, color: '#0f172a', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1.2 }}>{b.name}</div>
+                  <div style={{ fontSize: 11.5, color: '#64748b', fontWeight: 600, marginTop: 3, letterSpacing: '.02em' }}>{b.sub}</div>
+                </div>
               </div>
-              <div>
-                <div style={{ fontSize: 12.5, fontWeight: 700, color: '#1e293b' }}>{b.name}</div>
-                <div style={{ fontSize: 10, color: '#94a3b8' }}>{b.sub}</div>
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>
@@ -423,8 +468,8 @@ function ImpactNumbers() {
   const stats = [
     { target: 350, sfx: '+', label: 'Businesses transformed', sub: 'Across 28 countries', c: '#a5b4fc' },
     { target: 500, sfx: '+', label: 'Successful go-lives', sub: 'Zero project failures', c: '#67e8f9' },
-    { target: 40, sfx: '%', label: 'Faster month-end close', sub: 'Finance clients average', c: '#4ade80' },
-    { target: 3, sfx: 'x', label: 'Average ROI at 12 months', sub: 'Measured across all clients', c: '#f9a8d4' },
+    { target: 40, sfx: '%', label: 'Faster month-end close', sub: 'Finance clients average', c: '#7dd3fc' },
+    { target: 3, sfx: 'x', label: 'Average ROI at 12 months', sub: 'Measured across all clients', c: '#bfdbfe' },
   ]
   return (
     <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(160deg,#020814,#080f28,#100622)', position: 'relative', overflow: 'hidden' }}>
@@ -518,7 +563,7 @@ function HowWeDeliver({ navigate }) {
     { n: '01', icon: 'Target', title: 'Discovery & Scoping', desc: 'We map your current processes, pain points and goals. You get a detailed scope, timeline and fixed-price quote — no surprises.', color: '#0066FF' },
     { n: '02', icon: 'Cpu', title: 'Design & Configure', desc: 'Our certified consultants configure Dynamics 365 to your exact needs. Every decision is documented and client-approved before build.', color: '#003FB3' },
     { n: '03', icon: 'CheckCircle', title: 'Test, Train & Go-Live', desc: "Rigorous UAT, full team training, and a hypercare period post go-live. We're there on day one and the weeks after.", color: '#06b6d4' },
-    { n: '04', icon: 'Zap', title: 'Optimise & Grow', desc: 'Ongoing managed support, system health checks and new capability rollouts. Your platform evolves as your business does.', color: '#10b981' },
+    { n: '04', icon: 'Zap', title: 'Optimise & Grow', desc: 'Ongoing managed support, system health checks and new capability rollouts. Your platform evolves as your business does.', color: '#0EA5E9' },
   ]
   return (
     <section ref={sRef} style={{ padding: '100px 32px', background: '#f8fafc' }}>
@@ -572,10 +617,10 @@ function Testimonials() {
     <section ref={sRef} style={{ padding: '100px 32px', background: '#fff' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
-          <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#f97316', marginBottom: 14, textTransform: 'uppercase' }}>CLIENT SUCCESS</div>
+          <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 14, textTransform: 'uppercase' }}>CLIENT SUCCESS</div>
           <h2 style={{ fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', fontWeight: 900, color: '#0f172a', fontFamily: "'Plus Jakarta Sans',sans-serif", margin: 0 }}>
             Real results from{' '}
-            <span className="grad-text" style={{ background: 'linear-gradient(135deg,#f97316,#003FB3)' }}>real clients</span>
+            <span className="grad-text" style={{ background: 'linear-gradient(135deg,#0066FF,#003FB3)' }}>real clients</span>
           </h2>
         </div>
         <div className="axis-test-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 24 }}>
@@ -586,7 +631,7 @@ function Testimonials() {
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,${t.c},${t.c}44)` }} />
               <div style={{ position: 'absolute', top: 18, right: 20, fontSize: 56, color: t.c, opacity: .09, fontFamily: 'Georgia,serif', lineHeight: 1 }}>"</div>
               <div style={{ display: 'flex', gap: 2, marginBottom: 18 }}>
-                {'★★★★★'.split('').map((s, j) => <span key={j} style={{ color: '#fbbf24', fontSize: 15 }}>{s}</span>)}
+                {'★★★★★'.split('').map((s, j) => <span key={j} style={{ color: '#0066FF', fontSize: 15 }}>{s}</span>)}
               </div>
               <p style={{ fontSize: 15, color: '#334155', lineHeight: 1.8, marginBottom: 24, fontStyle: 'italic' }}>"{t.q}"</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>

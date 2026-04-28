@@ -90,9 +90,11 @@ export default function Header({ navigate, openConsult }) {
   // Mega — pure left:0 anchored under its own trigger button. 'right' anchors right:0 for last items.
   const mega = (w, side='left', extra={}) => ({
     position:'absolute', top:'calc(100% + 8px)', ...(side==='right' ? { right:0 } : { left:0 }),
-    width:w, background:'#fff',
-    border:`1.5px solid ${C.border}`, borderRadius:20,
-    boxShadow:'0 20px 70px rgba(0,0,0,.13)',
+    width:w, background:'rgba(245, 248, 255, 0.78)',
+    backdropFilter:'blur(22px) saturate(180%)',
+    WebkitBackdropFilter:'blur(22px) saturate(180%)',
+    border:`1.5px solid rgba(0, 102, 255, 0.12)`, borderRadius:20,
+    boxShadow:'0 20px 70px rgba(0, 63, 179, 0.18)',
     overflow:'hidden', zIndex:9999,
     animation:'dropIn .18s ease',
     ...extra
@@ -100,7 +102,7 @@ export default function Header({ navigate, openConsult }) {
 
   const cardBtn = (color) => ({
     display:'flex', alignItems:'center', gap:11, padding:'11px 13px',
-    borderRadius:13, border:`1.5px solid ${C.border}`, background:'#fff',
+    borderRadius:13, border:`1.5px solid rgba(0, 102, 255, 0.10)`, background:'rgba(255, 255, 255, 0.55)',
     cursor:'pointer', textAlign:'left', transition:'all .16s',
     position:'relative', overflow:'hidden'
   })
@@ -120,24 +122,24 @@ export default function Header({ navigate, openConsult }) {
   ]
 
   return (
-    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(255,255,255,.97)':'transparent', borderBottom:`1px solid ${sc?C.border:'transparent'}`, boxShadow:sc?'0 2px 20px rgba(0,0,0,.07)':'none', backdropFilter:sc?'blur(12px)':'none', transition:'all .25s' }}>
+    <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(232, 242, 255, 0.55)':'transparent', borderBottom:`1px solid ${sc?'rgba(0, 102, 255, 0.10)':'transparent'}`, boxShadow:sc?'0 4px 24px rgba(0, 63, 179, 0.06)':'none', backdropFilter:sc?'blur(20px) saturate(180%)':'none', WebkitBackdropFilter:sc?'blur(20px) saturate(180%)':'none', transition:'all .25s' }}>
       <div style={{ padding:'0 56px', height:68, display:'flex', alignItems:'center', gap:24 }}>
 
         {/* Logo */}
-        <button onClick={() => go('/')} style={{ marginTop:10, display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', flexShrink:0, padding:0 }}>
+        <button onClick={() => go('/')} style={{ display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', flexShrink:0, padding:0 }}>
           {/* Full logo with text — visible on desktop, hidden on mobile */}
           <img
             src={logoFull}
             alt="DevinStratus"
             className="hide-desk"
-            style={{ height:52, width:'auto', display:'block', objectFit:'contain' }}
+            style={{ height:42, width:'auto', display:'block', objectFit:'contain' }}
           />
           {/* Icon only — visible on mobile, hidden on desktop */}
           <img
             src={logoIcon}
             alt="DevinStratus"
             className="show-mob"
-            style={{ height:40, width:'auto', display:'block', objectFit:'contain' }}
+            style={{ height:36, width:'auto', display:'block', objectFit:'contain' }}
           />
         </button>
 
@@ -148,7 +150,7 @@ export default function Header({ navigate, openConsult }) {
           <NavItem label="Solutions" k="solutions">
             <div style={{ ...mega(780,'right'), display:'flex', flexDirection:'column' }}>
               <div style={{ display:'grid', gridTemplateColumns:'220px 1fr' }}>
-                <div style={{ background:C.bgSoft, borderRight:`1px solid ${C.border}`, padding:'14px 10px', display:'flex', flexDirection:'column', gap:2, maxHeight:460, overflowY:'auto', scrollbarWidth:'thin' }}>
+                <div style={{ background:'rgba(0, 102, 255, 0.04)', borderRight:'1px solid rgba(0, 102, 255, 0.08)', padding:'14px 10px', display:'flex', flexDirection:'column', gap:2, maxHeight:460, overflowY:'auto', scrollbarWidth:'thin' }}>
                   <div style={{ fontSize:9, fontWeight:800, letterSpacing:'.14em', color:C.textL, padding:'4px 8px 8px', textTransform:'uppercase' }}>All Solutions</div>
                   {/* ERP Solutions hidden — remove filter in FILTERED_SOLUTIONS above to re-enable */}
                   {FILTERED_SOLUTIONS.map((s) => (
@@ -202,7 +204,7 @@ export default function Header({ navigate, openConsult }) {
                   </div>
                 </div>
               </div>
-              <div style={{ padding:'10px 20px', background:C.bgSoft, borderTop:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div style={{ padding:'10px 20px', background:'rgba(0, 102, 255, 0.04)', borderTop:'1px solid rgba(0, 102, 255, 0.08)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:11.5, color:C.textM }}><span style={{ fontWeight:700, color:C.text }}>{FILTERED_SOLUTIONS.length} categories</span> · Browse full portfolio</span>
                 <button onClick={() => go('/solutions')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>View all <Ic n="Arrow" s={12} /></button>
               </div>
@@ -232,7 +234,7 @@ export default function Header({ navigate, openConsult }) {
                   ))}
                 </div>
               </div>
-              <div style={{ padding:'10px 20px', background:C.bgSoft, borderTop:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div style={{ padding:'10px 20px', background:'rgba(0, 102, 255, 0.04)', borderTop:'1px solid rgba(0, 102, 255, 0.08)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:11.5, color:C.textM }}>Implementation through managed support</span>
                 <button onClick={() => go('/services')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>All services <Ic n="Arrow" s={12} /></button>
               </div>
@@ -262,7 +264,7 @@ export default function Header({ navigate, openConsult }) {
                   ))}
                 </div>
               </div>
-              <div style={{ padding:'10px 20px', background:C.bgSoft, borderTop:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div style={{ padding:'10px 20px', background:'rgba(0, 102, 255, 0.04)', borderTop:'1px solid rgba(0, 102, 255, 0.08)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:11.5, color:C.textM }}>Purpose-built for your sector</span>
                 <button onClick={() => go('/industries')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>All industries <Ic n="Arrow" s={12} /></button>
               </div>
@@ -292,7 +294,7 @@ export default function Header({ navigate, openConsult }) {
                   ))}
                 </div>
               </div>
-              <div style={{ padding:'10px 20px', background:C.bgSoft, borderTop:`1px solid ${C.border}`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+              <div style={{ padding:'10px 20px', background:'rgba(0, 102, 255, 0.04)', borderTop:'1px solid rgba(0, 102, 255, 0.08)', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <span style={{ fontSize:11.5, color:C.textM }}>Guides, webinars & expert insights</span>
                 <button onClick={() => go('/resources')} style={{ display:'flex', alignItems:'center', gap:5, fontSize:12, fontWeight:700, color:C.blue, background:'none', border:'none', cursor:'pointer' }}>All resources <Ic n="Arrow" s={12} /></button>
               </div>

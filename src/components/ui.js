@@ -1,13 +1,16 @@
 import { useState, useEffect, useCallback } from 'react'
 
 // ─── PALETTE ──────────────────────────────────────────────────────────────────
+// All accents collapsed into the hero blue family so the whole site reads as one theme.
+// (Names like "purple"/"teal"/"orange"/"green" kept for compatibility with content.js
+// but all map to blue-family shades.)
 export const C = {
-  blue:"#0057B8", blueM:"#0071f3", blueL:"#e8f2ff", blueLL:"#f0f7ff",
-  purple:"#6C3CE1", purpleL:"#f0ebff",
-  teal:"#00A99D", tealL:"#e6f9f8",
-  orange:"#FF6B2B", orangeL:"#fff1eb",
-  green:"#16A34A", greenL:"#dcfce7",
-  text:"#0f172a", textM:"#475569", textL:"#94a3b8",
+  blue:"#0066FF", blueM:"#0071f3", blueL:"#e8f2ff", blueLL:"#f0f7ff",
+  purple:"#003FB3", purpleL:"#dde7ff",     // Deep navy
+  teal:"#06B6D4",   tealL:"#e0f7fa",       // Cyan (still blue family)
+  orange:"#1E40AF", orangeL:"#dde7ff",     // Indigo
+  green:"#0EA5E9",  greenL:"#e0f2fe",      // Sky blue
+  text:"#0a0a14", textM:"#475569", textL:"#94a3b8",
   bg:"#ffffff", bgSoft:"#f8fafc", bgAlt:"#f1f5f9",
   border:"#e2e8f0", borderM:"#cbd5e1",
 }
