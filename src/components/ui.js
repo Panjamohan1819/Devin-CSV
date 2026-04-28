@@ -250,6 +250,10 @@ export function GS() {
         .contact-offices-g{grid-template-columns:1fr!important}
         .company-values-g{grid-template-columns:1fr!important}
         .roi-results-g{grid-template-columns:1fr 1fr!important}
+        .foot-cta-card{padding:36px 26px!important;flex-direction:column!important;align-items:stretch!important;text-align:left!important}
+        .foot-cta-card > div:nth-child(3){font-size:24px!important}
+        .foot-cta-buttons{width:100%!important}
+        .foot-cta-buttons button{flex:1 1 auto!important;text-align:center!important;padding:14px 18px!important}
         .hero-stats{flex-wrap:wrap!important}
         .hero-stats>div{min-width:45%!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,.08)!important;padding:12px 8px!important;text-align:center!important}
         /* Touch-friendly buttons */

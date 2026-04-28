@@ -1,5 +1,6 @@
-import { C, Ic, LogoSvg } from './ui'
+import { C, Ic } from './ui'
 import { SOLUTIONS, SERVICES } from '../data/content'
+import logoWhite from '../assets/DS_Logo_white.png'
 
 export default function Footer({ navigate, openConsult }) {
   const go = (path) => { navigate(path); window.scrollTo({ top:0, behavior:'instant' }) }
@@ -8,20 +9,20 @@ export default function Footer({ navigate, openConsult }) {
     <footer style={{ background:'linear-gradient(180deg, #001d4a 0%, #001233 100%)', color:'#fff' }}>
       {/* CTA Banner */}
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'64px 24px 56px' }}>
-        <div style={{ borderRadius:28, background:'linear-gradient(135deg,#003580 0%,#0050b3 50%,#0066FF 100%)', padding:'52px 48px', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:28, position:'relative', overflow:'hidden' }}>
+        <div className="foot-cta-card" style={{ borderRadius:28, background:'linear-gradient(135deg,#003580 0%,#0050b3 50%,#0066FF 100%)', padding:'52px 48px', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:28, position:'relative', overflow:'hidden' }}>
           <div style={{ position:'absolute', top:-40, right:-40, width:220, height:220, borderRadius:'50%', background:'radial-gradient(circle, rgba(125,196,255,.35), transparent 70%)', filter:'blur(20px)', pointerEvents:'none' }}/>
           <div style={{ position:'absolute', bottom:-30, left:120, width:160, height:160, borderRadius:'50%', background:'radial-gradient(circle, rgba(255,255,255,.12), transparent 70%)', filter:'blur(20px)', pointerEvents:'none' }}/>
-          <div style={{ position:'relative', zIndex:1 }}>
+          <div style={{ position:'relative', zIndex:1, minWidth:0, flex:'1 1 280px' }}>
             <div style={{ fontSize:28, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8, lineHeight:1.2 }}>Ready to transform your business?</div>
             <div style={{ fontSize:15, opacity:.82, lineHeight:1.65, maxWidth:480 }}>Join 350+ businesses who chose DevinStratus for their Dynamics 365 journey.</div>
           </div>
-          <div style={{ display:'flex', gap:12, flexShrink:0, position:'relative', zIndex:1, flexWrap:'wrap' }}>
-            <button onClick={openConsult} style={{ padding:'14px 30px', borderRadius:50, background:'#fff', color:C.blue, border:'none', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", transition:'all .2s' }}
+          <div className="foot-cta-buttons" style={{ display:'flex', gap:12, position:'relative', zIndex:1, flexWrap:'wrap' }}>
+            <button onClick={openConsult} style={{ padding:'14px 28px', borderRadius:50, background:'#fff', color:C.blue, border:'none', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", transition:'all .2s', whiteSpace:'nowrap' }}
               onMouseEnter={e=>e.currentTarget.style.transform='translateY(-2px)'}
               onMouseLeave={e=>e.currentTarget.style.transform='none'}>
               Free Consultation →
             </button>
-            <button onClick={()=>go('/contact')} style={{ padding:'14px 30px', borderRadius:50, background:'rgba(255,255,255,.12)', color:'#fff', border:'1.5px solid rgba(255,255,255,.3)', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", backdropFilter:'blur(8px)', transition:'all .2s' }}
+            <button onClick={()=>go('/contact')} style={{ padding:'14px 28px', borderRadius:50, background:'rgba(255,255,255,.12)', color:'#fff', border:'1.5px solid rgba(255,255,255,.3)', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", backdropFilter:'blur(8px)', transition:'all .2s', whiteSpace:'nowrap' }}
               onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,.2)'}
               onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,.12)'}>
               Contact Us
@@ -36,14 +37,14 @@ export default function Footer({ navigate, openConsult }) {
 
           {/* Brand */}
           <div>
-            <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:20 }}>
-              <LogoSvg size={38} id="foot-logo" />
+            <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
+              <img src={logoWhite} alt="DevinStratus" style={{ height:38, width:'auto', display:'block', objectFit:'contain' }} />
               <div>
                 <div style={{ fontSize:16, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
                   <span className="grad-text" style={{ background:`linear-gradient(135deg,#60b4ff,#bfdbfe)` }}>Devin</span>
                   <span style={{ color:'#fff' }}>Stratus</span>
                 </div>
-                <div style={{ fontSize:8.5, letterSpacing:'.16em', color:'#475569', fontWeight:700 }}>TECHNOLOGIES</div>
+                <div style={{ fontSize:8.5, letterSpacing:'.16em', color:'#94a3b8', fontWeight:700 }}>TECHNOLOGIES</div>
               </div>
             </div>
             <p style={{ fontSize:13.5, color:'#64748b', lineHeight:1.8, marginBottom:24, maxWidth:280 }}>
