@@ -5,12 +5,12 @@ export default function Footer({ navigate, openConsult }) {
   const go = (path) => { navigate(path); window.scrollTo({ top:0, behavior:'instant' }) }
 
   return (
-    <footer style={{ background:'#060d1a', color:'#fff' }}>
+    <footer style={{ background:'linear-gradient(180deg, #001d4a 0%, #001233 100%)', color:'#fff' }}>
       {/* CTA Banner */}
       <div style={{ maxWidth:1280, margin:'0 auto', padding:'64px 24px 56px' }}>
-        <div style={{ borderRadius:28, background:'linear-gradient(135deg,#0057b8 0%,#4b1fc2 50%,#6c3ce1 100%)', padding:'52px 48px', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:28, position:'relative', overflow:'hidden' }}>
-          <div style={{ position:'absolute', top:-40, right:-40, width:220, height:220, borderRadius:'50%', background:'rgba(255,255,255,.06)', pointerEvents:'none' }}/>
-          <div style={{ position:'absolute', bottom:-30, left:120, width:160, height:160, borderRadius:'50%', background:'rgba(255,255,255,.04)', pointerEvents:'none' }}/>
+        <div style={{ borderRadius:28, background:'linear-gradient(135deg,#003580 0%,#0050b3 50%,#0066FF 100%)', padding:'52px 48px', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:28, position:'relative', overflow:'hidden' }}>
+          <div style={{ position:'absolute', top:-40, right:-40, width:220, height:220, borderRadius:'50%', background:'radial-gradient(circle, rgba(125,196,255,.35), transparent 70%)', filter:'blur(20px)', pointerEvents:'none' }}/>
+          <div style={{ position:'absolute', bottom:-30, left:120, width:160, height:160, borderRadius:'50%', background:'radial-gradient(circle, rgba(255,255,255,.12), transparent 70%)', filter:'blur(20px)', pointerEvents:'none' }}/>
           <div style={{ position:'relative', zIndex:1 }}>
             <div style={{ fontSize:28, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8, lineHeight:1.2 }}>Ready to transform your business?</div>
             <div style={{ fontSize:15, opacity:.82, lineHeight:1.65, maxWidth:480 }}>Join 350+ businesses who chose DevinStratus for their Dynamics 365 journey.</div>
@@ -40,7 +40,7 @@ export default function Footer({ navigate, openConsult }) {
               <LogoSvg size={38} id="foot-logo" />
               <div>
                 <div style={{ fontSize:16, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
-                  <span className="grad-text" style={{ background:`linear-gradient(135deg,#60b4ff,#a78bfa)` }}>Devin</span>
+                  <span className="grad-text" style={{ background:`linear-gradient(135deg,#60b4ff,#bfdbfe)` }}>Devin</span>
                   <span style={{ color:'#fff' }}>Stratus</span>
                 </div>
                 <div style={{ fontSize:8.5, letterSpacing:'.16em', color:'#475569', fontWeight:700 }}>TECHNOLOGIES</div>

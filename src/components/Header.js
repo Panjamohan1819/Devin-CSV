@@ -90,24 +90,28 @@ export default function Header({ navigate, openConsult }) {
   // Mega — pure left:0 anchored under its own trigger button. 'right' anchors right:0 for last items.
   const mega = (w, side='left', extra={}) => ({
     position:'absolute', top:'calc(100% + 8px)', ...(side==='right' ? { right:0 } : { left:0 }),
-    width:w, background:'rgba(245, 248, 255, 0.78)',
-    backdropFilter:'blur(22px) saturate(180%)',
-    WebkitBackdropFilter:'blur(22px) saturate(180%)',
-    border:`1.5px solid rgba(0, 102, 255, 0.12)`, borderRadius:20,
-    boxShadow:'0 20px 70px rgba(0, 63, 179, 0.18)',
+    width:w,
+    background:'linear-gradient(180deg, rgba(238, 245, 255, 0.96) 0%, rgba(225, 237, 255, 0.94) 100%)',
+    backdropFilter:'blur(40px) saturate(180%)',
+    WebkitBackdropFilter:'blur(40px) saturate(180%)',
+    border:`1.5px solid rgba(0, 102, 255, 0.18)`, borderRadius:20,
+    boxShadow:'0 24px 80px rgba(0, 53, 128, 0.22), 0 4px 20px rgba(0, 53, 128, 0.10), inset 0 1px 0 rgba(255,255,255,0.6)',
     overflow:'hidden', zIndex:9999,
     animation:'dropIn .18s ease',
     ...extra
   })
 
   const cardBtn = (color) => ({
-    display:'flex', alignItems:'center', gap:11, padding:'11px 13px',
-    borderRadius:13, border:`1.5px solid rgba(0, 102, 255, 0.10)`, background:'rgba(255, 255, 255, 0.55)',
-    cursor:'pointer', textAlign:'left', transition:'all .16s',
-    position:'relative', overflow:'hidden'
+    display:'flex', alignItems:'center', gap:11, padding:'12px 14px',
+    borderRadius:13,
+    border:`1px solid rgba(0, 102, 255, 0.08)`,
+    background:'linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(232, 242, 255, 0.45) 100%)',
+    boxShadow:'inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 2px rgba(0,53,128,0.04)',
+    cursor:'pointer', textAlign:'left', transition:'all .2s cubic-bezier(.2,.8,.2,1)',
+    position:'relative', overflow:'hidden', backdropFilter:'blur(8px)'
   })
-  const onCH = (e,c) => { e.currentTarget.style.borderColor=c+'55'; e.currentTarget.style.boxShadow=`0 4px 16px ${c}14`; e.currentTarget.style.transform='translateY(-2px)' }
-  const offCH = e => { e.currentTarget.style.borderColor=C.border; e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='none' }
+  const onCH = (e,c) => { e.currentTarget.style.borderColor=c+'66'; e.currentTarget.style.boxShadow=`inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px ${c}22`; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.background='linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(240, 247, 255, 0.85) 100%)' }
+  const offCH = e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.08)'; e.currentTarget.style.boxShadow='inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 2px rgba(0,53,128,0.04)'; e.currentTarget.style.transform='none'; e.currentTarget.style.background='linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(232, 242, 255, 0.45) 100%)' }
 
   const sec = FILTERED_SOLUTIONS.find(s => s.slug === activeSlug) || FILTERED_SOLUTIONS[0]
 
@@ -123,7 +127,7 @@ export default function Header({ navigate, openConsult }) {
 
   return (
     <header style={{ position:'fixed', top:0, left:0, right:0, zIndex:10000, background:sc?'rgba(232, 242, 255, 0.55)':'transparent', borderBottom:`1px solid ${sc?'rgba(0, 102, 255, 0.10)':'transparent'}`, boxShadow:sc?'0 4px 24px rgba(0, 63, 179, 0.06)':'none', backdropFilter:sc?'blur(20px) saturate(180%)':'none', WebkitBackdropFilter:sc?'blur(20px) saturate(180%)':'none', transition:'all .25s' }}>
-      <div style={{ padding:'0 56px', height:68, display:'flex', alignItems:'center', gap:24 }}>
+      <div className="ds-header-bar" style={{ padding:'0 56px', height:68, display:'flex', alignItems:'center', gap:24 }}>
 
         {/* Logo */}
         <button onClick={() => go('/')} style={{ display:'flex', alignItems:'center', background:'none', border:'none', cursor:'pointer', flexShrink:0, padding:0 }}>
@@ -339,47 +343,70 @@ export default function Header({ navigate, openConsult }) {
         </nav>
 
         {/* Hamburger */}
-        <button className="show-mob" onClick={e => { e.stopPropagation(); setMob(m => !m); setMobSection(null) }} style={{ marginLeft:'auto', background:mob?'rgba(0,102,255,.12)':'transparent', border:'none', borderRadius:12, cursor:'pointer', padding:'10px 10px', position:'relative', zIndex:10002, flexShrink:0, WebkitTapHighlightColor:'transparent', touchAction:'manipulation' }}>
-          <Ic n={mob?'X':'Menu'} s={22} style={{ color:C.text }} />
+        <button className="show-mob ds-burger" onClick={e => { e.stopPropagation(); setMob(m => !m); setMobSection(null) }} style={{ marginLeft:'auto', background:'transparent', border:'none', cursor:'pointer', padding:'8px', position:'relative', zIndex:10002, flexShrink:0, WebkitTapHighlightColor:'transparent', touchAction:'manipulation', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:10, transition:'background .18s' }}>
+          <Ic n={mob?'X':'Menu'} s={26} style={{ color:'#0a0a14', strokeWidth:2 }} />
         </button>
       </div>
 
       {/* ── MOBILE DRAWER ── */}
       {mob && (
-        <div style={{ position:'fixed', top:0, left:0, right:0, bottom:0, background:'linear-gradient(160deg,#f0f5ff 0%,#e8f0ff 60%,#f5f0ff 100%)', overflowY:'auto', zIndex:10001, paddingTop:68, WebkitOverflowScrolling:'touch' }}>
-          {/* Header strip */}
-          <div style={{ padding:'16px 20px', borderBottom:'1px solid rgba(0,102,255,0.1)', background:'rgba(0,102,255,0.04)', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <div style={{ fontSize:13, fontWeight:700, color:C.text }}>Navigation</div>
+        <div style={{ position:'fixed', top:0, left:0, right:0, bottom:0, background:'linear-gradient(170deg, #f5f9ff 0%, #e8f2ff 50%, #dde9ff 100%)', overflowY:'auto', zIndex:10001, paddingTop:68, WebkitOverflowScrolling:'touch' }}>
+          {/* Decorative orb (matches hero) */}
+          <div style={{ position:'absolute', top:-80, right:-80, width:280, height:280, borderRadius:'50%', background:'radial-gradient(circle, rgba(0,102,255,0.18), transparent 70%)', filter:'blur(60px)', pointerEvents:'none' }} />
+          <div style={{ position:'absolute', bottom:-60, left:-60, width:240, height:240, borderRadius:'50%', background:'radial-gradient(circle, rgba(0,53,128,0.12), transparent 70%)', filter:'blur(60px)', pointerEvents:'none' }} />
 
+          {/* Header strip */}
+          <div style={{ padding:'14px 20px 10px', position:'relative', zIndex:1 }}>
+            <div style={{ fontSize:13, fontWeight:700, color:'#475569' }}>Navigation</div>
           </div>
 
-          <div style={{ padding:'12px 16px' }}>
+          <div style={{ padding:'4px 16px 16px', position:'relative', zIndex:1 }}>
             {MOB_SECTIONS.map(sec => (
-              <div key={sec.key} style={{ marginBottom:4 }}>
+              <div key={sec.key} style={{ marginBottom:8 }}>
                 {/* Section header button */}
                 <button
                   onClick={() => setMobSection(mobSection===sec.key ? null : sec.key)}
-                  style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:mobSection===sec.key?'rgba(0,102,255,0.1)':'rgba(255,255,255,0.7)', border:`1.5px solid ${mobSection===sec.key?'rgba(0,102,255,0.4)':'rgba(0,102,255,0.12)'}`, cursor:'pointer', textAlign:'left', transition:'all .18s' }}>
-                  <div style={{ width:36, height:36, borderRadius:10, background:mobSection===sec.key?`linear-gradient(135deg,${C.blue},${C.purple})`:`linear-gradient(135deg,${C.bgAlt},${C.bgSoft})`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, transition:'all .18s' }}>
-                    <Ic n={sec.icon} s={16} style={{ color:mobSection===sec.key?'#fff':C.textM }} />
+                  style={{
+                    width:'100%', display:'flex', alignItems:'center', gap:14, padding:'15px 16px',
+                    borderRadius:16,
+                    background: mobSection===sec.key
+                      ? 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(232,242,255,0.85) 100%)'
+                      : 'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(245,249,255,0.55) 100%)',
+                    border: `1px solid ${mobSection===sec.key ? 'rgba(0,102,255,0.30)' : 'rgba(0,102,255,0.10)'}`,
+                    boxShadow: mobSection===sec.key
+                      ? 'inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,102,255,0.15)'
+                      : 'inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 2px rgba(0,53,128,0.04)',
+                    backdropFilter:'blur(10px)',
+                    cursor:'pointer', textAlign:'left', transition:'all .22s cubic-bezier(.2,.8,.2,1)'
+                  }}>
+                  <div style={{
+                    width:40, height:40, borderRadius:11,
+                    background: mobSection===sec.key
+                      ? 'linear-gradient(135deg, #0066FF, #003580)'
+                      : 'linear-gradient(135deg, rgba(0,102,255,0.10), rgba(0,53,128,0.06))',
+                    display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0,
+                    boxShadow: mobSection===sec.key ? '0 4px 12px rgba(0,102,255,0.35)' : 'none',
+                    transition:'all .22s'
+                  }}>
+                    <Ic n={sec.icon} s={18} style={{ color: mobSection===sec.key ? '#fff' : '#0066FF' }} />
                   </div>
-                  <span style={{ flex:1, fontSize:15, fontWeight:700, color:mobSection===sec.key?C.blue:C.text }}>{sec.label}</span>
-                  <Ic n="ChevD" s={15} style={{ color:mobSection===sec.key?C.blue:C.textL, transition:'transform .2s', transform:mobSection===sec.key?'rotate(180deg)':'none' }} />
+                  <span style={{ flex:1, fontSize:16, fontWeight:700, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{sec.label}</span>
+                  <Ic n="ChevD" s={16} style={{ color:'#0066FF', transition:'transform .25s', transform:mobSection===sec.key?'rotate(180deg)':'none' }} />
                 </button>
 
                 {/* Section items */}
                 {mobSection===sec.key && (
-                  <div style={{ padding:'8px 8px 8px 16px', display:'flex', flexDirection:'column', gap:2 }}>
+                  <div style={{ padding:'10px 6px 4px 8px', display:'flex', flexDirection:'column', gap:4 }}>
                     {sec.items.map(item => (
                       <button key={item.path} onClick={() => go(item.path)}
-                        style={{ display:'flex', alignItems:'center', gap:12, padding:'11px 14px', borderRadius:11, border:'none', background:'transparent', cursor:'pointer', textAlign:'left', transition:'background .15s' }}
-                        onMouseEnter={e => e.currentTarget.style.background=C.bgSoft}
-                        onMouseLeave={e => e.currentTarget.style.background='transparent'}>
-                        <div style={{ width:30, height:30, borderRadius:8, background:item.color+'15', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                          <Ic n={item.icon} s={14} style={{ color:item.color }} />
+                        style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:11, border:'none', background:'transparent', cursor:'pointer', textAlign:'left', transition:'all .15s' }}
+                        onMouseEnter={e => { e.currentTarget.style.background='rgba(0,102,255,0.06)'; e.currentTarget.style.transform='translateX(2px)' }}
+                        onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.transform='none' }}>
+                        <div style={{ width:32, height:32, borderRadius:9, background:'rgba(0,102,255,0.08)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                          <Ic n={item.icon} s={14} style={{ color:'#0066FF' }} />
                         </div>
-                        <span style={{ fontSize:14, fontWeight:600, color:C.text }}>{item.label}</span>
-                        <Ic n="ChevR" s={12} style={{ color:C.textL, marginLeft:'auto' }} />
+                        <span style={{ fontSize:14.5, fontWeight:600, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{item.label}</span>
+                        <Ic n="ChevR" s={13} style={{ color:'#94a3b8', marginLeft:'auto' }} />
                       </button>
                     ))}
                   </div>
@@ -389,26 +416,34 @@ export default function Header({ navigate, openConsult }) {
 
             {/* Contact direct link */}
             <button onClick={() => go('/contact')}
-              style={{ width:'100%', display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:14, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', cursor:'pointer', textAlign:'left', marginBottom:4 }}>
-              <div style={{ width:36, height:36, borderRadius:10, background:C.bgAlt, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                <Ic n="Mail" s={16} style={{ color:C.textM }} />
+              style={{
+                width:'100%', display:'flex', alignItems:'center', gap:14, padding:'15px 16px',
+                borderRadius:16,
+                background:'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(245,249,255,0.55) 100%)',
+                border:'1px solid rgba(0,102,255,0.10)',
+                boxShadow:'inset 0 1px 0 rgba(255,255,255,0.8), 0 1px 2px rgba(0,53,128,0.04)',
+                backdropFilter:'blur(10px)',
+                cursor:'pointer', textAlign:'left', marginBottom:8, transition:'all .22s'
+              }}>
+              <div style={{ width:40, height:40, borderRadius:11, background:'linear-gradient(135deg, rgba(0,102,255,0.10), rgba(0,53,128,0.06))', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <Ic n="Mail" s={18} style={{ color:'#0066FF' }} />
               </div>
-              <span style={{ fontSize:15, fontWeight:700, color:C.text }}>Contact Us</span>
-              <Ic n="ChevR" s={15} style={{ color:C.textL, marginLeft:'auto' }} />
+              <span style={{ flex:1, fontSize:16, fontWeight:700, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>Contact Us</span>
+              <Ic n="ChevR" s={16} style={{ color:'#0066FF' }} />
             </button>
           </div>
 
-          {/* Bottom CTA */}
-          <div style={{ padding:'16px 20px', borderTop:'1px solid rgba(0,102,255,0.1)', background:'rgba(0,102,255,0.04)' }}>
-            <button onClick={() => { navigate('/contact'); setMob(false) }} style={{ width:'100%', padding:'15px', borderRadius:14, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:15, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+          {/* Bottom CTA panel */}
+          <div style={{ padding:'8px 16px 24px', position:'relative', zIndex:1 }}>
+            <button onClick={() => { navigate('/contact'); setMob(false) }} style={{ width:'100%', padding:'15px', borderRadius:14, background:'linear-gradient(135deg,#003580 0%,#0066FF 100%)', border:'none', color:'#fff', fontSize:15, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:'0 8px 24px rgba(0,53,128,0.30)', transition:'all .2s' }}>
               Contact Us →
             </button>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginTop:10 }}>
-              <a href="tel:+442071932502" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
-                <Ic n="Phone" s={13} style={{ color:C.blue }} /> Call UK
+              <a href="tel:+442071932502" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'11px', borderRadius:11, background:'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(245,249,255,0.55) 100%)', border:'1px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12.5, fontWeight:700, color:'#0a0a14', backdropFilter:'blur(8px)' }}>
+                <Ic n="Phone" s={13} style={{ color:'#0066FF' }} /> Call UK
               </a>
-              <a href="mailto:hello@devinstratus.com" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px', borderRadius:10, background:'rgba(255,255,255,0.7)', border:'1.5px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12, fontWeight:600, color:C.text }}>
-                <Ic n="Mail" s={13} style={{ color:C.purple }} /> Email Us
+              <a href="mailto:hello@devinstratus.com" style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'11px', borderRadius:11, background:'linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(245,249,255,0.55) 100%)', border:'1px solid rgba(0,102,255,0.12)', textDecoration:'none', fontSize:12.5, fontWeight:700, color:'#0a0a14', backdropFilter:'blur(8px)' }}>
+                <Ic n="Mail" s={13} style={{ color:'#0066FF' }} /> Email Us
               </a>
             </div>
           </div>

@@ -205,6 +205,14 @@ export function GS() {
 
       .show-mob{display:none!important}
       @media(max-width:1100px){.show-mob{display:flex!important;align-items:center!important}.hide-desk{display:none!important}}
+      .ds-burger:hover{background:rgba(0,102,255,0.08)!important}
+      .ds-burger:active{background:rgba(0,102,255,0.14)!important}
+      @media(max-width:820px){
+        .ds-header-bar{padding:0 18px!important;height:64px!important;gap:12px!important}
+      }
+      @media(max-width:480px){
+        .ds-header-bar{padding:0 16px!important;height:60px!important}
+      }
       @media(max-width:900px){
         /* Hero */
         .hero-g{grid-template-columns:1fr!important;gap:32px!important}

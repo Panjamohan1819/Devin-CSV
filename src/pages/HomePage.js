@@ -32,8 +32,14 @@ const STYLES = `
   .tab-pill.active { background:linear-gradient(135deg,#0066FF,#003FB3)!important; color:#fff!important; box-shadow:0 4px 18px rgba(0,102,255,.38) }
   .step-card { opacity:0; transition:all .6s cubic-bezier(.22,1,.36,1) }
   .step-card.vis { opacity:1!important; transform:none!important }
+  .step-card-premium { opacity:0; transition:all .6s cubic-bezier(.22,1,.36,1) }
+  .step-card-premium.vis { opacity:1!important }
   .sol-card { transition:all .28s cubic-bezier(.22,1,.36,1) }
   .sol-card:hover { transform:translateY(-6px); box-shadow:var(--hover-shadow) }
+  .sol-card-premium:hover { transform:translateY(-8px) !important; box-shadow:0 24px 60px rgba(0, 102, 255, 0.18), 0 8px 20px rgba(0, 53, 128, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important }
+  .sol-card-premium:hover .sol-card-glow { opacity:1 }
+  .sol-card-premium:hover .sol-card-arrow { background:var(--card-color) !important; transform:translateX(4px) }
+  .sol-card-premium:hover .sol-card-arrow svg { color:#fff !important; stroke:#fff !important }
   .trust-track { display:flex; gap:20px; animation:marqueeScroll 50s linear infinite; width:max-content }
   .trust-track:hover { animation-play-state:paused }
   .cta-border-spin { animation:borderSpin 8s linear infinite }
@@ -44,6 +50,7 @@ const STYLES = `
     .axis-tab-screens{display:none!important}
     .axis-sol-grid{grid-template-columns:1fr 1fr!important}
     .axis-steps-grid{grid-template-columns:1fr!important}
+    .step-connector{display:none!important}
     .axis-test-grid{grid-template-columns:1fr!important}
     .axis-footer-cta{flex-direction:column!important;text-align:center!important}
   }
@@ -197,6 +204,7 @@ function Hero({ openConsult, navigate }) {
       /* ── Tablet & mobile: stack chevrons below hero text ── */
       @media(max-width:820px){
         .ds-hero-section{ height:auto !important; min-height:auto !important; }
+        .ds-scroll-indicator{ display:none !important; }
         .ds-hero-content{
           padding:84px 18px 12px 18px !important;
           height:auto !important;
@@ -342,7 +350,7 @@ function Hero({ openConsult, navigate }) {
   const STEPS = ['Discover','Design','Deliver']
 
   return (
-    <section className="ds-hero-section" style={{position:'relative',width:'100%',height:'100vh',overflow:'hidden',background:'#ffffff'}}>
+    <section className="ds-hero-section" style={{position:'relative',width:'100%',height:'100vh',overflow:'hidden',background:'linear-gradient(180deg,#fff 0%,#f5f9ff 100%)'}}>
       <canvas ref={canvasRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:1}} />
 
       {/* Vignette */}
@@ -394,7 +402,7 @@ function Hero({ openConsult, navigate }) {
       </div>
       
       {/* Scroll indicator */}
-      <div style={{position:'absolute',bottom:24,left:'50%',transform:'translateX(-50%)',zIndex:15,display:'flex',flexDirection:'column',alignItems:'center',gap:8}}>
+      <div className="ds-scroll-indicator" style={{position:'absolute',bottom:24,left:'50%',transform:'translateX(-50%)',zIndex:15,display:'flex',flexDirection:'column',alignItems:'center',gap:8}}>
         <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:9,letterSpacing:'0.3em',color:'rgba(10,10,20,0.3)',textTransform:'uppercase'}}>Scroll</span>
         <div style={{width:18,height:30,borderRadius:9,border:'1.5px solid rgba(10,10,20,.14)',display:'flex',justifyContent:'center',paddingTop:4}}>
           <div style={{width:2,height:6,borderRadius:2,background:'rgba(10,10,20,.28)',animation:'dsScrollDot 2s ease-in-out infinite'}} />
@@ -432,7 +440,7 @@ function Trust() {
   const shades = ['#0066FF', '#003FB3', '#06B6D4', '#1E40AF', '#0EA5E9', '#1D4ED8']
   const doubled = [...brands, ...brands]
   return (
-    <section style={{ background: '#fff', borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', padding: '40px 0 44px', overflow: 'hidden' }}>
+    <section style={{ background: 'linear-gradient(180deg,#f5f9ff 0%,#fff 100%)', padding: '40px 0 44px', overflow: 'hidden' }}>
       <div style={{ textAlign: 'center', fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 28, textTransform: 'uppercase' }}>
         Trusted by global enterprises &nbsp;·&nbsp; Manufacturing &nbsp;·&nbsp; Retail &nbsp;·&nbsp; Finance &nbsp;·&nbsp; Healthcare &nbsp;·&nbsp; Logistics
       </div>
@@ -472,29 +480,30 @@ function ImpactNumbers() {
     { target: 3, sfx: 'x', label: 'Average ROI at 12 months', sub: 'Measured across all clients', c: '#bfdbfe' },
   ]
   return (
-    <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(160deg,#020814,#080f28,#100622)', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px)', backgroundSize: '32px 32px', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', top: '20%', left: '50%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,102,255,.1) 0%,transparent 68%)', filter: 'blur(60px)', transform: 'translateX(-50%)', pointerEvents: 'none' }} />
+    <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(160deg,#001d4a,#003580,#0050b3)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px)', backgroundSize: '32px 32px', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '20%', left: '50%', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle,rgba(102,178,255,.18) 0%,transparent 68%)', filter: 'blur(70px)', transform: 'translateX(-50%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '-10%', left: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,180,255,.12) 0%,transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none' }} />
       <div style={{ maxWidth: 1300, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: 72 }}>
-          <div style={{ display: 'inline-block', fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 16, textTransform: 'uppercase', background: 'rgba(0,102,255,.12)', padding: '6px 16px', borderRadius: 50, border: '1px solid rgba(0,102,255,.25)' }}>PROVEN IMPACT</div>
-          <h2 style={{ fontSize: 'clamp(2rem,4vw,3.2rem)', fontWeight: 900, color: '#f8fafc', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1.15 }}>
+          <div style={{ display: 'inline-block', fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#7dc4ff', marginBottom: 16, textTransform: 'uppercase', background: 'rgba(125,196,255,.12)', padding: '6px 16px', borderRadius: 50, border: '1px solid rgba(125,196,255,.25)' }}>PROVEN IMPACT</div>
+          <h2 style={{ fontSize: 'clamp(2rem,4vw,3.2rem)', fontWeight: 900, color: '#ffffff', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1.15 }}>
             The numbers behind{' '}
-            <span className="grad-text" style={{ background: 'linear-gradient(135deg,#0066FF,#06b6d4)' }}>our track record</span>
+            <span className="grad-text" style={{ background: 'linear-gradient(135deg,#7dc4ff,#bfdbfe)' }}>our track record</span>
           </h2>
         </div>
         <div className="axis-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 20 }}>
           {stats.map((s, i) => {
             const n = useCount(s.target, on)
             return (
-              <div key={s.label} style={{ padding: '36px 24px', borderRadius: 24, background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', textAlign: 'center', backdropFilter: 'blur(8px)', transition: 'all .3s', animation: on ? `countBounce .6s ease both ${i * 120}ms` : 'none', opacity: on ? 1 : 0 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.08)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.04)'; e.currentTarget.style.transform = 'none' }}>
+              <div key={s.label} style={{ padding: '36px 24px', borderRadius: 24, background: 'rgba(255,255,255,.06)', border: '1px solid rgba(255,255,255,.12)', textAlign: 'center', backdropFilter: 'blur(8px)', transition: 'all .3s', animation: on ? `countBounce .6s ease both ${i * 120}ms` : 'none', opacity: on ? 1 : 0 }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,.10)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.20)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.06)'; e.currentTarget.style.transform = 'none'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.12)' }}>
                 <div style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 900, fontSize: 'clamp(2.6rem,4vw,3.8rem)', color: s.c, lineHeight: 1, marginBottom: 10, letterSpacing: '-.03em' }}>
                   {n}{s.sfx}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(248,250,252,.8)', marginBottom: 6, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{s.label}</div>
-                <div style={{ fontSize: 12, color: 'rgba(248,250,252,.35)', fontWeight: 500 }}>{s.sub}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: 'rgba(255,255,255,.92)', marginBottom: 6, fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{s.label}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,.55)', fontWeight: 500 }}>{s.sub}</div>
               </div>
             )
           })}
@@ -511,7 +520,7 @@ function Solutions({ navigate }) {
   const [sRef, on] = useOnScreen()
   const filtered = SOLUTIONS.filter(s => s.slug !== 'erp')
   return (
-    <section ref={sRef} style={{ padding: '100px 32px', background: '#fff' }}>
+    <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(180deg,#f5f9ff 0%,#fff 35%)' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56, flexWrap: 'wrap', gap: 20 }}>
           <div>
@@ -527,24 +536,40 @@ function Solutions({ navigate }) {
             View all solutions <Ic n="Arrow" s={14} style={{ color: '#0066FF' }} />
           </button>
         </div>
-        <div className="axis-sol-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+        <div className="axis-sol-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 22 }}>
           {filtered.map((s, i) => (
-            <button key={s.slug} className="sol-card" onClick={() => navigate(`/solutions/${s.slug}`)}
-              style={{ '--hover-shadow': `0 20px 60px ${s.color}20`, display: 'flex', flexDirection: 'column', padding: '30px', borderRadius: 24, border: '1.5px solid #e2e8f0', background: '#fff', cursor: 'pointer', textAlign: 'left', position: 'relative', overflow: 'hidden', opacity: on ? 1 : 0, transform: on ? 'none' : 'translateY(24px)', transition: `all .55s cubic-bezier(.22,1,.36,1) ${i * 80}ms` }}>
-              {/* Decorative corner */}
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 100, height: 100, background: s.bg, borderRadius: '0 24px 0 100px', opacity: .8 }} />
-              {/* Top accent */}
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,${s.color},${s.color}44)`, opacity: 0, transition: 'opacity .22s' }}
-                ref={el => el && el.parentElement.addEventListener('mouseenter', () => el.style.opacity = '1')}
-              />
-              <div style={{ width: 52, height: 52, borderRadius: 16, background: s.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, position: 'relative', zIndex: 1 }}>
-                <Ic n={s.icon} s={24} style={{ color: s.color }} />
+            <button key={s.slug} className="sol-card-premium" onClick={() => navigate(`/solutions/${s.slug}`)}
+              style={{
+                '--card-color': s.color,
+                '--card-bg': s.bg,
+                display: 'flex', flexDirection: 'column', padding: '32px 30px',
+                borderRadius: 22,
+                border: '1px solid rgba(0, 102, 255, 0.10)',
+                background: 'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)',
+                boxShadow: '0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                cursor: 'pointer', textAlign: 'left', position: 'relative', overflow: 'hidden',
+                opacity: on ? 1 : 0, transform: on ? 'none' : 'translateY(24px)',
+                transition: `all .55s cubic-bezier(.22,1,.36,1) ${i * 80}ms`,
+                minHeight: 240
+              }}>
+              {/* Animated gradient border on hover */}
+              <div className="sol-card-glow" style={{ position: 'absolute', inset: -1, borderRadius: 22, padding: 1, background: `linear-gradient(135deg, ${s.color}, transparent 60%)`, opacity: 0, transition: 'opacity .35s', WebkitMask: 'linear-gradient(#000,#000) content-box, linear-gradient(#000,#000)', WebkitMaskComposite: 'xor', maskComposite: 'exclude', pointerEvents: 'none' }} />
+              {/* Subtle corner blob */}
+              <div style={{ position: 'absolute', top: -50, right: -50, width: 180, height: 180, borderRadius: '50%', background: `radial-gradient(circle, ${s.color}22, transparent 70%)`, pointerEvents: 'none' }} />
+              {/* Icon tile with gradient + glow */}
+              <div style={{ width: 56, height: 56, borderRadius: 16, background: `linear-gradient(135deg, ${s.color}, ${s.color}cc)`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 22, position: 'relative', zIndex: 1, boxShadow: `0 8px 22px ${s.color}38, inset 0 1px 0 rgba(255,255,255,0.25)` }}>
+                <Ic n={s.icon} s={26} style={{ color: '#fff' }} />
               </div>
-              <h3 style={{ fontSize: 19, fontWeight: 800, color: '#0f172a', fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 10, position: 'relative', zIndex: 1 }}>{s.heading}</h3>
-              <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.7, marginBottom: 20, flex: 1, position: 'relative', zIndex: 1 }}>{s.tagline}</p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
-                <span style={{ padding: '4px 12px', borderRadius: 50, background: s.bg, fontSize: 12, fontWeight: 700, color: s.color }}>{s.items.length} solutions</span>
-                <Ic n="Arrow" s={16} style={{ color: s.color + '88' }} />
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: '#0a0a14', fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 10, position: 'relative', zIndex: 1, letterSpacing: '-0.01em' }}>{s.heading}</h3>
+              <p style={{ fontSize: 14, color: '#475569', lineHeight: 1.65, marginBottom: 24, flex: 1, position: 'relative', zIndex: 1 }}>{s.tagline}</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1, paddingTop: 16, borderTop: `1px solid ${s.color}15` }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 50, background: `${s.color}12`, fontSize: 12.5, fontWeight: 700, color: s.color, letterSpacing: '.01em' }}>
+                  <span style={{ width: 5, height: 5, borderRadius: '50%', background: s.color }} />
+                  {s.items.length} solutions
+                </span>
+                <span className="sol-card-arrow" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: '50%', background: `${s.color}12`, transition: 'all .25s' }}>
+                  <Ic n="Arrow" s={14} style={{ color: s.color }} />
+                </span>
               </div>
             </button>
           ))}
@@ -566,7 +591,7 @@ function HowWeDeliver({ navigate }) {
     { n: '04', icon: 'Zap', title: 'Optimise & Grow', desc: 'Ongoing managed support, system health checks and new capability rollouts. Your platform evolves as your business does.', color: '#0EA5E9' },
   ]
   return (
-    <section ref={sRef} style={{ padding: '100px 32px', background: '#f8fafc' }}>
+    <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(180deg,#fafcff 0%,#eff5ff 100%)' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 72 }}>
           <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#003FB3', marginBottom: 14, textTransform: 'uppercase' }}>HOW WE WORK</div>
@@ -574,20 +599,36 @@ function HowWeDeliver({ navigate }) {
             A clear process. <span className="grad-text" style={{ background: 'linear-gradient(135deg,#003FB3,#0066FF)' }}>Zero surprises.</span>
           </h2>
         </div>
-        <div className="axis-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 24 }}>
+        <div className="axis-steps-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 22, position: 'relative' }}>
+          {/* Connecting line behind cards (desktop) */}
+          <div className="step-connector" style={{ position: 'absolute', top: 65, left: '12%', right: '12%', height: 2, background: 'linear-gradient(90deg, transparent 0%, #0066FF44 20%, #0066FF44 80%, transparent 100%)', zIndex: 0 }} />
           {steps.map((s, i) => (
-            <div key={i} className={`step-card ${on ? 'vis' : ''}`}
-              style={{ transform: on ? 'none' : 'translateX(-20px)', transitionDelay: `${i * 120}ms`, padding: '30px 24px', borderRadius: 24, background: '#fff', border: '1.5px solid #e2e8f0', position: 'relative', overflow: 'hidden', transition: 'all .6s cubic-bezier(.22,1,.36,1)' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = s.color + '55'; e.currentTarget.style.boxShadow = `0 16px 48px ${s.color}14`; e.currentTarget.style.transform = 'translateY(-4px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none' }}>
+            <div key={i} className={`step-card-premium ${on ? 'vis' : ''}`}
+              style={{
+                transform: on ? 'none' : 'translateX(-20px)',
+                transitionDelay: `${i * 120}ms`,
+                padding: '32px 26px 28px',
+                borderRadius: 22,
+                background: 'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)',
+                border: '1px solid rgba(0, 102, 255, 0.10)',
+                boxShadow: '0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                position: 'relative', overflow: 'hidden',
+                transition: 'all .6s cubic-bezier(.22,1,.36,1)',
+                zIndex: 1
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = s.color + '50'; e.currentTarget.style.boxShadow = `0 16px 40px ${s.color}22, inset 0 1px 0 rgba(255,255,255,0.9)`; e.currentTarget.style.transform = 'translateY(-6px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)'; e.currentTarget.style.transform = 'none' }}>
               {/* Big decorative number */}
-              <div style={{ position: 'absolute', top: -10, right: 10, fontSize: 80, fontWeight: 900, color: s.color + '0a', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1, userSelect: 'none' }}>{s.n}</div>
-              <div style={{ width: 48, height: 48, borderRadius: 14, background: s.color + '14', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>
-                <Ic n={s.icon} s={22} style={{ color: s.color }} />
+              <div style={{ position: 'absolute', top: -12, right: 14, fontSize: 84, fontWeight: 900, color: s.color + '0e', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1, userSelect: 'none' }}>{s.n}</div>
+              {/* Top gradient accent bar */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${s.color}, ${s.color}66)` }} />
+              {/* Icon tile with gradient */}
+              <div style={{ width: 52, height: 52, borderRadius: 14, background: `linear-gradient(135deg, ${s.color}, ${s.color}cc)`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20, boxShadow: `0 8px 20px ${s.color}38, inset 0 1px 0 rgba(255,255,255,0.25)`, position: 'relative', zIndex: 1 }}>
+                <Ic n={s.icon} s={24} style={{ color: '#fff' }} />
               </div>
-              <div style={{ fontSize: 11, fontWeight: 800, color: s.color, letterSpacing: '.1em', marginBottom: 8 }}>STEP {s.n}</div>
-              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0f172a', fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 10 }}>{s.title}</h3>
-              <p style={{ fontSize: 13.5, color: '#64748b', lineHeight: 1.72 }}>{s.desc}</p>
+              <div style={{ fontSize: 11, fontWeight: 800, color: s.color, letterSpacing: '.12em', marginBottom: 8, position: 'relative', zIndex: 1 }}>STEP {s.n}</div>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0a0a14', fontFamily: "'Plus Jakarta Sans',sans-serif", marginBottom: 10, letterSpacing: '-0.01em', position: 'relative', zIndex: 1 }}>{s.title}</h3>
+              <p style={{ fontSize: 13.5, color: '#475569', lineHeight: 1.72, position: 'relative', zIndex: 1 }}>{s.desc}</p>
             </div>
           ))}
         </div>
@@ -614,7 +655,7 @@ function Testimonials() {
     { q: "The Power BI dashboards changed how our board makes decisions. Data we didn't know we could surface is now our competitive edge.", name: 'Charlotte Wu', role: 'COO', co: 'Stratford Retail Group', c: '#06b6d4', ini: 'CW' },
   ]
   return (
-    <section ref={sRef} style={{ padding: '100px 32px', background: '#fff' }}>
+    <section ref={sRef} style={{ padding: '100px 32px', background: 'linear-gradient(180deg,#fff 0%,#fafcff 100%)' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#0066FF', marginBottom: 14, textTransform: 'uppercase' }}>CLIENT SUCCESS</div>
@@ -657,32 +698,32 @@ function Testimonials() {
 function FinalCTA({ openConsult, navigate }) {
   const [sRef, on] = useOnScreen(0.2)
   return (
-    <section ref={sRef} style={{ padding: '0 32px 100px', background: '#f8fafc' }}>
+    <section ref={sRef} style={{ padding: '40px 32px 100px', background: 'linear-gradient(180deg,#fff 0%,#eff5ff 100%)' }}>
       <div style={{ maxWidth: 1300, margin: '0 auto' }}>
-        <div style={{ borderRadius: 32, background: 'linear-gradient(135deg,#020814 0%,#0f0c29 40%,#1a0533 100%)', padding: '72px 56px', position: 'relative', overflow: 'hidden', opacity: on ? 1 : 0, transform: on ? 'none' : 'translateY(24px)', transition: 'all .7s cubic-bezier(.22,1,.36,1)' }}>
+        <div style={{ borderRadius: 32, background: 'linear-gradient(135deg,#003580 0%,#0050b3 50%,#0066FF 100%)', padding: '72px 56px', position: 'relative', overflow: 'hidden', opacity: on ? 1 : 0, transform: on ? 'none' : 'translateY(24px)', transition: 'all .7s cubic-bezier(.22,1,.36,1)' }}>
           {/* Orbs */}
-          <div style={{ position: 'absolute', top: -60, left: -60, width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,102,255,.3),transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', bottom: -40, right: -40, width: 280, height: 280, borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,63,179,.25),transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', top: -60, left: -60, width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle,rgba(125,196,255,.45),transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: -40, right: -40, width: 280, height: 280, borderRadius: '50%', background: 'radial-gradient(circle,rgba(255,255,255,.18),transparent 70%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
           <div className="axis-footer-cta" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, position: 'relative', zIndex: 1 }}>
             <div style={{ maxWidth: 540 }}>
-              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#a5b4fc', marginBottom: 16, textTransform: 'uppercase' }}>READY TO START?</div>
-              <h2 style={{ fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', fontWeight: 900, color: '#f8fafc', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1.2, marginBottom: 14 }}>
+              <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.18em', color: '#bfdbfe', marginBottom: 16, textTransform: 'uppercase' }}>READY TO START?</div>
+              <h2 style={{ fontSize: 'clamp(1.8rem,3.5vw,2.8rem)', fontWeight: 900, color: '#ffffff', fontFamily: "'Plus Jakarta Sans',sans-serif", lineHeight: 1.2, marginBottom: 14 }}>
                 Transform your business with Dynamics 365
               </h2>
-              <p style={{ fontSize: 16, color: 'rgba(248,250,252,.6)', lineHeight: 1.75 }}>
+              <p style={{ fontSize: 16, color: 'rgba(255,255,255,.78)', lineHeight: 1.75 }}>
                 Free 60-minute consultation. Tailored ROI model. No obligation. Our team typically responds within 2 hours.
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12, flexShrink: 0 }}>
-              <button onClick={openConsult} style={{ padding: '16px 36px', borderRadius: 50, background: 'linear-gradient(135deg,#0066FF,#003FB3)', border: 'none', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", boxShadow: '0 8px 28px rgba(0,102,255,.5)', transition: 'all .24s', whiteSpace: 'nowrap' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,102,255,.6)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,102,255,.5)' }}>
+              <button onClick={openConsult} style={{ padding: '16px 36px', borderRadius: 50, background: '#fff', border: 'none', color: '#003580', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", boxShadow: '0 8px 28px rgba(0,53,128,.35)', transition: 'all .24s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,53,128,.5)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,53,128,.35)' }}>
                 Book Free Consultation →
               </button>
-              <button onClick={() => navigate('/contact')} style={{ padding: '16px 36px', borderRadius: 50, background: 'rgba(255,255,255,.07)', border: '1.5px solid rgba(255,255,255,.2)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", backdropFilter: 'blur(10px)', transition: 'all .22s', whiteSpace: 'nowrap' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.14)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,.07)'}>
+              <button onClick={() => navigate('/contact')} style={{ padding: '16px 36px', borderRadius: 50, background: 'rgba(255,255,255,.10)', border: '1.5px solid rgba(255,255,255,.35)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer', fontFamily: "'Plus Jakarta Sans',sans-serif", backdropFilter: 'blur(10px)', transition: 'all .22s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.18)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,.10)'}>
                 Explore the Platform
               </button>
             </div>
