@@ -122,7 +122,7 @@ export default function Header({ navigate, openConsult }) {
     { key:'services',   label:'Services',   icon:'Wrench',  items: SERVICES.map(s =>  ({ label:s.t,       path:`/service/${s.slug}`,   color:s.color, icon:s.n    })) },
     // { key:'industries', label:'Industries', icon:'Globe',   items: NAV_INDUSTRIES.map(i => ({ label:i.t, path:`/industries/${i.slug}`, color:i.c, icon:i.n })) }, // HIDDEN — uncomment to re-enable
     { key:'resources',  label:'Resources',  icon:'BookOpen',items: NAV_RESOURCES.map(r  => ({ label:r.t, path:`/resources/${r.slug}`,  color:r.c, icon:r.n })) },
-    { key:'company',    label:'Company',    icon:'Award',   items: NAV_COMPANY.map(c    => ({ label:c.t, path: c.slug === 'careers' ? '/careers' : `/company/${c.slug}`,    color:c.c, icon:c.n })) },
+    { key:'company',    label:'Company',    icon:'Award',   items: NAV_COMPANY.map(c    => ({ label:c.t, path: `/company/${c.slug}`,    color:c.c, icon:c.n })) },
   ]
 
   return (
@@ -136,14 +136,14 @@ export default function Header({ navigate, openConsult }) {
             src={logoFull}
             alt="DevinStratus"
             className="hide-desk"
-            style={{ height:42, width:'auto', display:'block', objectFit:'contain' }}
+            style={{ height:50, width:'auto', display:'block', objectFit:'contain' }}
           />
           {/* Icon only — visible on mobile, hidden on desktop */}
           <img
             src={logoIcon}
             alt="DevinStratus"
             className="show-mob"
-            style={{ height:36, width:'auto', display:'block', objectFit:'contain' }}
+            style={{ height:44, width:'auto', display:'block', objectFit:'contain' }}
           />
         </button>
 
@@ -315,7 +315,7 @@ export default function Header({ navigate, openConsult }) {
                 </div>
                 <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8, marginBottom:12 }}>
                   {NAV_COMPANY.map(r => (
-                    <button key={r.t} onClick={() => go(r.slug === 'careers' ? '/careers' : `/company/${r.slug}`)} style={cardBtn(r.c)} onMouseEnter={e=>onCH(e,r.c)} onMouseLeave={offCH}>
+                    <button key={r.t} onClick={() => go(`/company/${r.slug}`)} style={cardBtn(r.c)} onMouseEnter={e=>onCH(e,r.c)} onMouseLeave={offCH}>
                       <div style={{ position:'absolute', left:0, top:0, bottom:0, width:3, background:`linear-gradient(180deg,${r.c},${r.c}55)`, borderRadius:'13px 0 0 13px' }} />
                       <div style={{ width:38, height:38, borderRadius:10, background:r.bg, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginLeft:4 }}>
                         <Ic n={r.n} s={17} style={{ color:r.c }} />

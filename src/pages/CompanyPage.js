@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { C, Ic } from '../components/ui'
 import Leader_1 from '../assets/Leader_1.png'
 import Leader_2 from '../assets/Leader_2.jpg'
 import Leader_3 from '../assets/Leader_3.jpg'
 import Leader_4 from '../assets/Leader_4.jpg'
+// If file extension differs, change `.jpg` to match your local file (e.g. .png, .webp)
+import Aboutus_Img from '../assets/Aboutus_Img.png'
 
 function useReveal() {
   useEffect(() => {
@@ -39,17 +42,17 @@ const VALUES = [
 ]
 
 const TEAM = [
-  { name:'Deepak', role:'CEO & Founder',             loc:'London, UK',    exp:'20 yrs', cert:'MBA · MC-900',        initials:'DK', color:C.blue,
-    about:'Deepak founded DevinStratus in 2009 with a mission to make enterprise software deliver real business value. He leads strategy, partnerships, and client relationships at the executive level.',
+  { name:'Deepakteja', role:'Founder & CEO',                  loc:'Ontario, CA',    exp:'20 yrs', cert:'MBA · MC-900',        initials:'DT', color:C.blue,
+    about:'Deepakteja founded DevinStratus in 2009 with a vision to make Dynamics 365 deliver real, measurable business outcomes. He sets company strategy, leads global client relationships, and drives the partnerships that have made DevinStratus a Microsoft Gold Partner.',
     linkedin:'https://linkedin.com' },
-  { name:'Deepa',    role:'CTO & Technical Director',  loc:'New Delhi, IN', exp:'16 yrs', cert:'Azure Architect',       initials:'DA', color:C.purple,
-    about:'Deepa oversees all technical delivery and architecture decisions. She leads our Azure & AI practice and ensures every solution is built to scale, integrate, and perform.',
+  { name:'Vinay Kumar',  role:'Co-Founder & COO',              loc:'Ontario, CA',    exp:'20 yrs', cert:'MBA · PMP',           initials:'VK', color:C.green,
+    about:'Vinay Kumar co-founded DevinStratus in 2009 alongside Deepakteja. As Chief Operating Officer he runs day-to-day operations, delivery governance, and customer success — ensuring every engagement lands on time, on budget, and on outcome.',
     linkedin:'https://linkedin.com' },
-  { name:'Vineeth',     role:'Head of Delivery, Americas',loc:'New York, USA', exp:'14 yrs', cert:'MB-300 · PMP',          initials:'VN', color:C.teal,
-    about:'Vineeth manages all North American client engagements and delivery operations. With 14 years in D365 implementations, he ensures projects land on time and on budget.',
+  { name:'Manideepa',    role:'Director of Finance & HR',      loc:'Hyderabad, IN',  exp:'16 yrs', cert:'CA · MBA-HR',         initials:'MD', color:C.purple,
+    about:'Manideepa leads finance, people operations, and corporate governance across DevinStratus. She manages financial planning, compliance, and the talent strategy that has scaled the firm to 120+ certified consultants across four continents.',
     linkedin:'https://linkedin.com' },
-  { name:'Vinay',  role:'Head of Customer Success',  loc:'London, UK',    exp:'12 yrs', cert:'MB-240 · PRINCE2',     initials:'VY', color:C.orange,
-    about:'Vinay leads our post-go-live success programmes, ensuring clients realise the full ROI of their Dynamics 365 investment through adoption, training, and continuous improvement.',
+  { name:'Vineeth',      role:'Director of Sales & Marketing', loc:'London, UK',     exp:'14 yrs', cert:'MB-910 · Salesforce', initials:'VN', color:C.teal,
+    about:'Vineeth heads global sales and marketing, owning revenue growth, brand positioning, and strategic account development. He has built DevinStratus\' enterprise pipeline across North America, Europe, and APAC over the past decade.',
     linkedin:'https://linkedin.com' },
   { name:'Anil Kapoor',     role:'Head of Delivery, APAC',    loc:'New Delhi, IN', exp:'13 yrs', cert:'MB-800 · AZ-900',       initials:'AK', color:C.green,
     about:'Anil heads our India delivery centre and APAC client operations, specialising in Business Central and supply chain implementations for manufacturing and logistics clients.',
@@ -127,34 +130,177 @@ function CompanyHero({ section, navigate }) {
       {/* Subtle grid pattern overlay */}
       <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(0, 102, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.04) 1px, transparent 1px)', backgroundSize:'48px 48px', maskImage:'radial-gradient(ellipse at center, #000 30%, transparent 75%)', WebkitMaskImage:'radial-gradient(ellipse at center, #000 30%, transparent 75%)', pointerEvents:'none' }} />
 
-      <div style={{ maxWidth:1280, margin:'0 auto', padding:'132px 24px 72px', position:'relative', zIndex:1 }}>
-        <button onClick={() => navigate('/company/about')}
-          style={{ display:'flex', alignItems:'center', gap:6, background:'rgba(255,255,255,0.7)', border:'1px solid rgba(0, 102, 255, 0.18)', borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer', marginBottom:28, backdropFilter:'blur(8px)', transition:'all .2s' }}
-          onMouseEnter={e => { e.currentTarget.style.background='#fff'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.3)' }}
-          onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.18)' }}>
-          <Ic n="ChevD" s={12} style={{ transform:'rotate(90deg)', color:'#0066FF' }} /> Company
-        </button>
-        <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${cfg.color}14`, border:`1px solid ${cfg.color}33`, borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:700, color:cfg.color, marginBottom:20, backdropFilter:'blur(6px)' }}>
-          <Ic n="Award" s={12} style={{ color:cfg.color }} /> Microsoft Gold Partner · Est. 2009
+      <div className="company-hero-grid" style={{ maxWidth:1280, margin:'0 auto', padding:'132px 24px 72px', position:'relative', zIndex:1, display:'grid', gridTemplateColumns: '1fr 1.05fr', gap:56, alignItems:'center' }}>
+        {/* LEFT — content */}
+        <div>
+          <button onClick={() => navigate('/company/about')}
+            style={{ display:'flex', alignItems:'center', gap:6, background:'rgba(255,255,255,0.7)', border:'1px solid rgba(0, 102, 255, 0.18)', borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer', marginBottom:28, backdropFilter:'blur(8px)', transition:'all .2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background='#fff'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.3)' }}
+            onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.18)' }}>
+            <Ic n="ChevD" s={12} style={{ transform:'rotate(90deg)', color:'#0066FF' }} /> Company
+          </button>
+          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${cfg.color}14`, border:`1px solid ${cfg.color}33`, borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:700, color:cfg.color, marginBottom:20, backdropFilter:'blur(6px)' }}>
+            <Ic n="Award" s={12} style={{ color:cfg.color }} /> Microsoft Gold Partner · Est. 2009
+          </div>
+          <h1 style={{ fontSize:'clamp(32px,5vw,52px)', fontWeight:900, color:'#0a0a14', lineHeight:1.1, marginBottom:16, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>
+            {cfg.title.split(' ').slice(0,-1).join(' ')}{' '}
+            <span className="grad-text" style={{ background:`linear-gradient(135deg, ${cfg.color}, ${cfg.color}aa)`, display:'inline-block' }}>
+              {cfg.title.split(' ').slice(-1)[0]}
+            </span>
+          </h1>
+          <p style={{ fontSize:17, color:'#475569', maxWidth:540, lineHeight:1.7 }}>{cfg.sub}</p>
+          {/* Quick stats bar */}
+          <div style={{ display:'flex', gap:32, marginTop:40, flexWrap:'wrap' }}>
+            {[['500+','Deployments'],['16','Years'],['4','Continents'],['120+','Consultants']].map(([v,l]) => (
+              <div key={l} style={{ textAlign:'left' }}>
+                <div style={{ fontSize:28, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>{v}</div>
+                <div style={{ fontSize:11.5, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>{l}</div>
+              </div>
+            ))}
+          </div>
         </div>
-        <h1 style={{ fontSize:'clamp(32px,5vw,52px)', fontWeight:900, color:'#0a0a14', lineHeight:1.1, marginBottom:16, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>
-          {cfg.title.split(' ').slice(0,-1).join(' ')}{' '}
-          <span className="grad-text" style={{ background:`linear-gradient(135deg, ${cfg.color}, ${cfg.color}aa)`, display:'inline-block' }}>
-            {cfg.title.split(' ').slice(-1)[0]}
-          </span>
-        </h1>
-        <p style={{ fontSize:17, color:'#475569', maxWidth:540, lineHeight:1.7 }}>{cfg.sub}</p>
-        {/* Quick stats bar */}
-        <div style={{ display:'flex', gap:32, marginTop:40, flexWrap:'wrap' }}>
-          {[['500+','Deployments'],['16','Years'],['4','Continents'],['120+','Consultants']].map(([v,l]) => (
-            <div key={l} style={{ textAlign:'left' }}>
-              <div style={{ fontSize:28, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>{v}</div>
-              <div style={{ fontSize:11.5, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>{l}</div>
+
+        {/* RIGHT — Photo on About/Team, themed visual on others */}
+        {(section==='about' || section==='team') ? (
+          <div className="company-hero-image" style={{ position:'relative' }}>
+            {/* Soft glow behind image */}
+            <div style={{ position:'absolute', top:'4%', left:'4%', right:'4%', bottom:'4%', borderRadius:32, background:`radial-gradient(circle, ${C.blue}38, transparent 70%)`, filter:'blur(50px)', zIndex:0 }} />
+
+            {/* PROMINENT blue gradient frame — visible behind the image edges */}
+            <div style={{ position:'absolute', top:-14, right:-14, bottom:-14, left:-14, borderRadius:32, background:`linear-gradient(135deg, ${C.blue} 0%, #06B6D4 60%, ${C.blue} 100%)`, opacity:0.32, zIndex:0 }} />
+            <div style={{ position:'absolute', top:-22, right:-22, bottom:-22, left:-22, borderRadius:36, background:`linear-gradient(135deg, ${C.purple}, ${C.blue})`, opacity:0.14, zIndex:0 }} />
+
+            {/* Main image — square aspect for impact */}
+            <div style={{ position:'relative', borderRadius:24, overflow:'hidden', zIndex:1, boxShadow:'0 32px 80px rgba(0, 53, 128, 0.32), inset 0 1px 0 rgba(255,255,255,0.9)', border:'1px solid rgba(0, 102, 255, 0.18)', aspectRatio:'1 / 1' }}>
+              <img src={Aboutus_Img} alt="DevinStratus team at work"
+                style={{ width:'100%', height:'100%', display:'block', objectFit:'cover' }} />
+              {/* Subtle blue tint overlay — gives the image more 'blue' feel without changing the file */}
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(135deg, rgba(0, 102, 255, 0.10) 0%, rgba(6, 182, 212, 0.06) 50%, transparent 100%)`, mixBlendMode:'soft-light', pointerEvents:'none' }} />
+            </div>
+
+            {/* Floating glass card 1 — Gold Partner (top-right) */}
+            <div className="hero-float-card-tr" style={{ position:'absolute', top:24, right:-22, padding:'14px 18px', borderRadius:14, background:'rgba(255,255,255,0.97)', backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', border:'1px solid rgba(0, 102, 255, 0.16)', boxShadow:'0 16px 36px rgba(0, 53, 128, 0.22)', zIndex:3, display:'flex', alignItems:'center', gap:12 }}>
+              <div style={{ width:42, height:42, borderRadius:11, background:`linear-gradient(135deg, ${C.blue}, ${C.purple})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 8px 16px ${C.blue}48`, flexShrink:0 }}>
+                <Ic n="Award" s={20} style={{ color:'#fff' }} />
+              </div>
+              <div>
+                <div style={{ fontSize:16, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.05, letterSpacing:'-0.01em' }}>Gold Partner</div>
+                <div style={{ fontSize:10.5, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>Microsoft Certified</div>
+              </div>
+            </div>
+
+            {/* Floating glass card 2 — 120+ Consultants (bottom-left, overlapping) */}
+            <div className="hero-float-card-bl" style={{ position:'absolute', bottom:24, left:-22, padding:'14px 18px', borderRadius:14, background:'rgba(255,255,255,0.97)', backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', border:'1px solid rgba(0, 102, 255, 0.16)', boxShadow:'0 16px 36px rgba(0, 53, 128, 0.22)', zIndex:3, display:'flex', alignItems:'center', gap:12 }}>
+              <div style={{ width:42, height:42, borderRadius:11, background:`linear-gradient(135deg, ${C.teal}, ${C.blue})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 8px 16px ${C.teal}48`, flexShrink:0 }}>
+                <Ic n="Users" s={20} style={{ color:'#fff' }} />
+              </div>
+              <div>
+                <div style={{ fontSize:16, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.05, letterSpacing:'-0.01em' }}>120+ Consultants</div>
+                <div style={{ fontSize:10.5, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>Across 4 Continents</div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <SectionVisual section={section} color={cfg.color} />
+        )}
+      </div>
+    </section>
+  )
+}
+
+// ── Themed visual for non-photo Company sections ─────────────────────────────────
+// Each section gets a unique enterprise-style card with relevant data + iconography.
+function SectionVisual({ section, color }) {
+  const visuals = {
+    global: {
+      icon: 'Globe',
+      title: '4 Global Offices',
+      subtitle: '120+ certified consultants',
+      items: [
+        { icon:'Pin',  label:'London, UK',     sub:'Headquarters · 38 staff' },
+        { icon:'Pin',  label:'New York, USA',  sub:'Americas · 32 staff' },
+        { icon:'Pin',  label:'New Delhi, IN',  sub:'APAC delivery · 35 staff' },
+        { icon:'Pin',  label:'Toronto, CA',    sub:'North America · 15 staff' },
+      ],
+    },
+    awards: {
+      icon: 'Award',
+      title: 'Recognised Excellence',
+      subtitle: '12 industry awards · 2022–2025',
+      items: [
+        { icon:'Award',     label:'Microsoft Inner Circle', sub:'Top 1% global partners' },
+        { icon:'Star',      label:'Partner of the Year',     sub:'Business Applications · 2024' },
+        { icon:'Shield',    label:'ISO 27001 Certified',     sub:'Information security' },
+        { icon:'Award',     label:'Gartner Recognised',      sub:'D365 Implementation Specialist' },
+      ],
+    },
+    careers: {
+      icon: 'Users',
+      title: "We're Hiring",
+      subtitle: '14 open positions · global remote',
+      items: [
+        { icon:'Cpu',    label:'D365 F&O Developer',      sub:'London · Remote · 5+ yrs' },
+        { icon:'Cloud',  label:'Azure Solution Architect',sub:'New York · Remote · 7+ yrs' },
+        { icon:'Brain',  label:'AI / Copilot Engineer',   sub:'Hybrid · 4+ yrs' },
+        { icon:'Users',  label:'Practice Lead — Retail',  sub:'Toronto · 10+ yrs' },
+      ],
+    },
+    press: {
+      icon: 'FileText',
+      title: 'Press & Media',
+      subtitle: '24 features · 2023–2025',
+      items: [
+        { icon:'FileText', label:'Forbes',           sub:'"Reshaping mid-market ERP" · 2024' },
+        { icon:'FileText', label:'TechCrunch',       sub:'"AI-first consulting" · 2024' },
+        { icon:'FileText', label:'Microsoft Blog',   sub:'Featured Partner Story · 2025' },
+        { icon:'FileText', label:'CIO Review',       sub:'Top 10 D365 Partners · 2024' },
+      ],
+    },
+  }
+  const v = visuals[section] || visuals.global
+
+  return (
+    <div className="company-hero-image" style={{ position:'relative' }}>
+      {/* Soft glow */}
+      <div style={{ position:'absolute', top:'8%', left:'8%', right:'8%', bottom:'8%', borderRadius:32, background:`radial-gradient(circle, ${color}28, transparent 70%)`, filter:'blur(40px)', zIndex:0 }} />
+      {/* Subtle gradient frame */}
+      <div style={{ position:'absolute', top:-10, right:-10, bottom:-10, left:-10, borderRadius:28, background:`linear-gradient(135deg, ${color}, ${C.teal})`, opacity:0.14, zIndex:0 }} />
+
+      {/* Main themed card */}
+      <div style={{ position:'relative', zIndex:1, padding:'32px 30px 28px', borderRadius:24, background:'linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(245,249,255,0.94) 100%)', backdropFilter:'blur(12px)', WebkitBackdropFilter:'blur(12px)', border:`1px solid ${color}22`, boxShadow:'0 32px 80px rgba(0, 53, 128, 0.18), inset 0 1px 0 rgba(255,255,255,0.9)', overflow:'hidden' }}>
+
+        {/* Decorative corner blob */}
+        <div style={{ position:'absolute', top:-50, right:-50, width:200, height:200, borderRadius:'50%', background:`radial-gradient(circle, ${color}1f, transparent 70%)`, pointerEvents:'none' }} />
+
+        {/* Header — big icon + title + subtitle */}
+        <div style={{ display:'flex', alignItems:'flex-start', gap:14, marginBottom:24, position:'relative', zIndex:1 }}>
+          <div style={{ width:54, height:54, borderRadius:14, background:`linear-gradient(135deg, ${color}, ${color}cc)`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, boxShadow:`0 10px 22px ${color}45, inset 0 1px 0 rgba(255,255,255,0.25)` }}>
+            <Ic n={v.icon} s={26} style={{ color:'#fff' }} />
+          </div>
+          <div style={{ minWidth:0, flex:1 }}>
+            <div style={{ fontSize:20, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.18, letterSpacing:'-0.02em' }}>{v.title}</div>
+            <div style={{ fontSize:12.5, color:'#475569', marginTop:6, fontWeight:600, letterSpacing:'.02em' }}>{v.subtitle}</div>
+          </div>
+        </div>
+
+        {/* Items list */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10, position:'relative', zIndex:1 }}>
+          {v.items.map((it, i) => (
+            <div key={i} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px', borderRadius:12, background:'rgba(0, 102, 255, 0.04)', border:'1px solid rgba(0, 102, 255, 0.08)', transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background=`${color}10`; e.currentTarget.style.borderColor=`${color}30`; e.currentTarget.style.transform='translateX(4px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='rgba(0, 102, 255, 0.04)'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.08)'; e.currentTarget.style.transform='none' }}>
+              <div style={{ width:34, height:34, borderRadius:9, background:`${color}14`, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                <Ic n={it.icon} s={16} style={{ color:color }} />
+              </div>
+              <div style={{ minWidth:0, flex:1 }}>
+                <div style={{ fontSize:13.5, fontWeight:800, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.01em', lineHeight:1.3 }}>{it.label}</div>
+                <div style={{ fontSize:11.5, color:'#64748b', marginTop:2, fontWeight:500 }}>{it.sub}</div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
@@ -163,7 +309,7 @@ function AboutSection({ navigate, openConsult }) {
   useReveal()
   return (
     <div>
-      <section style={{ padding:'72px 24px', background:'#fff' }}>
+      <section className="company-section" style={{ padding:'72px 24px', background:'#fff' }}>
         <div className="company-about-g" style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:48, alignItems:'start' }}>
           <div className="rv">
             <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.blue},${C.purple})`, marginBottom:16 }} />
@@ -179,16 +325,19 @@ function AboutSection({ navigate, openConsult }) {
             <p style={{ fontSize:15.5, color:C.textM, lineHeight:1.85, marginBottom:32 }}>
               With 120+ certified consultants across London, New York, New Delhi and Toronto, we serve mid-market and enterprise businesses in manufacturing, retail, financial services, healthcare, logistics and professional services.
             </p>
-            <button onClick={openConsult} style={{ display:'flex', alignItems:'center', gap:8, padding:'13px 28px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+            <button onClick={openConsult} style={{ display:'flex', alignItems:'center', gap:8, padding:'13px 28px', borderRadius:50, background:`linear-gradient(135deg,${C.blue},${C.purple})`, border:'none', color:'#fff', fontSize:14, fontWeight:700, cursor:'pointer', fontFamily:"'Plus Jakarta Sans',sans-serif", boxShadow:`0 8px 24px ${C.blue}33`, transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow=`0 14px 32px ${C.blue}44` }}
+              onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow=`0 8px 24px ${C.blue}33` }}>
               Talk to Our Team <Ic n="Arrow" s={14} style={{ color:'#fff' }} />
             </button>
           </div>
           <div className="rv">
             <div style={{ marginBottom:24 }}>
               <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:16 }}>Our Mission</h3>
-              <div style={{ background:`linear-gradient(135deg,${C.blue},${C.purple})`, borderRadius:18, padding:28, color:'#fff' }}>
-                <Ic n="Target" s={28} style={{ color:'rgba(255,255,255,.5)', marginBottom:12 }} />
-                <p style={{ fontSize:16, lineHeight:1.8, fontWeight:500 }}>
+              <div style={{ background:`linear-gradient(135deg,${C.blue},${C.purple})`, borderRadius:18, padding:28, color:'#fff', position:'relative', overflow:'hidden', boxShadow:`0 12px 32px ${C.blue}28` }}>
+                <div style={{ position:'absolute', top:-30, right:-30, width:140, height:140, borderRadius:'50%', background:'radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%)', pointerEvents:'none' }} />
+                <Ic n="Target" s={28} style={{ color:'rgba(255,255,255,.6)', marginBottom:12 }} />
+                <p style={{ fontSize:16, lineHeight:1.8, fontWeight:500, position:'relative', zIndex:1 }}>
                   "To make Dynamics 365 the competitive advantage of every business we work with — not just a system they have to use, but one they genuinely love."
                 </p>
               </div>
@@ -196,13 +345,13 @@ function AboutSection({ navigate, openConsult }) {
             <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:14 }}>Our Values</h3>
             <div className="company-values-g" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
               {VALUES.map(v => (
-                <div key={v.title} style={{ padding:'16px', borderRadius:14, border:`1.5px solid ${C.border}`, background:'#fff', transition:'all .22s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor=v.color+'55'; e.currentTarget.style.boxShadow=`0 8px 24px ${v.color}12`; e.currentTarget.style.transform='translateY(-3px)' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor=C.border; e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='none' }}>
-                  <div style={{ width:34, height:34, borderRadius:9, background:v.color+'15', display:'flex', alignItems:'center', justifyContent:'center', marginBottom:8 }}>
-                    <Ic n={v.icon} s={16} style={{ color:v.color }} />
+                <div key={v.title} style={{ padding:'18px', borderRadius:14, border:'1px solid rgba(0, 102, 255, 0.10)', background:'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)', boxShadow:'0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)', transition:'all .25s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor=v.color+'45'; e.currentTarget.style.boxShadow=`0 10px 24px ${v.color}1a, inset 0 1px 0 rgba(255,255,255,0.9)`; e.currentTarget.style.transform='translateY(-3px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow='0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)'; e.currentTarget.style.transform='none' }}>
+                  <div style={{ width:34, height:34, borderRadius:9, background:`linear-gradient(135deg, ${v.color}, ${v.color}cc)`, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:10, boxShadow:`0 4px 12px ${v.color}30` }}>
+                    <Ic n={v.icon} s={16} style={{ color:'#fff' }} />
                   </div>
-                  <div style={{ fontSize:13, fontWeight:700, color:C.text, marginBottom:4 }}>{v.title}</div>
+                  <div style={{ fontSize:13, fontWeight:700, color:C.text, marginBottom:4, fontFamily:"'Plus Jakarta Sans',sans-serif" }}>{v.title}</div>
                   <div style={{ fontSize:11.5, color:C.textM, lineHeight:1.6 }}>{v.desc}</div>
                 </div>
               ))}
@@ -212,7 +361,7 @@ function AboutSection({ navigate, openConsult }) {
       </section>
 
       {/* Timeline */}
-      <section style={{ padding:'72px 24px', background:C.bgSoft }}>
+      <section className="company-section" style={{ padding:'72px 24px', background:C.bgSoft }}>
         <div style={{ maxWidth:1280, margin:'0 auto' }}>
           <div className="rv" style={{ textAlign:'center', marginBottom:52 }}>
             <div style={{ display:'inline-flex', background:C.blueL, color:C.blue, borderRadius:50, padding:'6px 16px', fontSize:12, fontWeight:700, marginBottom:16 }}>OUR JOURNEY</div>
@@ -237,27 +386,33 @@ function AboutSection({ navigate, openConsult }) {
   )
 }
 
-// ── Team Section ─────────────────────────────────────────────────────────────────
-// CLIENT PREVIEW MODE: Three different layout styles are stacked below for the client
-// to choose from. Once a style is chosen, delete the other two (and the divider headers)
-// and keep only the selected one.
-//
-// PHOTOS: Leader_2.jpg is wired in. Drop Leader_1.jpg / Leader_3.jpg / Leader_4.jpg into
-// /src/assets/ and uncomment the imports + photo bindings in LEADERS array below.
+// ── Team Section — final design (Style 03 Minimal Grid + bio modal) ─────────────
 function TeamSection() {
   useReveal()
+  const [bioFor, setBioFor] = useState(null)  // member object when modal open, null otherwise
 
-  // Trim to top 4 leaders for the demo. Uses original TEAM data with on-brand blue colors.
-  // Photos: Leader_1.jpg → slot 1, Leader_2.jpg → slot 2, etc.
+  // 4 leaders — already ordered in TEAM array: Deepak, Vinay, Deepa, Vineeth
+  // Photo mapping: Leader_1=Deepak, Leader_4=Vinay, Leader_2=Deepa, Leader_3=Vineeth
   const LEADERS = [
-    { ...TEAM[0], color:C.blue,   photo:Leader_1 },
-    { ...TEAM[1], color:C.purple, photo:Leader_2 },
-    { ...TEAM[2], color:C.teal,   photo:Leader_3 },
-    { ...TEAM[3], color:C.green,  photo:Leader_4 },
+    { ...TEAM[0], color:C.blue,   photo:Leader_1 },  // Deepak — Founder & CEO
+    { ...TEAM[1], color:C.green,  photo:Leader_4 },  // Vinay — Co-Founder & COO
+    { ...TEAM[2], color:C.purple, photo:Leader_2 },  // Deepa — Director of Finance & HR
+    { ...TEAM[3], color:C.teal,   photo:Leader_3 },  // Vineeth — Director of Sales & Marketing
   ]
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (bioFor) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      const onKey = (e) => { if (e.key === 'Escape') setBioFor(null) }
+      window.addEventListener('keydown', onKey)
+      return () => { document.body.style.overflow = prev; window.removeEventListener('keydown', onKey) }
+    }
+  }, [bioFor])
+
   return (
-    <section style={{ padding:'72px 24px', background:'linear-gradient(180deg,#f5f9ff 0%,#fff 35%)' }}>
+    <section className="company-section" style={{ padding:'72px 24px', background:'linear-gradient(180deg,#f5f9ff 0%,#fff 35%)' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
 
         {/* Section header */}
@@ -267,426 +422,86 @@ function TeamSection() {
           <p style={{ color:C.textM, fontSize:16, maxWidth:600, lineHeight:1.65 }}>The people steering DevinStratus — deep Dynamics 365 expertise, global consulting experience, and an obsession with client outcomes.</p>
         </div>
 
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 1 — EDITORIAL / MAGAZINE COVER
-            Tall portrait cards with full-bleed photo + dark gradient overlay.
-            Best for: emphasising people. Bold, modern, tech-magazine feel.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="01" name="Editorial" desc="Bold magazine-style cards. Photo dominates, info overlays the bottom." />
-        <div className="leaders-grid-editorial">
+        {/* Cards grid */}
+        <div className="leaders-grid-final">
           {LEADERS.map((m, i) => (
-            <div key={`ed-${m.name}`} className="rv leader-editorial"
-              style={{
-                position:'relative', borderRadius:22, overflow:'hidden',
-                aspectRatio:'3 / 4',
-                border:'1px solid rgba(0, 102, 255, 0.10)',
-                boxShadow:'0 4px 20px rgba(0, 53, 128, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                cursor:'default', transition:'all .35s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .5s ease both ${i*70}ms`
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform='translateY(-6px)'; e.currentTarget.style.boxShadow=`0 24px 60px ${m.color}28` }}
-              onMouseLeave={e => { e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 4px 20px rgba(0, 53, 128, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)' }}>
-
-              <Portrait member={m} variant="full" />
-
-              {/* Dark gradient overlay at bottom */}
-              <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg, transparent 40%, rgba(0,18,51,0.55) 75%, rgba(0,18,51,0.92) 100%)', pointerEvents:'none' }} />
-
-              {/* Top-right LinkedIn pill */}
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                style={{ position:'absolute', top:14, right:14, display:'flex', alignItems:'center', justifyContent:'center', width:36, height:36, borderRadius:'50%', background:'rgba(255,255,255,0.92)', backdropFilter:'blur(8px)', textDecoration:'none', boxShadow:'0 4px 12px rgba(0,0,0,0.15)', transition:'all .2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background='#fff'; e.currentTarget.style.transform='scale(1.1)' }}
-                onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.92)'; e.currentTarget.style.transform='none' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill={m.color}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </a>
-
-              {/* Bottom info overlay */}
-              <div style={{ position:'absolute', left:0, right:0, bottom:0, padding:'24px 22px', color:'#fff', zIndex:2 }}>
-                <div style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'4px 11px', borderRadius:50, background:`${m.color}cc`, fontSize:10, fontWeight:800, letterSpacing:'.10em', textTransform:'uppercase', marginBottom:10, backdropFilter:'blur(6px)' }}>
-                  <span style={{ width:5, height:5, borderRadius:'50%', background:'#fff', boxShadow:'0 0 6px rgba(255,255,255,0.6)' }} />
-                  {m.cert}
-                </div>
-                <h3 style={{ fontSize:20, fontWeight:800, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:4, lineHeight:1.18, letterSpacing:'-0.01em' }}>{m.name}</h3>
-                <div style={{ fontSize:13, fontWeight:600, color:'rgba(255,255,255,0.88)', marginBottom:8 }}>{m.role}</div>
-                <div style={{ display:'flex', alignItems:'center', gap:8, fontSize:11.5, color:'rgba(255,255,255,0.7)' }}>
-                  <Ic n="Pin" s={11} style={{ color:'rgba(255,255,255,0.7)' }} />{m.loc}
-                  <span>·</span>
-                  <span>{m.exp}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 2 — EXECUTIVE SPLIT (horizontal card)
-            Photo on left, full info on right. Corporate, traditional enterprise.
-            Best for: a more serious / consulting-firm feel. More info per card.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="02" name="Executive Split" desc="Photo left, expanded bio right. Traditional enterprise feel — closer to the Big-4 consulting style." />
-        <div className="leaders-grid-split">
-          {LEADERS.map((m, i) => (
-            <div key={`sp-${m.name}`} className="rv leader-split"
-              style={{
-                display:'flex', borderRadius:20, overflow:'hidden',
-                background:'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)',
-                border:'1px solid rgba(0, 102, 255, 0.10)',
-                boxShadow:'0 4px 16px rgba(0, 53, 128, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                cursor:'default', transition:'all .3s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .5s ease both ${i*70}ms`,
-                minHeight:240
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`${m.color}40`; e.currentTarget.style.boxShadow=`0 16px 40px ${m.color}1f` }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(0, 53, 128, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9)' }}>
-
-              {/* Left: photo */}
-              <div className="leader-split-photo" style={{ position:'relative', width:200, flexShrink:0, background:`linear-gradient(135deg,${m.color}18,${m.color}08)`, overflow:'hidden' }}>
-                <Portrait member={m} variant="full" />
-                {/* Color accent bar */}
-                <div style={{ position:'absolute', top:0, left:0, bottom:0, width:4, background:`linear-gradient(180deg,${m.color},${m.color}66)` }} />
-              </div>
-
-              {/* Right: content */}
-              <div style={{ flex:1, padding:'24px 26px', display:'flex', flexDirection:'column', justifyContent:'space-between', minWidth:0 }}>
-                <div>
-                  <div style={{ fontSize:10, fontWeight:800, letterSpacing:'.18em', color:m.color, textTransform:'uppercase', marginBottom:8 }}>{m.role.split(',')[0].split(' & ')[0]}</div>
-                  <h3 style={{ fontSize:21, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8, lineHeight:1.18, letterSpacing:'-0.01em' }}>{m.name}</h3>
-                  <p style={{ fontSize:13.5, color:C.textM, lineHeight:1.65, marginBottom:14, display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{m.about}</p>
-
-                  {/* Meta pills */}
-                  <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:16 }}>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 11px', borderRadius:50, background:`${m.color}10`, fontSize:11, fontWeight:700, color:m.color }}>
-                      <Ic n="Pin" s={10} style={{ color:m.color }} />{m.loc}
-                    </span>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 11px', borderRadius:50, background:'rgba(0,102,255,0.06)', fontSize:11, fontWeight:700, color:C.textM }}>
-                      <Ic n="Clock" s={10} style={{ color:C.textL }} />{m.exp}
-                    </span>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 11px', borderRadius:50, background:'rgba(0,102,255,0.06)', fontSize:11, fontWeight:700, color:C.textM }}>
-                      <Ic n="Award" s={10} style={{ color:C.textL }} />{m.cert.split(' · ')[0]}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Action row */}
-                <div style={{ display:'flex', gap:10 }}>
-                  <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 14px', borderRadius:10, background:`linear-gradient(135deg,${m.color},${m.color}cc)`, color:'#fff', fontSize:12, fontWeight:700, textDecoration:'none', boxShadow:`0 4px 12px ${m.color}33`, transition:'all .2s' }}
-                    onMouseEnter={e => e.currentTarget.style.transform='translateY(-1px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform='none'}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    Connect
-                  </a>
-                  <button
-                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 14px', borderRadius:10, background:'transparent', border:`1.5px solid ${m.color}40`, color:m.color, fontSize:12, fontWeight:700, cursor:'pointer', transition:'all .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background=`${m.color}10` }}
-                    onMouseLeave={e => { e.currentTarget.style.background='transparent' }}>
-                    <Ic n="Mail" s={12} style={{ color:m.color }} /> Contact
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 3 — MINIMAL (clean grid with circular portraits)
-            Round photo, clean typography, hover reveals subtle ring + role.
-            Best for: a quieter, sophisticated, easy-to-scan look.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="03" name="Minimal Grid" desc="Clean circular portraits, generous white space. The most scalable if you grow to 8+ leaders." />
-        <div className="leaders-grid-minimal">
-          {LEADERS.map((m, i) => (
-            <div key={`mn-${m.name}`} className="rv leader-minimal"
-              style={{
-                padding:'32px 22px 26px',
-                borderRadius:20,
-                background:'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)',
-                border:'1px solid rgba(0, 102, 255, 0.08)',
-                boxShadow:'0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                textAlign:'center',
-                transition:'all .3s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .5s ease both ${i*70}ms`,
-                cursor:'default'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`${m.color}38`; e.currentTarget.style.transform='translateY(-4px)'; e.currentTarget.style.boxShadow=`0 16px 40px ${m.color}1c, inset 0 1px 0 rgba(255, 255, 255, 0.9)` }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.08)'; e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow='0 1px 3px rgba(0, 53, 128, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9)' }}>
-
-              {/* Circular photo wrapped in gradient ring */}
-              <div style={{ position:'relative', width:120, height:120, margin:'0 auto 18px' }}>
-                {/* Gradient ring */}
-                <div style={{ position:'absolute', inset:-3, borderRadius:'50%', background:`linear-gradient(135deg,${m.color},${m.color}66)`, padding:3, boxShadow:`0 8px 24px ${m.color}33` }}>
-                  <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'#fff' }}>
-                    <Portrait member={m} variant="circle" />
-                  </div>
-                </div>
-              </div>
-
-              <h3 style={{ fontSize:17, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:5, letterSpacing:'-0.01em' }}>{m.name}</h3>
-              <div style={{ fontSize:12.5, fontWeight:600, color:m.color, marginBottom:14, lineHeight:1.4 }}>{m.role}</div>
-
-              {/* Single divider */}
-              <div style={{ height:1, background:`linear-gradient(90deg, transparent, ${m.color}30, transparent)`, margin:'0 0 14px' }} />
-
-              {/* Quick meta */}
-              <div style={{ display:'flex', justifyContent:'center', gap:14, fontSize:11, color:C.textM, marginBottom:16 }}>
-                <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Pin" s={10} style={{ color:C.textL }} />{m.loc.split(',')[0]}</span>
-                <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Clock" s={10} style={{ color:C.textL }} />{m.exp}</span>
-              </div>
-
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'8px 18px', borderRadius:50, background:`${m.color}10`, color:m.color, fontSize:12, fontWeight:700, textDecoration:'none', transition:'all .2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background=m.color; e.currentTarget.style.color='#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background=`${m.color}10`; e.currentTarget.style.color=m.color }}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                LinkedIn
-              </a>
-            </div>
-          ))}
-        </div>
-
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 4 — HERO PROFILE (content left, BIG photo right)
-            Editorial / magazine spread feel. Large photo dominates the right.
-            Best for: making each leader feel important. Maximum visual weight per card.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="04" name="Hero Profile" desc="Large photo on the right, generous content on the left. Each card is a mini-spread — the most premium / editorial feel." />
-        <div className="leaders-grid-hero">
-          {LEADERS.map((m, i) => (
-            <div key={`hr-${m.name}`} className="rv leader-hero"
-              style={{
-                display:'flex', borderRadius:24, overflow:'hidden',
-                background:'linear-gradient(135deg, #ffffff 0%, #fafcff 100%)',
-                border:'1px solid rgba(0, 102, 255, 0.10)',
-                boxShadow:'0 6px 24px rgba(0, 53, 128, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                cursor:'default', transition:'all .35s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .55s ease both ${i*80}ms`,
-                minHeight:340, position:'relative'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`${m.color}45`; e.currentTarget.style.boxShadow=`0 24px 64px ${m.color}22, inset 0 1px 0 rgba(255, 255, 255, 0.9)`; e.currentTarget.style.transform='translateY(-6px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow='0 6px 24px rgba(0, 53, 128, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)'; e.currentTarget.style.transform='none' }}>
-
-              {/* Subtle decorative blob behind content */}
-              <div style={{ position:'absolute', top:-40, left:-40, width:240, height:240, borderRadius:'50%', background:`radial-gradient(circle, ${m.color}10, transparent 70%)`, pointerEvents:'none' }} />
-
-              {/* Left: content (60%) */}
-              <div className="leader-hero-content" style={{ flex:'1 1 60%', padding:'40px 36px 36px', display:'flex', flexDirection:'column', justifyContent:'space-between', minWidth:0, position:'relative', zIndex:1 }}>
-                <div>
-                  {/* Role pill at top */}
-                  <div style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'5px 12px', borderRadius:50, background:`${m.color}12`, border:`1px solid ${m.color}25`, fontSize:10.5, fontWeight:800, color:m.color, letterSpacing:'.14em', textTransform:'uppercase', marginBottom:18 }}>
-                    <span style={{ width:5, height:5, borderRadius:'50%', background:m.color }} />
-                    {m.role.split(',')[0].split(' & ')[0]}
-                  </div>
-
-                  <h3 style={{ fontSize:'clamp(22px, 2.4vw, 28px)', fontWeight:900, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:8, lineHeight:1.15, letterSpacing:'-0.02em' }}>{m.name}</h3>
-
-                  <div style={{ fontSize:13, fontWeight:600, color:m.color, marginBottom:18 }}>{m.role}</div>
-
-                  <p style={{ fontSize:14, color:C.textM, lineHeight:1.7, marginBottom:22, display:'-webkit-box', WebkitLineClamp:4, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{m.about}</p>
-
-                  {/* Achievements row */}
-                  <div style={{ display:'flex', flexWrap:'wrap', gap:10, marginBottom:24 }}>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'7px 13px', borderRadius:10, background:'rgba(0, 102, 255, 0.06)', border:'1px solid rgba(0, 102, 255, 0.10)', fontSize:11.5, fontWeight:700, color:C.textM }}>
-                      <Ic n="Pin" s={11} style={{ color:m.color }} />{m.loc}
-                    </span>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'7px 13px', borderRadius:10, background:'rgba(0, 102, 255, 0.06)', border:'1px solid rgba(0, 102, 255, 0.10)', fontSize:11.5, fontWeight:700, color:C.textM }}>
-                      <Ic n="Clock" s={11} style={{ color:m.color }} />{m.exp} experience
-                    </span>
-                    <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'7px 13px', borderRadius:10, background:`${m.color}10`, border:`1px solid ${m.color}25`, fontSize:11.5, fontWeight:700, color:m.color }}>
-                      <Ic n="Award" s={11} style={{ color:m.color }} />{m.cert}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Action buttons */}
-                <div style={{ display:'flex', gap:10 }}>
-                  <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                    style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'11px 20px', borderRadius:50, background:`linear-gradient(135deg, ${m.color}, ${m.color}cc)`, color:'#fff', fontSize:12.5, fontWeight:700, textDecoration:'none', boxShadow:`0 6px 18px ${m.color}38`, transition:'all .2s' }}
-                    onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform='none'}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    Connect on LinkedIn
-                  </a>
-                  <button
-                    style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'11px 20px', borderRadius:50, background:'transparent', border:`1.5px solid ${m.color}40`, color:m.color, fontSize:12.5, fontWeight:700, cursor:'pointer', transition:'all .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background=`${m.color}10`; e.currentTarget.style.borderColor=m.color }}
-                    onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor=`${m.color}40` }}>
-                    <Ic n="Mail" s={12} style={{ color:m.color }} /> Contact
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: BIG photo (40% width, fills full card height) */}
-              <div className="leader-hero-photo" style={{ flex:'0 0 40%', position:'relative', overflow:'hidden', background:`linear-gradient(135deg, ${m.color}15, ${m.color}05)`, minHeight:340 }}>
-                <Portrait member={m} variant="full" />
-                {/* Subtle gradient overlay on photo edge for blending */}
-                <div style={{ position:'absolute', top:0, left:0, bottom:0, width:60, background:`linear-gradient(90deg, ${m.color}10, transparent)`, pointerEvents:'none' }} />
-                {/* Color accent bar on left edge of photo */}
-                <div style={{ position:'absolute', top:0, left:0, bottom:0, width:3, background:`linear-gradient(180deg, ${m.color}, ${m.color}66)` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 5 — EXECUTIVE CARD (circular photo top-right, content left)
-            Compact horizontal card. Small circular portrait floats top-right,
-            full content takes the left/main area.
-            Best for: when you want clean, scannable cards with personality.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="05" name="Executive Card" desc="Circular portrait floats top-right, all info on the left. Clean, scannable, modern executive feel." />
-        <div className="leaders-grid-exec">
-          {LEADERS.map((m, i) => (
-            <div key={`ex-${m.name}`} className="rv leader-exec"
+            <div key={`lf-${m.name}`} className="rv leader-final"
               style={{
                 position:'relative',
-                padding:'32px 30px 28px',
-                borderRadius:20,
-                background:'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)',
-                border:'1px solid rgba(0, 102, 255, 0.10)',
-                boxShadow:'0 4px 16px rgba(0, 53, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-                cursor:'default', transition:'all .35s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .55s ease both ${i*70}ms`,
-                overflow:'hidden'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor=`${m.color}45`; e.currentTarget.style.boxShadow=`0 18px 44px ${m.color}20, inset 0 1px 0 rgba(255, 255, 255, 0.9)`; e.currentTarget.style.transform='translateY(-5px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(0, 53, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9)'; e.currentTarget.style.transform='none' }}>
-
-              {/* Left accent bar */}
-              <div style={{ position:'absolute', top:0, left:0, bottom:0, width:4, background:`linear-gradient(180deg, ${m.color}, ${m.color}66)` }} />
-
-              {/* Decorative corner blob */}
-              <div style={{ position:'absolute', top:-30, right:-30, width:140, height:140, borderRadius:'50%', background:`radial-gradient(circle, ${m.color}1a, transparent 70%)`, pointerEvents:'none' }} />
-
-              {/* Photo top-right (circular) */}
-              <div style={{ position:'absolute', top:24, right:24, width:84, height:84, borderRadius:'50%', padding:3, background:`linear-gradient(135deg, ${m.color}, ${m.color}88)`, boxShadow:`0 8px 22px ${m.color}38`, zIndex:2 }}>
-                <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'#fff' }}>
-                  <Portrait member={m} variant="circle" />
-                </div>
-              </div>
-
-              {/* Content (with right-padding to clear the photo) */}
-              <div style={{ paddingRight:108, position:'relative', zIndex:1 }}>
-                {/* Role pill */}
-                <div style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'4px 10px', borderRadius:50, background:`${m.color}12`, fontSize:10, fontWeight:800, color:m.color, letterSpacing:'.14em', textTransform:'uppercase', marginBottom:14 }}>
-                  <span style={{ width:4, height:4, borderRadius:'50%', background:m.color }} />
-                  {m.role.split(',')[0].split(' & ')[0]}
-                </div>
-
-                <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:5, lineHeight:1.2, letterSpacing:'-0.01em' }}>{m.name}</h3>
-                <div style={{ fontSize:13, fontWeight:600, color:m.color, marginBottom:16 }}>{m.role}</div>
-              </div>
-
-              {/* About — full width since photo space is above */}
-              <p style={{ fontSize:13.5, color:C.textM, lineHeight:1.65, marginBottom:18, marginTop:14, display:'-webkit-box', WebkitLineClamp:3, WebkitBoxOrient:'vertical', overflow:'hidden', position:'relative', zIndex:1 }}>{m.about}</p>
-
-              {/* Meta + actions row */}
-              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, paddingTop:16, borderTop:`1px solid ${m.color}15`, position:'relative', zIndex:1, flexWrap:'wrap' }}>
-                <div style={{ display:'flex', gap:12, fontSize:11.5, color:C.textM, flexWrap:'wrap' }}>
-                  <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Pin" s={11} style={{ color:m.color }} />{m.loc}</span>
-                  <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Clock" s={11} style={{ color:m.color }} />{m.exp}</span>
-                  <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Award" s={11} style={{ color:m.color }} />{m.cert.split(' · ')[0]}</span>
-                </div>
-
-                <div style={{ display:'flex', gap:8 }}>
-                  <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                    style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'7px 14px', borderRadius:50, background:`linear-gradient(135deg, ${m.color}, ${m.color}cc)`, color:'#fff', fontSize:11.5, fontWeight:700, textDecoration:'none', boxShadow:`0 4px 12px ${m.color}33`, transition:'all .2s' }}
-                    onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform='none'}>
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    Connect
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ════════════════════════════════════════════════════════════
-            STYLE 6 — CLASSIC PROFILE (full layout, photo top-right)
-            The original detailed card layout — name, role, full bio, cert pill,
-            both action buttons — but with the circular photo moved to TOP-RIGHT
-            instead of top-left. Full info per card.
-            ════════════════════════════════════════════════════════════ */}
-        <DemoLabel n="06" name="Classic Profile" desc="Detailed card layout — circular photo top-right with online indicator, full bio, cert badge, and both LinkedIn + Contact buttons." />
-        <div className="leaders-grid-classic">
-          {LEADERS.map((m, i) => (
-            <div key={`cl-${m.name}`} className="rv leader-classic"
-              style={{
-                position:'relative',
+                paddingBottom:24,
                 borderRadius:22,
                 background:'#ffffff',
                 border:'1px solid rgba(0, 102, 255, 0.10)',
                 boxShadow:'0 4px 16px rgba(0, 53, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
                 overflow:'hidden',
                 cursor:'default', transition:'all .35s cubic-bezier(.22,1,.36,1)',
-                animation:`fadeUp .55s ease both ${i*70}ms`
+                animation:`fadeUp .55s ease both ${i*70}ms`,
+                textAlign:'center',
+                display:'flex', flexDirection:'column'
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor=`${m.color}45`; e.currentTarget.style.boxShadow=`0 18px 44px ${m.color}20, inset 0 1px 0 rgba(255, 255, 255, 0.9)`; e.currentTarget.style.transform='translateY(-5px)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.10)'; e.currentTarget.style.boxShadow='0 4px 16px rgba(0, 53, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9)'; e.currentTarget.style.transform='none' }}>
 
-              {/* Top section: avatar (top-right) + name (left) over coloured backdrop */}
-              <div style={{ position:'relative', padding:'28px 28px 0', background:`linear-gradient(160deg, ${m.color}14 0%, transparent 70%)` }}>
-                {/* Decorative corner shape — mirrored to LEFT side now */}
-                <div style={{ position:'absolute', top:0, left:0, width:90, height:90, background:`linear-gradient(135deg, ${m.color}18, transparent)`, borderRadius:'22px 0 90px 0', pointerEvents:'none' }} />
+              {/* Top section with soft gradient backdrop (borrowed from Style 6) */}
+              <div style={{ position:'relative', padding:'36px 22px 0', background:`linear-gradient(160deg, ${m.color}14 0%, transparent 75%)` }}>
+                {/* Decorative corner shape */}
+                <div style={{ position:'absolute', top:0, right:0, width:90, height:90, background:`linear-gradient(225deg, ${m.color}18, transparent)`, borderRadius:'0 22px 0 90px', pointerEvents:'none' }} />
 
-                {/* Photo circle — TOP-RIGHT */}
-                <div style={{ position:'absolute', top:24, right:24, width:80, height:80, borderRadius:'50%', padding:3, background:`linear-gradient(135deg, ${m.color}, ${m.color}88)`, boxShadow:`0 8px 24px ${m.color}40`, zIndex:2 }}>
-                  <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'#fff', position:'relative' }}>
-                    <Portrait member={m} variant="circle" />
+                {/* FOUNDING TEAM badge — only for founders */}
+                {m.role.toLowerCase().includes('founder') && (
+                  <div style={{ position:'absolute', top:14, left:14, display:'inline-flex', alignItems:'center', gap:5, padding:'4px 10px 4px 8px', borderRadius:50, background:`linear-gradient(135deg, ${m.color}, ${m.color}cc)`, boxShadow:`0 4px 10px ${m.color}40`, zIndex:3 }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3 6.5 7 1-5 4.5 1.5 7L12 17.5 5.5 21 7 14 2 9.5l7-1z"/></svg>
+                    <span style={{ fontSize:8.5, fontWeight:800, color:'#fff', letterSpacing:'.12em', textTransform:'uppercase', whiteSpace:'nowrap' }}>Founder</span>
                   </div>
-                  {/* Online indicator dot */}
-                  <div style={{ position:'absolute', bottom:3, right:3, width:14, height:14, borderRadius:'50%', background:'#4ade80', border:'2.5px solid #fff', boxShadow:'0 0 6px rgba(74, 222, 128, 0.5)', zIndex:3 }} />
-                </div>
+                )}
 
-                {/* Name & role (with right padding to clear photo) */}
-                <div style={{ paddingRight:104, position:'relative', zIndex:1, minHeight:80 }}>
-                  <h3 style={{ fontSize:19, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:5, letterSpacing:'-0.01em', lineHeight:1.2 }}>{m.name}</h3>
-                  <div style={{ fontSize:13.5, fontWeight:600, color:m.color, marginBottom:12 }}>{m.role}</div>
+                {/* Circular photo 160×160 with gradient ring */}
+                <div style={{ position:'relative', width:160, height:160, margin:'0 auto 20px', zIndex:1 }}>
+                  {/* Gradient ring */}
+                  <div style={{ position:'absolute', inset:-4, borderRadius:'50%', background:`linear-gradient(135deg, ${m.color}, ${m.color}66)`, padding:4, boxShadow:`0 10px 28px ${m.color}38` }}>
+                    <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'#fff' }}>
+                      <Portrait member={m} variant="circle" />
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* Body */}
-              <div style={{ padding:'12px 28px 26px' }}>
-                {/* Meta row */}
-                <div style={{ display:'flex', gap:10, marginBottom:14, flexWrap:'wrap', alignItems:'center' }}>
-                  <span style={{ display:'inline-flex', alignItems:'center', gap:5, fontSize:11.5, color:C.textM, fontWeight:600 }}>
-                    <Ic n="Pin" s={11} style={{ color:m.color }} />{m.loc}
-                  </span>
-                  <span style={{ width:3, height:3, borderRadius:'50%', background:C.textL }} />
-                  <span style={{ fontSize:11.5, color:C.textM, fontWeight:600 }}>{m.exp} exp</span>
+              <div style={{ padding:'0 22px', display:'flex', flexDirection:'column', flex:1 }}>
+                <h3 style={{ fontSize:18, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:6, letterSpacing:'-0.01em', lineHeight:1.25 }}>{m.name}</h3>
+                <div style={{ fontSize:13, fontWeight:600, color:m.color, marginBottom:16, lineHeight:1.4 }}>{m.role}</div>
+
+                {/* Single divider */}
+                <div style={{ height:1, background:`linear-gradient(90deg, transparent, ${m.color}30, transparent)`, margin:'0 0 16px' }} />
+
+                {/* Quick meta */}
+                <div style={{ display:'flex', justifyContent:'center', gap:14, fontSize:11.5, color:C.textM, marginBottom:18, flexWrap:'wrap' }}>
+                  <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Pin" s={11} style={{ color:C.textL }} />{m.loc}</span>
+                  <span style={{ display:'inline-flex', alignItems:'center', gap:4 }}><Ic n="Clock" s={11} style={{ color:C.textL }} />{m.exp}</span>
                 </div>
 
-                {/* About text */}
-                <p style={{ fontSize:13, color:C.textM, lineHeight:1.7, marginBottom:18, display:'-webkit-box', WebkitLineClamp:4, WebkitBoxOrient:'vertical', overflow:'hidden' }}>{m.about}</p>
-
-                {/* Cert badge */}
-                <div style={{ marginBottom:18, padding:'7px 13px', borderRadius:10, background:`${m.color}10`, border:`1px solid ${m.color}22`, display:'inline-flex', alignItems:'center', gap:6 }}>
-                  <Ic n="Award" s={11} style={{ color:m.color }} />
-                  <span style={{ fontSize:11, fontWeight:700, color:m.color }}>{m.cert}</span>
-                </div>
-
-                {/* Action buttons */}
-                <div style={{ display:'flex', gap:10 }}>
+                {/* Action buttons row */}
+                <div style={{ display:'flex', gap:8, marginTop:'auto' }}>
+                  <button onClick={() => setBioFor(m)}
+                    style={{ flex:1, display:'inline-flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 14px', borderRadius:50, background:`${m.color}10`, color:m.color, fontSize:12, fontWeight:700, border:`1px solid ${m.color}25`, cursor:'pointer', transition:'all .2s', fontFamily:"'Plus Jakarta Sans',sans-serif" }}
+                    onMouseEnter={e => { e.currentTarget.style.background=m.color; e.currentTarget.style.color='#fff'; e.currentTarget.style.borderColor=m.color }}
+                    onMouseLeave={e => { e.currentTarget.style.background=`${m.color}10`; e.currentTarget.style.color=m.color; e.currentTarget.style.borderColor=`${m.color}25` }}>
+                    <Ic n="FileText" s={11} />
+                    Read Bio
+                  </button>
                   <a href={m.linkedin} target="_blank" rel="noopener noreferrer"
-                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px 14px', borderRadius:10, background:`linear-gradient(135deg, ${m.color}, ${m.color}cc)`, color:'#fff', fontSize:12.5, fontWeight:700, textDecoration:'none', boxShadow:`0 4px 12px ${m.color}33`, transition:'all .2s' }}
+                    style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:6, padding:'9px 16px', borderRadius:50, background:`linear-gradient(135deg, ${m.color}, ${m.color}cc)`, color:'#fff', fontSize:12, fontWeight:700, textDecoration:'none', boxShadow:`0 4px 12px ${m.color}33`, transition:'all .2s' }}
                     onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
                     onMouseLeave={e => e.currentTarget.style.transform='none'}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    LinkedIn
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                   </a>
-                  <button
-                    style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'10px 14px', borderRadius:10, background:'#fff', border:`1.5px solid ${m.color}40`, color:m.color, fontSize:12.5, fontWeight:700, cursor:'pointer', transition:'all .2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background=`${m.color}10`; e.currentTarget.style.borderColor=m.color }}
-                    onMouseLeave={e => { e.currentTarget.style.background='#fff'; e.currentTarget.style.borderColor=`${m.color}40` }}>
-                    <Ic n="Mail" s={12} style={{ color:m.color }} /> Contact
-                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Bottom CTA — kept from original, recoloured to blue family */}
+        {/* Bottom CTA */}
         <div className="rv" style={{ marginTop:48, padding:'36px 40px', borderRadius:24, background:'linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%)', border:'1px solid rgba(0, 102, 255, 0.10)', boxShadow:'0 4px 20px rgba(0, 53, 128, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9)', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:20 }}>
           <div>
             <h3 style={{ fontSize:20, fontWeight:800, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:6, letterSpacing:'-0.01em' }}>Plus 100+ More Certified Consultants</h3>
@@ -706,58 +521,104 @@ function TeamSection() {
         </div>
       </div>
 
-      {/* ───────── Inline styles for the team layouts (responsive) ───────── */}
+      {/* ─────────── Bio Modal — portaled to body so it escapes any transformed ancestor ─────────── */}
+      {bioFor && createPortal(
+        <div onClick={() => setBioFor(null)}
+          style={{ position:'fixed', top:0, left:0, right:0, bottom:0, zIndex:99999, background:'rgba(10, 14, 30, 0.65)', backdropFilter:'blur(8px)', WebkitBackdropFilter:'blur(8px)', display:'flex', alignItems:'center', justifyContent:'center', padding:20, animation:'bioFadeIn .25s ease' }}>
+          <div onClick={(e) => e.stopPropagation()}
+            style={{ position:'relative', width:'100%', maxWidth:560, maxHeight:'88vh', overflowY:'auto', borderRadius:22, background:'linear-gradient(180deg, #ffffff 0%, #fafcff 100%)', border:`1px solid ${bioFor.color}30`, boxShadow:`0 28px 64px rgba(0, 14, 40, 0.40), 0 0 0 1px rgba(255,255,255,0.6) inset`, animation:'bioPopIn .35s cubic-bezier(.22,1,.36,1)', margin:'auto' }}>
+
+            {/* Close button */}
+            <button onClick={() => setBioFor(null)}
+              aria-label="Close"
+              style={{ position:'absolute', top:14, right:14, width:34, height:34, borderRadius:'50%', background:'rgba(0, 14, 40, 0.06)', border:'1px solid rgba(0, 14, 40, 0.10)', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', zIndex:2, transition:'all .2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background='rgba(0, 14, 40, 0.12)'; e.currentTarget.style.transform='rotate(90deg)' }}
+              onMouseLeave={e => { e.currentTarget.style.background='rgba(0, 14, 40, 0.06)'; e.currentTarget.style.transform='none' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.text} strokeWidth="2.5" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+
+            {/* Header band — color-tinted backdrop */}
+            <div style={{ padding:'40px 32px 24px', background:`linear-gradient(160deg, ${bioFor.color}14 0%, transparent 75%)`, borderRadius:'22px 22px 0 0', position:'relative', overflow:'hidden' }}>
+              <div style={{ position:'absolute', top:-30, right:-30, width:160, height:160, borderRadius:'50%', background:`radial-gradient(circle, ${bioFor.color}1c, transparent 70%)`, pointerEvents:'none' }} />
+
+              <div style={{ display:'flex', alignItems:'center', gap:18, position:'relative', zIndex:1 }}>
+                {/* Bigger photo in modal */}
+                <div style={{ position:'relative', width:96, height:96, flexShrink:0 }}>
+                  <div style={{ position:'absolute', inset:-3, borderRadius:'50%', background:`linear-gradient(135deg, ${bioFor.color}, ${bioFor.color}66)`, padding:3, boxShadow:`0 8px 22px ${bioFor.color}40` }}>
+                    <div style={{ width:'100%', height:'100%', borderRadius:'50%', overflow:'hidden', background:'#fff' }}>
+                      <Portrait member={bioFor} variant="circle" />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ minWidth:0 }}>
+                  {bioFor.role.toLowerCase().includes('founder') && (
+                    <div style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'3px 10px 3px 7px', borderRadius:50, background:`linear-gradient(135deg, ${bioFor.color}, ${bioFor.color}cc)`, boxShadow:`0 3px 8px ${bioFor.color}40`, marginBottom:8 }}>
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l3 6.5 7 1-5 4.5 1.5 7L12 17.5 5.5 21 7 14 2 9.5l7-1z"/></svg>
+                      <span style={{ fontSize:8, fontWeight:800, color:'#fff', letterSpacing:'.12em', textTransform:'uppercase', whiteSpace:'nowrap' }}>Founder</span>
+                    </div>
+                  )}
+                  <h3 style={{ fontSize:24, fontWeight:900, color:C.text, fontFamily:"'Plus Jakarta Sans',sans-serif", marginBottom:4, letterSpacing:'-0.02em', lineHeight:1.15 }}>{bioFor.name}</h3>
+                  <div style={{ fontSize:13.5, fontWeight:700, color:bioFor.color, lineHeight:1.4 }}>{bioFor.role}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div style={{ padding:'8px 32px 32px' }}>
+              {/* Meta pills */}
+              <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:20 }}>
+                <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'6px 12px', borderRadius:50, background:`${bioFor.color}10`, fontSize:11.5, fontWeight:700, color:bioFor.color }}>
+                  <Ic n="Pin" s={11} style={{ color:bioFor.color }} />{bioFor.loc}
+                </span>
+                <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'6px 12px', borderRadius:50, background:'rgba(0,14,40,0.05)', fontSize:11.5, fontWeight:700, color:C.textM }}>
+                  <Ic n="Clock" s={11} style={{ color:C.textL }} />{bioFor.exp} experience
+                </span>
+                <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'6px 12px', borderRadius:50, background:`${bioFor.color}10`, fontSize:11.5, fontWeight:700, color:bioFor.color }}>
+                  <Ic n="Award" s={11} style={{ color:bioFor.color }} />{bioFor.cert}
+                </span>
+              </div>
+
+              {/* Bio text */}
+              <p style={{ fontSize:14.5, color:C.textM, lineHeight:1.8, marginBottom:24 }}>{bioFor.about}</p>
+
+              {/* CTA row */}
+              <div style={{ display:'flex', gap:10, paddingTop:16, borderTop:`1px solid ${bioFor.color}15` }}>
+                <a href={bioFor.linkedin} target="_blank" rel="noopener noreferrer"
+                  style={{ flex:1, display:'inline-flex', alignItems:'center', justifyContent:'center', gap:7, padding:'12px 20px', borderRadius:50, background:`linear-gradient(135deg, ${bioFor.color}, ${bioFor.color}cc)`, color:'#fff', fontSize:13, fontWeight:700, textDecoration:'none', boxShadow:`0 6px 16px ${bioFor.color}38`, transition:'all .2s' }}
+                  onMouseEnter={e => e.currentTarget.style.transform='translateY(-2px)'}
+                  onMouseLeave={e => e.currentTarget.style.transform='none'}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  Connect on LinkedIn
+                </a>
+                <button onClick={() => setBioFor(null)}
+                  style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', padding:'12px 22px', borderRadius:50, background:'transparent', border:`1.5px solid ${bioFor.color}40`, color:bioFor.color, fontSize:13, fontWeight:700, cursor:'pointer', transition:'all .2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.background=`${bioFor.color}10`; e.currentTarget.style.borderColor=bioFor.color }}
+                  onMouseLeave={e => { e.currentTarget.style.background='transparent'; e.currentTarget.style.borderColor=`${bioFor.color}40` }}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ─────────── Inline styles ─────────── */}
       <style>{`
-        .team-demo-label { display:flex; align-items:flex-start; gap:14px; margin:0 0 22px; padding:14px 18px; border-radius:14px; background:linear-gradient(180deg, rgba(0,102,255,0.04), rgba(0,102,255,0.01)); border:1px dashed rgba(0,102,255,0.22); }
-        .team-demo-label-num { flex-shrink:0; width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, #0066FF, #003580); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; font-family:'Plus Jakarta Sans',sans-serif; box-shadow:0 4px 12px rgba(0,102,255,0.30); }
-        .team-demo-label-text strong { display:block; font-size:14px; font-weight:800; color:${C.text}; font-family:'Plus Jakarta Sans',sans-serif; margin-bottom:2px; letter-spacing:-0.01em; }
-        .team-demo-label-text span { font-size:12.5px; color:${C.textM}; line-height:1.5; }
+        @keyframes bioFadeIn { from { opacity:0 } to { opacity:1 } }
+        @keyframes bioPopIn  { from { opacity:0; transform: translateY(20px) scale(.96) } to { opacity:1; transform: none } }
 
-        .leaders-grid-editorial { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:64px; }
-        .leaders-grid-split    { display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-bottom:64px; }
-        .leaders-grid-minimal  { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:64px; }
-        .leaders-grid-hero     { display:grid; grid-template-columns:repeat(2, 1fr); gap:22px; margin-bottom:64px; }
-        .leaders-grid-exec     { display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-bottom:64px; }
-        .leaders-grid-classic  { display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-bottom:0; }
+        .leaders-grid-final { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
 
-        @media(max-width:1024px){
-          .leaders-grid-editorial { grid-template-columns:repeat(2, 1fr); gap:16px; }
-          .leaders-grid-minimal   { grid-template-columns:repeat(2, 1fr); gap:16px; }
-          .leaders-grid-hero      { grid-template-columns:1fr; gap:18px; }
-          .leaders-grid-classic   { grid-template-columns:repeat(2, 1fr); gap:16px; }
+        @media(max-width:1024px) {
+          .leaders-grid-final { grid-template-columns:repeat(2, 1fr); gap:16px; }
         }
-        @media(max-width:680px){
-          .leaders-grid-editorial,
-          .leaders-grid-split,
-          .leaders-grid-minimal,
-          .leaders-grid-hero,
-          .leaders-grid-exec,
-          .leaders-grid-classic { grid-template-columns:1fr; gap:14px; margin-bottom:48px; }
-          .leader-split { flex-direction:column !important; }
-          .leader-split-photo { width:100% !important; height:240px !important; }
-          .leader-editorial { aspect-ratio:4 / 5 !important; }
-          .leader-hero { flex-direction:column-reverse !important; min-height:auto !important; }
-          .leader-hero-photo { flex:0 0 auto !important; min-height:280px !important; height:280px !important; width:100% !important; }
-          .leader-hero-content { padding:28px 24px !important; }
-          .leader-hero-content h3 { font-size:22px !important; }
-          .leader-exec { padding:24px 22px !important; }
-          .leader-exec > div:nth-of-type(3) { width:64px !important; height:64px !important; top:18px !important; right:18px !important; }
+        @media(max-width:680px) {
+          .leaders-grid-final { grid-template-columns:1fr; gap:14px; }
         }
       `}</style>
     </section>
-  )
-}
-
-// ── Helper: small label header above each demo style ──
-function DemoLabel({ n, name, desc }) {
-  return (
-    <div className="team-demo-label rv">
-      <div className="team-demo-label-num">{n}</div>
-      <div className="team-demo-label-text">
-        <strong>Style {n} — {name}</strong>
-        <span>{desc}</span>
-      </div>
-    </div>
   )
 }
 
@@ -800,7 +661,7 @@ function Portrait({ member, variant }) {
 function GlobalSection({ navigate }) {
   useReveal()
   return (
-    <section style={{ padding:'72px 24px', background:'#fff' }}>
+    <section className="company-section" style={{ padding:'72px 24px', background:'#fff' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
         <div className="rv" style={{ marginBottom:48 }}>
           <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.teal},${C.blue})`, marginBottom:16 }} />
@@ -863,7 +724,7 @@ function GlobalSection({ navigate }) {
 function AwardsSection() {
   useReveal()
   return (
-    <section style={{ padding:'72px 24px', background:'#fff' }}>
+    <section className="company-section" style={{ padding:'72px 24px', background:'#fff' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
         <div className="rv" style={{ marginBottom:48 }}>
           <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.orange},${C.purple})`, marginBottom:16 }} />
@@ -903,7 +764,7 @@ function CareersSection({ navigate }) {
   useReveal()
   return (
     <div>
-      <section style={{ padding:'72px 24px', background:'#fff' }}>
+      <section className="company-section" style={{ padding:'72px 24px', background:'#fff' }}>
         <div className="svc-body-g" style={{ maxWidth:1280, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:40, alignItems:'start' }}>
           <div className="rv">
             <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.green},${C.teal})`, marginBottom:16 }} />
@@ -965,7 +826,7 @@ function CareersSection({ navigate }) {
 function PressSection() {
   useReveal()
   return (
-    <section style={{ padding:'72px 24px', background:'#fff' }}>
+    <section className="company-section" style={{ padding:'72px 24px', background:'#fff' }}>
       <div style={{ maxWidth:1280, margin:'0 auto' }}>
         <div className="rv" style={{ marginBottom:48 }}>
           <div style={{ width:4, height:40, borderRadius:4, background:`linear-gradient(180deg,${C.purple},${C.blue})`, marginBottom:16 }} />

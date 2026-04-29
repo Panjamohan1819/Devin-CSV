@@ -220,6 +220,45 @@ function Hero({ openConsult, navigate }) {
       @keyframes dsPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.4)}}
       @keyframes dsScrollDot{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
 
+      /* Hero pill — dot follows active word: 3 separate dots, each fades in when its word activates */
+      @keyframes dsPillDot1 { /* visible 0%–28%, hidden 33%–100% */
+        0%, 6%        { opacity: 0; transform: scale(0.6); }
+        12%, 28%      { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px rgba(0, 63, 179, 0.85); }
+        34%, 100%     { opacity: 0; transform: scale(0.6); box-shadow: 0 0 4px rgba(0, 63, 179, 0); }
+      }
+      @keyframes dsPillDot2 { /* visible 33%–61% */
+        0%, 32%       { opacity: 0; transform: scale(0.6); }
+        38%, 61%      { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px rgba(0, 63, 179, 0.85); }
+        67%, 100%     { opacity: 0; transform: scale(0.6); box-shadow: 0 0 4px rgba(0, 63, 179, 0); }
+      }
+      @keyframes dsPillDot3 { /* visible 66%–94% */
+        0%, 65%       { opacity: 0; transform: scale(0.6); }
+        71%, 94%      { opacity: 1; transform: scale(1.1); box-shadow: 0 0 12px rgba(0, 63, 179, 0.85); }
+        100%          { opacity: 0; transform: scale(0.6); box-shadow: 0 0 4px rgba(0, 63, 179, 0); }
+      }
+      /* Each word lights up for ~1/3 of the cycle: ENTERPRISE AI → DATA → AUTOMATION */
+      @keyframes dsPillWord1 {
+        0%, 28%, 100%  { color: #003580; font-weight: 900; }
+        38%, 95%       { color: rgba(10, 14, 30, 0.55); font-weight: 700; }
+      }
+      @keyframes dsPillWord2 {
+        0%, 28%        { color: rgba(10, 14, 30, 0.55); font-weight: 700; }
+        38%, 61%       { color: #003580; font-weight: 900; }
+        72%, 100%      { color: rgba(10, 14, 30, 0.55); font-weight: 700; }
+      }
+      @keyframes dsPillWord3 {
+        0%, 61%        { color: rgba(10, 14, 30, 0.55); font-weight: 700; }
+        72%, 94%       { color: #003580; font-weight: 900; }
+        100%           { color: rgba(10, 14, 30, 0.55); font-weight: 700; }
+      }
+      .ds-pill-dot1 { animation: dsPillDot1 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; vertical-align:middle; }
+      .ds-pill-dot2 { animation: dsPillDot2 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; vertical-align:middle; }
+      .ds-pill-dot3 { animation: dsPillDot3 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; vertical-align:middle; }
+      .ds-pill-w1   { animation: dsPillWord1 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; transition: all 0.25s; }
+      .ds-pill-w2   { animation: dsPillWord2 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; transition: all 0.25s; }
+      .ds-pill-w3   { animation: dsPillWord3 4.5s cubic-bezier(0.65,0,0.35,1) infinite; display:inline-block; transition: all 0.25s; }
+      .ds-pill-sep  { color: rgba(10, 14, 30, 0.30); margin: 0 6px; font-weight: 700; }
+
       /* ── Smaller laptops: tighten cluster slightly ── */
       @media(max-width:1280px){
         .ds-chev-area{ width:440px !important; right:48px !important; }
@@ -382,9 +421,17 @@ function Hero({ openConsult, navigate }) {
 
       {/* Hero content */}
       <div className="ds-hero-content" style={{position:'relative',zIndex:10,height:'100%',display:'flex',flexDirection:'column',justifyContent:'center',padding:'0 56px',maxWidth:760}}>
-        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:11,letterSpacing:'0.32em',color:'#0066FF',textTransform:'uppercase',marginBottom:28,display:'inline-flex',alignItems:'center',gap:12,padding:'8px 16px',background:'rgba(0,102,255,0.06)',border:'1px solid rgba(0,102,255,0.2)',borderRadius:100,backdropFilter:'blur(18px)',width:'fit-content'}}>
-          <span style={{width:6,height:6,background:'#0066FF',borderRadius:'50%',boxShadow:'0 0 10px rgba(0,102,255,0.6)',animation:'dsPulse 2s infinite',flexShrink:0}} />
-          Enterprise AI · Data · Automation
+        <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:12,letterSpacing:'0.26em',textTransform:'uppercase',marginBottom:28,display:'inline-flex',alignItems:'center',gap:0,padding:'10px 18px',background:'rgba(0,63,179,0.06)',border:'1px solid rgba(0,63,179,0.22)',borderRadius:100,backdropFilter:'blur(18px)',width:'fit-content',boxShadow:'0 4px 16px rgba(0,53,128,0.06), inset 0 1px 0 rgba(255,255,255,0.6)'}}>
+          <span style={{fontWeight:700, color:'rgba(10,14,30,0.55)', display:'inline-flex', alignItems:'center'}}>
+            <span className="ds-pill-dot1" style={{width:8,height:8,borderRadius:'50%',background:'#003FB3',marginRight:10}} />
+            <span className="ds-pill-w1">Enterprise AI</span>
+            <span className="ds-pill-sep">·</span>
+            <span className="ds-pill-dot2" style={{width:8,height:8,borderRadius:'50%',background:'#003FB3',marginRight:10}} />
+            <span className="ds-pill-w2">Data</span>
+            <span className="ds-pill-sep">·</span>
+            <span className="ds-pill-dot3" style={{width:8,height:8,borderRadius:'50%',background:'#003FB3',marginRight:10}} />
+            <span className="ds-pill-w3">Automation</span>
+          </span>
         </div>
         <h1 style={{fontSize:'clamp(2.2rem,4.5vw,3.6rem)',fontWeight:900,color:'rgb(10,10,20)',lineHeight:1.08,fontFamily:"'Plus Jakarta Sans',sans-serif",letterSpacing:'-0.03em',margin:'0 0 4px 0',maxWidth:760}}>
           Engineered intelligence<br/>

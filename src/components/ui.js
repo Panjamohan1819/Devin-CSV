@@ -209,6 +209,7 @@ export function GS() {
       .ds-burger:active{background:rgba(0,102,255,0.14)!important}
       @media(max-width:820px){
         .ds-header-bar{padding:0 18px!important;height:64px!important;gap:12px!important}
+        .ds-scroll-top{width:36px!important;height:36px!important;bottom:16px!important;right:16px!important;opacity:0.7!important}
       }
       @media(max-width:480px){
         .ds-header-bar{padding:0 16px!important;height:60px!important}
@@ -230,6 +231,19 @@ export function GS() {
         /* Company page */
         .company-about-g{grid-template-columns:1fr!important;gap:32px!important}
         .company-values-g{grid-template-columns:1fr 1fr!important}
+        /* Company hero — image stacks below content on tablet/mobile */
+        .company-hero-grid{grid-template-columns:1fr!important;gap:36px!important;padding:120px 20px 48px!important}
+        .company-hero-image{max-width:520px;margin:0 auto}
+        .hero-float-card-tr{right:-12px!important;padding:10px 14px!important}
+        .hero-float-card-bl{left:-12px!important;padding:10px 14px!important}
+        .hero-float-card-tr > div:first-child,
+        .hero-float-card-bl > div:first-child{width:36px!important;height:36px!important}
+        .hero-float-card-tr > div:nth-child(2) > div:first-child,
+        .hero-float-card-bl > div:nth-child(2) > div:first-child{font-size:14px!important}
+        .company-hero-grid h1{font-size:clamp(28px,7vw,42px)!important}
+        /* All Company sections — tighter mobile padding */
+        .company-section{padding:48px 20px!important}
+        .company-section h2{font-size:clamp(22px,5vw,30px)!important}
         /* ROI Calculator */
         .roi-inputs-g{grid-template-columns:1fr!important;gap:16px!important}
         .roi-method-g{grid-template-columns:1fr!important;gap:12px!important}
@@ -249,6 +263,8 @@ export function GS() {
         .foot-g{grid-template-columns:1fr!important}
         .contact-offices-g{grid-template-columns:1fr!important}
         .company-values-g{grid-template-columns:1fr!important}
+        .company-section{padding:36px 16px!important}
+        .company-hero-grid{padding:108px 16px 36px!important;gap:28px!important}
         .roi-results-g{grid-template-columns:1fr 1fr!important}
         .foot-cta-card{padding:36px 26px!important;flex-direction:column!important;align-items:stretch!important;text-align:left!important}
         .foot-cta-card > div:nth-child(3){font-size:24px!important}
