@@ -234,12 +234,10 @@ export function GS() {
         /* Company hero — image stacks below content on tablet/mobile */
         .company-hero-grid{grid-template-columns:1fr!important;gap:36px!important;padding:120px 20px 48px!important}
         .company-hero-image{max-width:520px;margin:0 auto}
-        .hero-float-card-tr{right:-12px!important;padding:10px 14px!important}
-        .hero-float-card-bl{left:-12px!important;padding:10px 14px!important}
-        .hero-float-card-tr > div:first-child,
-        .hero-float-card-bl > div:first-child{width:36px!important;height:36px!important}
-        .hero-float-card-tr > div:nth-child(2) > div:first-child,
-        .hero-float-card-bl > div:nth-child(2) > div:first-child{font-size:14px!important}
+        .hero-float-stat-tr{right:-10px!important;padding:10px 14px!important}
+        .hero-float-stat-bl{left:-10px!important;padding:10px 14px!important}
+        .hero-float-stat > div:first-child{width:34px!important;height:34px!important}
+        .hero-float-stat > div:nth-child(2) > div:first-child{font-size:13px!important}
         .company-hero-grid h1{font-size:clamp(28px,7vw,42px)!important}
         /* All Company sections — tighter mobile padding */
         .company-section{padding:48px 20px!important}
