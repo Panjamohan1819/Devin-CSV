@@ -130,31 +130,31 @@ function CompanyHero({ section, navigate }) {
       {/* Subtle grid pattern overlay */}
       <div style={{ position:'absolute', inset:0, backgroundImage:'linear-gradient(rgba(0, 102, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.04) 1px, transparent 1px)', backgroundSize:'48px 48px', maskImage:'radial-gradient(ellipse at center, #000 30%, transparent 75%)', WebkitMaskImage:'radial-gradient(ellipse at center, #000 30%, transparent 75%)', pointerEvents:'none' }} />
 
-      <div className="company-hero-grid" style={{ maxWidth:1280, margin:'0 auto', padding:'132px 24px 72px', position:'relative', zIndex:1, display:'grid', gridTemplateColumns: section==='about' ? '1.1fr 1fr' : '1fr', gap:48, alignItems:'center' }}>
+      <div className="company-hero-grid" style={{ maxWidth:1400, margin:'0 auto', padding:'92px 24px 48px', position:'relative', zIndex:1, display:'grid', gridTemplateColumns: section==='about' ? '1fr 1fr' : '1fr', gap:40, alignItems:'center', height:560 }}>
         {/* LEFT — content */}
         <div>
           <button onClick={() => navigate('/company/about')}
-            style={{ display:'flex', alignItems:'center', gap:6, background:'rgba(255,255,255,0.7)', border:'1px solid rgba(0, 102, 255, 0.18)', borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer', marginBottom:28, backdropFilter:'blur(8px)', transition:'all .2s' }}
+            style={{ display:'flex', alignItems:'center', gap:6, background:'rgba(255,255,255,0.7)', border:'1px solid rgba(0, 102, 255, 0.18)', borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer', marginBottom:24, backdropFilter:'blur(8px)', transition:'all .2s' }}
             onMouseEnter={e => { e.currentTarget.style.background='#fff'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.3)' }}
             onMouseLeave={e => { e.currentTarget.style.background='rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor='rgba(0, 102, 255, 0.18)' }}>
             <Ic n="ChevD" s={12} style={{ transform:'rotate(90deg)', color:'#0066FF' }} /> Company
           </button>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${cfg.color}14`, border:`1px solid ${cfg.color}33`, borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:700, color:cfg.color, marginBottom:20, backdropFilter:'blur(6px)' }}>
+          <div style={{ display:'inline-flex', alignItems:'center', gap:8, background:`${cfg.color}14`, border:`1px solid ${cfg.color}33`, borderRadius:50, padding:'7px 16px', fontSize:12, fontWeight:700, color:cfg.color, marginBottom:18, backdropFilter:'blur(6px)' }}>
             <Ic n="Award" s={12} style={{ color:cfg.color }} /> Microsoft Gold Partner · Est. 2009
           </div>
-          <h1 style={{ fontSize:'clamp(32px,5vw,52px)', fontWeight:900, color:'#0a0a14', lineHeight:1.1, marginBottom:16, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>
+          <h1 style={{ fontSize:'clamp(30px,4.6vw,48px)', fontWeight:900, color:'#0a0a14', lineHeight:1.1, marginBottom:14, fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>
             {cfg.title.split(' ').slice(0,-1).join(' ')}{' '}
             <span className="grad-text" style={{ background:`linear-gradient(135deg, ${cfg.color}, ${cfg.color}aa)`, display:'inline-block' }}>
               {cfg.title.split(' ').slice(-1)[0]}
             </span>
           </h1>
-          <p style={{ fontSize:17, color:'#475569', maxWidth:540, lineHeight:1.7 }}>{cfg.sub}</p>
+          <p style={{ fontSize:16, color:'#475569', maxWidth:520, lineHeight:1.6 }}>{cfg.sub}</p>
           {/* Quick stats bar */}
-          <div style={{ display:'flex', gap:32, marginTop:40, flexWrap:'wrap' }}>
+          <div style={{ display:'flex', gap:32, marginTop:32, flexWrap:'wrap' }}>
             {[['500+','Deployments'],['16','Years'],['4','Continents'],['120+','Consultants']].map(([v,l]) => (
               <div key={l} style={{ textAlign:'left' }}>
-                <div style={{ fontSize:28, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>{v}</div>
-                <div style={{ fontSize:11.5, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>{l}</div>
+                <div style={{ fontSize:26, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", letterSpacing:'-0.02em' }}>{v}</div>
+                <div style={{ fontSize:11, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>{l}</div>
               </div>
             ))}
           </div>
@@ -162,37 +162,37 @@ function CompanyHero({ section, navigate }) {
 
         {/* RIGHT — Image (only on About Us page) */}
         {section==='about' && (
-          <div className="company-hero-image" style={{ position:'relative' }}>
-            {/* Decorative gradient frames behind image */}
-            <div style={{ position:'absolute', top:-12, right:-12, width:'94%', height:'94%', borderRadius:24, background:`linear-gradient(135deg, ${C.blue}, ${C.teal})`, opacity:0.22, zIndex:0 }} />
-            <div style={{ position:'absolute', bottom:-12, left:-12, width:'94%', height:'94%', borderRadius:24, background:`linear-gradient(135deg, ${C.purple}, ${C.blue})`, opacity:0.14, zIndex:0 }} />
+          <div className="company-hero-image" style={{ position:'relative', width:'100%', height:'80%' }}>
+            {/* Back frame — offset top-right */}
+            <div style={{ position:'absolute', top:-14, right:-14, left:14, bottom:14, borderRadius:20, background:`linear-gradient(135deg, ${C.blue}3a, ${C.teal}3a)`, border:`1px solid ${C.blue}25`, zIndex:0 }} />
 
-            {/* Image */}
-            <div style={{ position:'relative', borderRadius:24, overflow:'hidden', zIndex:1, boxShadow:'0 28px 64px rgba(0, 53, 128, 0.22), inset 0 1px 0 rgba(255,255,255,0.9)', border:'1px solid rgba(0, 102, 255, 0.12)' }}>
+            {/* Second back frame — offset bottom-left */}
+            <div style={{ position:'absolute', top:14, right:14, left:-14, bottom:-14, borderRadius:20, background:`linear-gradient(135deg, ${C.blue}28, ${C.purple}20)`, zIndex:0 }} />
+
+            {/* Image fills 100% width × 100% height of wrapper */}
+            <div style={{ position:'relative', width:'100%', height:'100%', borderRadius:20, overflow:'hidden', zIndex:1, boxShadow:'0 24px 56px rgba(0, 53, 128, 0.20), inset 0 1px 0 rgba(255,255,255,0.9)', border:'1px solid rgba(0, 102, 255, 0.16)' }}>
               <img src={Aboutus_Img} alt="DevinStratus team at work"
-                style={{ width:'100%', height:'auto', display:'block', objectFit:'cover', aspectRatio:'4 / 5', maxHeight:520 }} />
-              {/* Bottom gradient overlay */}
-              <div style={{ position:'absolute', left:0, right:0, bottom:0, height:120, background:'linear-gradient(180deg, transparent, rgba(0, 18, 51, 0.40))', pointerEvents:'none' }} />
+                style={{ width:'100%', height:'100%', display:'block', objectFit:'cover' }} />
             </div>
 
-            {/* Floating stat 1 — top-right */}
-            <div className="hero-float-stat hero-float-stat-tr" style={{ position:'absolute', top:20, right:-18, padding:'12px 16px', borderRadius:14, background:'rgba(255,255,255,0.96)', backdropFilter:'blur(12px)', border:'1px solid rgba(0, 102, 255, 0.14)', boxShadow:'0 14px 32px rgba(0, 53, 128, 0.18)', zIndex:2, display:'flex', alignItems:'center', gap:11 }}>
-              <div style={{ width:38, height:38, borderRadius:10, background:`linear-gradient(135deg, ${C.blue}, ${C.purple})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 6px 14px ${C.blue}44` }}>
+            {/* Floating stat 1 — Gold Partner top-right (overhanging image edge) */}
+            <div className="hero-float-stat hero-float-stat-tr" style={{ position:'absolute', top:18, right:-22, padding:'12px 16px', borderRadius:14, background:'rgba(255,255,255,0.98)', backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', border:'1px solid rgba(0, 102, 255, 0.14)', boxShadow:'0 16px 36px rgba(0, 53, 128, 0.22)', zIndex:3, display:'flex', alignItems:'center', gap:11 }}>
+              <div style={{ width:38, height:38, borderRadius:10, background:`linear-gradient(135deg, ${C.blue}, ${C.purple})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 6px 14px ${C.blue}48`, flexShrink:0 }}>
                 <Ic n="Award" s={18} style={{ color:'#fff' }} />
               </div>
               <div>
-                <div style={{ fontSize:15, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1, letterSpacing:'-0.01em' }}>Gold Partner</div>
+                <div style={{ fontSize:15, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.05, letterSpacing:'-0.01em' }}>Gold Partner</div>
                 <div style={{ fontSize:10, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>Microsoft Certified</div>
               </div>
             </div>
 
-            {/* Floating stat 2 — bottom-left */}
-            <div className="hero-float-stat hero-float-stat-bl" style={{ position:'absolute', bottom:20, left:-18, padding:'12px 16px', borderRadius:14, background:'rgba(255,255,255,0.96)', backdropFilter:'blur(12px)', border:'1px solid rgba(0, 102, 255, 0.14)', boxShadow:'0 14px 32px rgba(0, 53, 128, 0.18)', zIndex:2, display:'flex', alignItems:'center', gap:11 }}>
-              <div style={{ width:38, height:38, borderRadius:10, background:`linear-gradient(135deg, ${C.teal}, ${C.blue})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 6px 14px ${C.teal}44` }}>
+            {/* Floating stat 2 — 120+ Consultants bottom-left (overhanging image edge) */}
+            <div className="hero-float-stat hero-float-stat-bl" style={{ position:'absolute', bottom:18, left:-22, padding:'12px 16px', borderRadius:14, background:'rgba(255,255,255,0.98)', backdropFilter:'blur(14px)', WebkitBackdropFilter:'blur(14px)', border:'1px solid rgba(0, 102, 255, 0.14)', boxShadow:'0 16px 36px rgba(0, 53, 128, 0.22)', zIndex:3, display:'flex', alignItems:'center', gap:11 }}>
+              <div style={{ width:38, height:38, borderRadius:10, background:`linear-gradient(135deg, ${C.teal}, ${C.blue})`, display:'flex', alignItems:'center', justifyContent:'center', boxShadow:`0 6px 14px ${C.teal}48`, flexShrink:0 }}>
                 <Ic n="Users" s={18} style={{ color:'#fff' }} />
               </div>
               <div>
-                <div style={{ fontSize:15, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1, letterSpacing:'-0.01em' }}>120+ Consultants</div>
+                <div style={{ fontSize:15, fontWeight:900, color:'#0a0a14', fontFamily:"'Plus Jakarta Sans',sans-serif", lineHeight:1.05, letterSpacing:'-0.01em' }}>120+ Consultants</div>
                 <div style={{ fontSize:10, color:'#64748b', marginTop:3, fontWeight:600, letterSpacing:'.04em' }}>Across 4 Continents</div>
               </div>
             </div>

@@ -232,7 +232,8 @@ export function GS() {
         .company-about-g{grid-template-columns:1fr!important;gap:32px!important}
         .company-values-g{grid-template-columns:1fr 1fr!important}
         /* Company hero — image stacks below content on tablet/mobile */
-        .company-hero-grid{grid-template-columns:1fr!important;gap:36px!important;padding:120px 20px 48px!important}
+        .company-hero-grid{grid-template-columns:1fr!important;gap:36px!important;padding:120px 20px 48px!important;height:auto!important}
+        .company-hero-image{width:100%!important;height:auto!important;aspect-ratio:4/3!important}
         .company-hero-image{max-width:520px;margin:0 auto}
         .hero-float-stat-tr{right:-10px!important;padding:10px 14px!important}
         .hero-float-stat-bl{left:-10px!important;padding:10px 14px!important}
